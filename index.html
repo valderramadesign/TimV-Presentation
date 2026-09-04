@@ -49,7 +49,8 @@ button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--pp);outlin
 .eyebrow{left:72px;right:72px;top:44px;display:flex;justify-content:space-between;align-items:center;padding-bottom:14px;border-bottom:1px solid var(--rule)}
 .pill{display:inline-flex;align-items:center;gap:9px;padding:8px 13px 6px;border:1px solid var(--rule);border-radius:999px;font:400 11.5px/1 var(--sans);letter-spacing:.03em;color:var(--ink);background:var(--paper)}
 .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--dot);flex:none;
-  transform:translateY(-1.5px)}
+  /* optical centre of a mixed-case label: midway between its cap-height and x-height centres */
+  transform:translateY(-1.15px)}
 .stage-tag{font:400 11px/1 var(--sans);letter-spacing:.03em;color:var(--ink-3)}
 .stage-tag b{font-weight:500;color:var(--ink-2)}
 .ghost{right:36px;top:-56px;font:400 520px/1 var(--serif);letter-spacing:-.05em;color:var(--ink);opacity:.035;pointer-events:none;user-select:none}
@@ -520,8 +521,6 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
   color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
 .pgrid .v .u{display:block;margin-top:4px;font:400 11px/1.3 var(--sans);letter-spacing:.02em;
   color:var(--ink-3);text-align:right}
-.pgrid .tot .v{margin-top:0}
-.pgrid .tot .nm{margin-top:4px;font:400 11px/1.3 var(--sans);letter-spacing:.02em;color:var(--ink-3)}
 
 /* 7 — portfolio bars. Deck palette only: paper track, tinted 2023 baseline,
    solid accent for the gain measured against it. */
@@ -621,7 +620,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
 <section class="slide" id="s1" data-project="tv" aria-label="Slide 1">
   <header class="eyebrow b" style="--i:0">
     <span class="pill"><i class="dot"></i>Tim Valderrama — Lead Product Designer</span>
-    <span class="stage-tag">Portfolio talk · <b>≈ 13 min</b></span>
+    <span class="stage-tag">Portfolio talk · <b>≈ 14 min</b></span>
   </header>
   <h1 class="hl xl b" style="--i:1">I turn consequential friction into repeatable product systems.</h1>
   <p class="sub b" style="--i:2">Three stories of strategy, systems, craft—and results.</p>
@@ -1087,11 +1086,9 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
     <div class="pgrid">
           <p class="cell"><img class="art" src="Images/Slide7/PayIn3_CardArt.png" alt=""><span class="nm">Pay in 3</span><span class="v"><span data-count="37" data-prefix="+" data-suffix="%">+37%</span><span class="u">TPV</span></span></p>
           <p class="cell"><img class="art" src="Images/Slide7/PayPalCredit_CardArt.png" alt=""><span class="nm">PayPal Credit</span><span class="v"><span data-count="2.22" data-decimals="2" data-prefix="+" data-suffix="%">+2.22%</span><span class="u">iRev</span></span></p>
-          <p class="cell"></p>
-          <p class="cell tot"><span class="v"><span data-count="25.6" data-decimals="1" data-prefix="+" data-suffix="%">+25.6%</span></span><span class="nm">Total annual iRev increase<sup class="fnm">†</sup></span></p>
     </div>
   </div>
-  <p class="foot fn b" style="--i:7;left:556px;top:719px;width:812px"><span class="fnm">†</span> Every figure is an increase over the year before the redesign. iRev is annual incremental revenue, and the four product figures sum to the 25.6% portfolio total; TPV is payment volume, not revenue. The portfolio rows above measure the 2023 baseline against H1 2024.</p>
+  <p class="foot fn b" style="--i:7;left:556px;top:719px;width:812px">Every product figure is a change against that product’s preceding annual baseline. iRev is annual incremental revenue; TPV is payment volume. The portfolio rows above compare the 2023 baseline with H1 2024.</p>
 
 </section>
 
@@ -1334,10 +1331,11 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
         'PayPal Germany. The PayPal credit portfolio across the US and UK. Ms. Sunshine, a preschool operations product built from zero.',
         'What to listen for: I won’t only show the winning screen. I’ll show the options I rejected, why, and what I encoded so the next team can reuse the decision.'
       ],
-      notes: 'The only number on this slide is the run time—≈ 13 minutes, matching the drawer total. The three handsets are real screens: PayPal Germany checkout, Pay in 4, the Ms. Sunshine feed.' },
-    { title: 'German customers wanted flexibility through responsible credit', time: 60,
+      notes: 'The only number on this slide is the run time—≈ 14 minutes, matching the drawer total. The three handsets are real screens: PayPal Germany checkout, Pay in 4, the Ms. Sunshine feed.' },
+    { title: 'German customers wanted flexibility through responsible credit', time: 75,
       points: [
-        'Two customer needs, from a market study our German research lead ran across the country: time to inspect a purchase before paying, and predictable installments for larger expenses.',
+        'Context in one line: I owned the credit checkout and application experience for the German market, working with our German research lead—who ran the market study behind this—and with the checkout partner we shipped through.',
+        'Two customer needs came out of that study: time to inspect a purchase before paying, and predictable installments for larger expenses.',
         'Wherever cost or commitment felt uncertain, customers hesitated. That is a trust problem, not a usability nuisance.',
         'The business goal: grow responsible credit adoption—without hiding cost or commitment to get there.',
         'That tension—simpler credit versus an informed commitment—is the constraint every later decision answers to.'
@@ -1360,8 +1358,9 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
         'Pay in 30 Days: +48.78% monthly TPV, +17.33% annual incremental revenue. Ratenzahlung: +14.92% monthly TPV, +25.44% annual incremental revenue.'
       ],
       notes: 'All four figures are <em>measured</em> one year after launch, against each product’s preceding production version. TPV = total payment volume. Percentages are relative changes, not points.' },
-    { title: 'Six credit products. One clearer path through checkout.', time: 60,
+    { title: 'Six credit products. One clearer path through checkout.', time: 75,
       points: [
+        'Context in one line: I led the experience strategy across six credit products in two markets. I owned the core pattern and made the trade-offs visible; product owned the final business decision.',
         'Six products, two markets: Pay in 4, Pay Monthly, PayPal Credit and PayPal Mastercard in the US; Pay in 3 and PayPal Credit in the UK. Each with its own requirements, metrics and regulations.',
         'The customer problem: reapplying for installments with every purchase. Friction at checkout, and no reason to come back.',
         'The business consequence: credit is 5% of total revenue, so utilization is a billion-dollar lever.',
@@ -1377,31 +1376,33 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
         'How the call was made: I lay out the options with the trade-offs explicit; product owns the decision, and took this one. Variant boundaries came from underwriting and US/UK disclosure rules.'
       ],
       notes: '≈ 40 s on options, ≈ 30 s on the slider. The 42 iterations were review cycles with leadership, my team and product—say that if you’re asked what an iteration was.' },
-    { title: 'From one winning flow to a reusable system', time: 75,
+    { title: 'From one winning flow to a reusable system', time: 90,
       points: [
         'The winning flow, Pay in 4: the offer explained in place, checkout pre-approved with the schedule visible, one review-and-apply page with details prefilled, approval returned inside checkout.',
-        'Pay in 4: application completion 2.08×, US TPV up 67%. In the UK, Pay in 3 TPV up 37%.',
-        'Then the system carried it across the portfolio: conversion 51% → 79%, utilization 38% → 47%, 2023 against H1 2024.',
-        'Every product gained on incremental revenue—Pay Monthly +5.45%, PayPal Credit +10.32%, PayPal Mastercard +7.61%, UK PayPal Credit +2.22%—and together that is a 25.6% annual increase across the portfolio.',
-        'The point for this room: one crafted flow is a win. A system that reproduces it across six products is leverage.'
+        'Pay in 4 was the proof point: application completion 2.08×, US TPV up 67%; in the UK, Pay in 3 TPV up 37%.',
+        'The harder problem came next—getting five more product teams to adopt the pattern without forcing false consistency. I defined the non-negotiable core: the offer explained in context, one review-and-apply step, and approval returned to the checkout already in progress.',
+        'The teams did not copy the flow blindly. We adapted each one to its underwriting, product and US/UK disclosure requirements; product owned the final call on every variant. That is how a successful flow became a reusable system.',
+        'The portfolio moved with it: conversion 51% → 79%, utilization 38% → 47%, 2023 against H1 2024—and every product gained on incremental revenue, each measured against its own prior year.'
       ],
-      notes: '51 → 79 and 38 → 47 are absolute rates—28 and 9 points, not relative growth. 2.08× is a multiple of the prior rate. Every percentage on the card rows is an <em>increase</em> over the year before the redesign—none of them are shares.' },
-    { title: 'Two hours of teacher time disappeared into reporting', time: 60,
+      notes: '51 → 79 and 38 → 47 are absolute rates—28 and 9 points, not relative growth. 2.08× is a multiple of the prior rate. Every percentage on the card rows is an <em>increase</em> over the year before the redesign—they are independent product results, not shares, and they do not add up to a portfolio total.' },
+    { title: 'Two hours of teacher time disappeared into reporting', time: 75,
       points: [
-        'I interviewed the head teacher. Her priority wasn’t paperwork—it was transparent daily communication with parents, which her school’s reputation runs on.',
+        'Context in one line: Ms. Sunshine is a zero-to-one product for one school and two classrooms, three weeks from kick-off to install. I owned the design end to end; the head teacher was my counterpart and set the operational priorities.',
+        'I interviewed her first. Her priority wasn’t paperwork—it was transparent daily communication with parents, which her school’s reputation runs on.',
         'The manual day: assistant teachers wrote activity notes; the head teacher rewrote every child’s report by hand each evening; parents heard nothing until pickup.',
         'Human cost: roughly two hours a day of a head teacher’s time—time that belonged to children and running the school.',
         'Operational cost: the same information recorded twice, and delivered too late to matter.',
         'The opportunity was never a digital form. It was returning that capacity to the classroom.'
       ],
       notes: '~2 hours/day is an <em>estimate</em> from observing the workflow, not a measured baseline. The footnote says so—say it too.' },
-    { title: 'Capture the day once. Use it twice.', time: 90,
+    { title: 'Capture the day once. Use it twice.', time: 105,
       points: [
-        'Three real options. End-of-day batch reports: least disruptive, but built on recall, and parents still wait. Passive-signal reports: less teacher input, but more complexity and less confidence in accuracy.',
-        'I brought the head teacher the options; together we chose one activity record that powers both the parent feed and the report. The cost: lightweight, real-time capture. The payoff: no duplicate work.',
+        'Three real options, each with a real cost. End-of-day batch reporting: least classroom interruption, but it runs on recall, and parents still hear nothing until pickup.',
+        'Passive-signal reporting: less teacher input, but more system complexity—and less confidence that what reaches a parent is accurate and in context.',
+        'Lightweight, real-time capture asks something of the teacher, but it removes the duplicate write-up and immediately powers both the parent feed and the report.',
+        'I made those trade-offs visible and brought all three to the head teacher. Her operational priorities decided the direction—chosen together, not a solution I arrived with.',
         'Left, the teacher: start from a child or an activity, add a photo or note, log once for everyone who took part—bulk actions make it a few taps.',
-        'Right, the parent: a live prototype. The tile lands in each child’s private feed; only approved guardians see it; a like or comment reaches the head teacher.',
-        'System rules: one child, approved guardians only; teacher and guardian permissions; head-teacher review before anything publishes.'
+        'Right, the parent: a live prototype. The tile lands in each child’s private feed; only approved guardians see it; a like or comment reaches the head teacher, and head-teacher review gates anything that publishes.'
       ],
       notes: '≈ 40 seconds on options. The right handset is the real prototype—drag the slider, then scroll the feed live. Have one concrete revision from critique ready for Q&A.' },
     { title: 'Human impact, business value', time: 75,
@@ -1409,8 +1410,8 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
         'Watch the loop: pick the activity, mark who took part, record the meal, publish. The teacher logs once.',
         'Teacher impact: reports are generated at checkout for quick approval, replacing a manual task estimated at two hours a day.',
         'Parent impact: guardians follow, like and comment as the day happens—not hours later at pickup.',
-        'Business impact: across 262 school days, roughly 524 staff hours a year redirected to classroom care and operations.',
-        'Three weeks from kick-off to install, and in daily use since. Say the caveat yourself: one school, two classrooms, and the time savings are an estimate, not yet measured post-launch.'
+        'Say the business number precisely: this is a modeled annual opportunity, not a measured post-launch result. The two-hour estimate came from observing the previous workflow; across 262 operating days that is approximately 524 hours of potential capacity.',
+        'Keep confirmed evidence separate from the estimate: three weeks from kick-off to install, in daily use since, one school and two classrooms. Realized time savings still need to be measured over a sufficient operating period.'
       ],
       notes: '~524 hours/year is <em>derived</em>—2 hours × 262 days—from the observed-workflow estimate, not measured. “In daily use” is confirmed; “real-time visibility” describes product behavior, not a measured outcome.' },
     { title: 'Strategy · Systems · Craft', time: 60,
@@ -1421,7 +1422,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
         'Craft — one record, two audiences. The moment a customer, a teacher or a hiring manager can feel the strategy.',
         'Close on the line, then stop: I don’t just design the successful flow. I design how the organization can produce the next successful flow.'
       ],
-      notes: 'Total run time ≈ 13 minutes, leaving room for questions in a 15-minute slot. The mark: three solid dots in, five open dots out—leverage, not volume.' }
+      notes: 'Total run time ≈ 14 minutes—tight in a 15-minute slot, so trim the slide 9 walkthrough first if you need more question time. The mark: three solid dots in, five open dots out—leverage, not volume.' }
   ];
 
   const $ = (s, r = document) => r.querySelector(s);
