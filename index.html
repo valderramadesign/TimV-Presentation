@@ -1,0 +1,1771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tim Valderrama — Strategy, Systems, Craft</title>
+<!--
+  Tim Valderrama · portfolio talk · 11 slides · 1440×810 canvas
+  Keys: ← → navigate · Home/End · T talking points · Esc close · F fullscreen · H hide chrome (clean screenshots) · ⌘P print/PDF
+  Every [TYPE — label] box is a placeholder for an asset Tim inserts later. Geometry is inline (left/top/width/height) so it is easy to adjust.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libertinus+Serif:ital,wght@0,400;1,400&family=League+Spartan:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F2EB; --paper:#FBF9F5; --edge:#E9E4DA;
+  --ink:#090909; --ink-2:#4E4941; --ink-3:#8A8477;
+  --rule:#D9D3C6; --ph:#ECE8DF; --ph-line:#C6BFB0; --ph-text:#6F695F;
+  --pp:#0070E0; --pp-text:#0059B8; --pp-deep:#003087;
+  --sun:#F2B705; --terra:#C25B2B;
+  --bar:#B4C615; --bar-soft:#DBE0AE;
+  /* Two families only: Libertinus Serif sets headings and figures,
+     League Spartan sets body copy and every label. */
+  --serif:'Libertinus Serif',Georgia,'Times New Roman',serif;
+  --serif-i:var(--serif);
+  --sans:'League Spartan','Helvetica Neue',Helvetica,Arial,sans-serif;
+  --ease:cubic-bezier(.2,.6,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--edge);color:var(--ink);font-family:var(--sans);font-weight:300;overflow:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--pp);outline-offset:3px}
+
+/* ---------- Stage ---------- */
+.stage{position:fixed;left:50%;top:50%;width:1440px;height:810px;transform:translate(-50%,-50%);transform-origin:center;background:var(--bg);box-shadow:0 40px 90px -30px rgba(40,30,10,.28),0 0 0 1px rgba(0,0,0,.03);overflow:hidden}
+.grain{position:absolute;inset:0;pointer-events:none;opacity:.05;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");z-index:5}
+
+.slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .45s ease,visibility 0s linear .45s}
+.slide.is-active{opacity:1;visibility:visible;transition:opacity .45s ease;z-index:2}
+.slide.is-leaving{z-index:1}
+.slide[data-project="pp"]{--acc:var(--pp);--acc-text:var(--pp-text);--acc-soft:rgba(0,112,224,.08);--dot:var(--pp);--chip-bg:var(--pp);--chip-fg:#fff}
+.slide[data-project="sun"]{--acc:var(--terra);--acc-text:var(--terra);--acc-soft:rgba(242,183,5,.18);--dot:var(--sun);--chip-bg:var(--sun);--chip-fg:var(--ink)}
+.slide[data-project="tv"]{--acc:var(--ink);--acc-text:var(--ink);--acc-soft:rgba(9,9,9,.06);--dot:var(--ink);--chip-bg:var(--ink);--chip-fg:#fff}
+.slide>*{position:absolute}
+
+/* ---------- Chrome inside the canvas ---------- */
+.eyebrow{left:72px;right:72px;top:44px;display:flex;justify-content:space-between;align-items:center;padding-bottom:14px;border-bottom:1px solid var(--rule)}
+.pill{display:inline-flex;align-items:center;gap:9px;padding:8px 13px 6px;border:1px solid var(--rule);border-radius:999px;font:400 11.5px/1 var(--sans);letter-spacing:.03em;color:var(--ink);background:var(--paper)}
+.pill .dot{width:7px;height:7px;border-radius:50%;background:var(--dot);flex:none;
+  transform:translateY(-1.5px)}
+.stage-tag{font:400 11px/1 var(--sans);letter-spacing:.03em;color:var(--ink-3)}
+.stage-tag b{font-weight:500;color:var(--ink-2)}
+.ghost{right:36px;top:-56px;font:400 520px/1 var(--serif);letter-spacing:-.05em;color:var(--ink);opacity:.035;pointer-events:none;user-select:none}
+
+.hud{position:absolute;left:72px;right:72px;bottom:24px;height:36px;display:flex;justify-content:space-between;align-items:center;z-index:6;pointer-events:none}
+.hud>*{pointer-events:auto}
+.counter{font:400 11px/1 var(--sans);letter-spacing:.06em;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.counter b{font-weight:500;color:var(--ink)}
+.navbtns{display:flex;gap:8px}
+.navbtns button{width:36px;height:36px;border:1px solid var(--rule);border-radius:50%;display:grid;place-items:center;color:var(--ink-2);background:var(--paper);transition:border-color .2s,color .2s,transform .2s}
+.navbtns button:hover{border-color:var(--ink);color:var(--ink)}
+.navbtns button:disabled{opacity:.3;cursor:default}
+.navbtns svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.progress{position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--rule);z-index:6}
+.progress span{display:block;height:100%;width:0;background:var(--ink);transition:width .5s var(--ease)}
+body.clean .hud,body.clean .tab,body.clean .progress{display:none}
+
+/* ---------- Type ---------- */
+.hl{font:400 50px/1.06 var(--serif);letter-spacing:-.012em;color:var(--ink);margin:0}
+.hl em{font-style:italic;font-family:var(--serif-i)}
+.hl.xl{font-size:66px;line-height:1.03;letter-spacing:-.018em}
+.hl.lg{font-size:56px}
+.hl.md{font-size:44px}
+.sub{font:300 21px/1.4 var(--sans);color:var(--ink-2);margin:0}
+.label{font:400 11px/1.3 var(--sans);letter-spacing:.02em;color:var(--ink-3);margin:0}
+.label.cap{font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+.state{font:300 22px/1.35 var(--sans);color:var(--ink);margin:0}
+.state .label{display:block;margin-bottom:12px}
+.state.ruled{padding-top:18px;border-top:1px solid var(--rule)}
+.foot{font:400 11px/1.5 var(--sans);letter-spacing:.01em;color:var(--ink-3);margin:0}
+.foot.fn{font-size:10px;line-height:1.6}
+.fnm{color:var(--ink-2)}
+sup.fnm{font-size:.72em;letter-spacing:0;margin-left:2px}
+.idx{display:flex;gap:28px;align-items:center;font:400 13px/1 var(--sans);letter-spacing:.02em;color:var(--ink-2)}
+.idx span{display:inline-flex;align-items:center;gap:9px}
+.idx i{width:7px;height:7px;border-radius:50%;background:var(--pp);transform:translateY(-1.75px)}
+.idx i.s{background:var(--sun)}
+.idx code{font:400 11px/1 var(--sans);color:var(--ink-3);letter-spacing:.05em;font-variant-numeric:tabular-nums}
+
+/* ---------- Metrics ---------- */
+.metric{margin:0}
+.metric .label{display:block;margin-bottom:14px}
+.metric .num{display:block;font:400 100px/.9 var(--serif);letter-spacing:-.03em;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+.metric .num.md{font-size:64px}
+.metric .num.sm{font-size:44px}
+.metric .num .arrow{font-family:var(--sans);font-size:.42em;vertical-align:.3em;color:var(--acc-text);margin:0 .18em;letter-spacing:0}
+.metric .unit{display:block;margin-top:7px;font:400 11px/1.3 var(--sans);letter-spacing:.02em;color:var(--ink-3);text-align:right}
+.metric .sec{display:block;margin-top:12px;font:300 15px/1.35 var(--sans);color:var(--ink-2)}
+.metric .sec b{font-weight:500;color:var(--ink)}
+
+/* ---------- Placeholders (asset wireframes) ---------- */
+.ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;text-align:center;padding:14px;background:var(--ph);border:1px dashed var(--ph-line);border-radius:6px;color:var(--ph-text)}
+.ph::before{content:"";position:absolute;inset:5px;border:1px solid rgba(9,9,9,.045);border-radius:inherit;pointer-events:none}
+.ph.phone{border-radius:16px}
+.ph.phone::before{border-radius:12px}
+.ph.solid{border-style:solid}
+.ph.acc{border-color:var(--acc);border-style:solid}
+.ph.acc .t{color:var(--acc-text)}
+.ph.mute{opacity:.72}
+.ph.lift{box-shadow:0 0 0 8px var(--bg),0 24px 40px -24px rgba(30,20,0,.35)}
+
+/* ---------- Photo figure ---------- */
+.fig{margin:0;overflow:hidden;border-radius:18px;background:var(--ph)}
+.fig>img{width:100%;height:100%;display:block;object-fit:cover;object-position:var(--op,center)}
+.fig::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;
+  box-shadow:inset 0 0 0 1px rgba(60,50,30,.10)}
+.fig.lift{box-shadow:0 2px 4px -2px rgba(42,33,18,.13),0 34px 60px -30px rgba(42,33,18,.40)}
+/* Circular portrait: the picture is already cut to a disc, so the caption sits beneath it. */
+.fig.circ{border-radius:50%;background:transparent;overflow:visible}
+.fig.circ>img{border-radius:50%;box-shadow:0 2px 4px -2px rgba(42,33,18,.13),0 22px 38px -26px rgba(42,33,18,.40)}
+.fig.circ>figcaption{position:absolute;top:calc(100% + 16px);left:50%;width:100%;transform:translateX(-50%);
+  text-align:center;font:400 12px/1.4 var(--sans);letter-spacing:.01em;color:var(--ink-2)}
+
+/* Copy set inside a photo: soft directional scrims keep the plate legible
+   without flattening the picture. Peaks sit in the two copy corners. */
+.fig>.scrim{position:absolute;inset:0;z-index:1;pointer-events:none;background:
+  linear-gradient(to bottom,rgba(12,8,3,.60) 0%,rgba(12,8,3,.34) 18%,rgba(12,8,3,.10) 30%,rgba(12,8,3,0) 42%),
+  linear-gradient(to right,rgba(12,8,3,.56) 0%,rgba(12,8,3,.36) 22%,rgba(12,8,3,.12) 44%,rgba(12,8,3,0) 58%)}
+.fig>.hl,.fig>.fig-copy,.fig>.ghost{position:absolute;z-index:2}
+.fig>.ghost{color:var(--paper);opacity:.34;text-shadow:0 2px 14px rgba(10,6,2,.34)}
+  /* Watermark over a photo: the ink token disappears there, and the soft dark shadow is what keeps
+     the numeral holding its shape where the picture goes bright. */
+.on-img{color:var(--paper);text-shadow:0 1px 2px rgba(10,6,2,.50),0 2px 20px rgba(10,6,2,.55)}
+.on-img.state{color:rgba(251,249,245,.95)}
+.on-img.state .label{color:rgba(251,249,245,.68);margin-bottom:11px}
+.fig-copy .state+.state{margin-top:22px;padding-top:26px;border-top:1px solid rgba(251,249,245,.30)}  /* 22/26, not 24/24: balances the rule on the baseline above it, past the descender */
+.ph .t{font:400 10.5px/1 var(--sans);letter-spacing:.02em;color:var(--ink-3)}
+.ph .d{font:400 12px/1.35 var(--sans);letter-spacing:.01em;max-width:92%}
+.ph.sm .d{font-size:11px}
+.ph.sm{padding:10px 8px;gap:5px}
+
+/* ---------- iPhone device mock (white titanium · Dynamic Island) ----------
+   Geometry is driven entirely by --w (device width); --rot fans the device.
+   Screen is a true 2.174:1 iPhone 17 Pro ratio.                            */
+.dev{position:absolute}
+.iphone{
+  --rim:calc(var(--w)*.022);             /* polished white-titanium band */
+  --bez:calc(var(--w)*.011);             /* black bezel                  */
+  --sw:calc(var(--w)*.934);              /* screen width                 */
+  --sh:calc(var(--sw)*2.174);            /* screen height                */
+  --r:calc(var(--w)*.158);
+  position:relative;display:block;
+  width:var(--w);height:calc(var(--sh) + var(--w)*.066);
+  padding:var(--rim);border-radius:var(--r);
+  transform:rotate(var(--rot,0deg));
+  background:linear-gradient(122deg,
+    #fff 0%,#fdfdfc 8%,#e0ddd7 20%,#fff 32%,#f4f2ee 44%,
+    #dbd8d2 59%,#fff 73%,#eae7e1 87%,#fdfdfd 100%);
+  box-shadow:
+    inset 0 .5px .5px rgba(255,255,255,.95),
+    inset 0 -.5px .5px rgba(255,255,255,.7),
+    0 0 0 .5px rgba(122,116,104,.34),
+    0 calc(var(--w)*.008) calc(var(--w)*.012) calc(var(--w)*-.004) rgba(42,33,18,.14),
+    0 calc(var(--w)*.095) calc(var(--w)*.175) calc(var(--w)*-.079) rgba(42,33,18,.40),
+    0 calc(var(--w)*.230) calc(var(--w)*.333) calc(var(--w)*-.190) rgba(42,33,18,.34);
+}
+.iphone .body{position:relative;width:100%;height:100%;padding:var(--bez);
+  border-radius:calc(var(--r) - var(--rim));background:#0b0b0d;
+  box-shadow:inset 0 0 0 .5px rgba(255,255,255,.10)}
+.iphone .screen{position:relative;width:100%;height:100%;overflow:hidden;
+  border-radius:calc(var(--r) - var(--rim) - var(--bez));
+  background:var(--scr,#f1f2f3);
+  box-shadow:inset 0 0 0 .5px rgba(0,0,0,.42)}
+.iphone .screen>img{position:absolute;inset:0;width:100%;height:100%;display:block;
+  object-fit:cover;object-position:var(--op,center)}
+
+/* Dynamic Island + front camera */
+.iphone .island{position:absolute;left:50%;top:calc(var(--sw)*.028);
+  width:calc(var(--sw)*.318);height:calc(var(--sw)*.094);
+  transform:translateX(-50%);border-radius:999px;background:#08080a;
+  box-shadow:0 .5px 1.5px rgba(0,0,0,.35),inset 0 0 0 .5px rgba(255,255,255,.05)}
+.iphone .island::after{content:"";position:absolute;top:50%;right:calc(var(--sw)*.020);
+  width:calc(var(--sw)*.0455);height:calc(var(--sw)*.0455);
+  transform:translateY(-50%);border-radius:50%;
+  background:radial-gradient(circle at 33% 28%,#42566f 0%,#1b2634 40%,#080b11 72%);
+  box-shadow:inset 0 0 0 .5px rgba(138,164,205,.55)}
+
+/* Status bar */
+.iphone .status{position:absolute;left:0;right:0;top:0;
+  height:calc(var(--sw)*.15);display:flex;align-items:center;
+  justify-content:space-between;pointer-events:none;
+  padding:0 calc(var(--sw)*.060) 0 calc(var(--sw)*.070);
+  color:var(--sbar,#0b0b0c);
+  font:600 calc(var(--sw)*.0455)/1 var(--sans);
+  letter-spacing:.002em;font-variant-numeric:tabular-nums}
+.iphone .status .ico{display:flex;align-items:center;gap:calc(var(--sw)*.020)}
+.iphone .status svg{display:block;fill:currentColor}
+.iphone .status .cell{width:calc(var(--sw)*.0458);height:calc(var(--sw)*.0305)}
+.iphone .status .wifi{width:calc(var(--sw)*.0432);height:calc(var(--sw)*.0305)}
+.iphone .status .batt{width:calc(var(--sw)*.0686);height:calc(var(--sw)*.0330)}
+
+/* Home indicator (only where the capture doesn't already include one) */
+.iphone .home{position:absolute;left:50%;bottom:calc(var(--sw)*.021);
+  transform:translateX(-50%);width:calc(var(--sw)*.355);
+  height:calc(var(--sw)*.0135);border-radius:999px;background:#0b0b0c;opacity:.85}
+
+/* Glass sheen */
+.iphone .gloss{position:absolute;inset:0;pointer-events:none;border-radius:inherit;
+  background:linear-gradient(114deg,
+    rgba(255,255,255,.34) 0%,rgba(255,255,255,.09) 13%,
+    rgba(255,255,255,0) 30%,rgba(255,255,255,0) 74%,
+    rgba(255,255,255,.11) 95%,rgba(255,255,255,.02) 100%)}
+
+/* Side hardware */
+.iphone i{position:absolute;width:calc(var(--w)*.0135);
+  background:linear-gradient(180deg,#fbfaf8,#dbd8d1 42%,#c9c6be 62%,#f2f1ed);
+  box-shadow:0 0 0 .5px rgba(112,106,95,.42)}
+.iphone i.l{left:calc(var(--w)*-.009);border-radius:calc(var(--w)*.007) 0 0 calc(var(--w)*.007)}
+.iphone i.r{right:calc(var(--w)*-.009);border-radius:0 calc(var(--w)*.007) calc(var(--w)*.007) 0}
+.iphone i.act{top:calc(var(--w)*.308);height:calc(var(--w)*.079)}
+.iphone i.vup{top:calc(var(--w)*.447);height:calc(var(--w)*.129)}
+.iphone i.vdn{top:calc(var(--w)*.607);height:calc(var(--w)*.129)}
+.iphone i.pwr{top:calc(var(--w)*.468);height:calc(var(--w)*.197)}
+.iphone i.cam{top:calc(var(--w)*.742);height:calc(var(--w)*.100);
+  background:linear-gradient(180deg,#eceae6,#b9b6b0 40%,#a9a6a0 60%,#e2e0db)}
+
+/* Flanking devices sit back a touch */
+.dev.back .iphone .screen::after{content:"";position:absolute;inset:0;
+  background:rgba(245,242,235,.14);pointer-events:none}
+
+/* ---------- Device walkthrough (slide 4) ---------- */
+.walk{position:absolute;inset:0;overflow:hidden;background:#fff}
+.walk .fr{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;opacity:0}
+.walk .fr:first-child{opacity:1}
+.walk .pt,.iphone .cur .pt{position:absolute;left:0;top:0;width:0;height:0;will-change:transform}
+.walk .wdot{position:absolute;left:calc(var(--w)*-.0729);top:calc(var(--w)*-.0729);
+  width:calc(var(--w)*.1458);height:calc(var(--w)*.1458);border-radius:50%;opacity:0;
+  background:radial-gradient(circle,rgba(0,160,255,.161) 0%,rgba(0,160,255,.161) 89.8%,rgba(0,160,255,.235) 93.7%,rgba(0,160,255,.235) 96.9%,rgba(0,160,255,0) 100%)}
+.iphone .cur{position:absolute;inset:0;overflow:hidden;border-radius:var(--r);pointer-events:none;z-index:3}
+.iphone .cur img{position:absolute;left:calc(var(--w)*-.00574);top:calc(var(--w)*.02526);
+  width:calc(var(--w)*.1091);height:auto;display:block;opacity:0;transform-origin:25.8% 10.9%}
+
+/* Paired result figures — both numbers share one treatment */
+.res{margin:0}
+.res .label{display:block;margin:0 0 16px}
+.res .kpi{display:block;margin:0;text-align:right}
+.res .kpi+.kpi{margin-top:26px}
+.res .n{display:block;font:400 68px/.9 var(--serif);letter-spacing:-.03em;color:var(--ink);
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.res .u{display:block;margin-top:7px;font:400 11px/1.3 var(--sans);letter-spacing:.02em;
+  color:var(--ink-3)}
+#s4 .res .n{width:max-content;position:relative;left:100%;transform:translateX(-100%)}
+
+/* ---------- Wireframe index (slide 5) ----------
+   Screens are transparent-cornered PNGs, so the lift comes from a drop-shadow
+   that follows the device silhouette rather than a box. Captions sit outside
+   the pair of rows (above the top row, below the bottom row) to keep the
+   band between them clear for the wires. */
+.wf{margin:0;width:92px;height:230px}
+.wf>img{display:block;width:100%;height:100%;object-fit:contain;
+  filter:drop-shadow(0 1px 2px rgba(42,33,18,.10)) drop-shadow(0 16px 24px rgba(42,33,18,.18))}
+.wf .cap{position:absolute;left:0;width:150px}
+.wf.up .cap{bottom:calc(100% + 12px)}
+.wf.dn .cap{top:calc(100% + 12px)}
+.wf .n{display:block;font:400 13.5px/1.2 var(--sans);letter-spacing:.005em;color:var(--ink);white-space:nowrap}
+.states .state+.state{margin-top:22px;padding-top:26px;border-top:1px solid var(--rule)}  /* 22/26 mirrors slide 2: optically centres the rule past the descender */
+.wf .m{display:block;margin-top:5px;font:400 10.5px/1 var(--sans);letter-spacing:.02em;color:var(--ink-3);white-space:nowrap}
+
+/* ---------- Diagram nodes ---------- */
+.node{display:flex;flex-direction:column;justify-content:center;gap:5px;padding:10px 14px;background:var(--paper);border:1px solid var(--rule);border-radius:6px;color:var(--ink)}
+.node .t{font:400 10.5px/1 var(--sans);letter-spacing:.02em;color:var(--ink-3)}
+.node .d{font:400 13px/1.3 var(--sans);letter-spacing:.005em}
+.node.ink{border-color:var(--ink);background:var(--paper)}
+.node.ink .t{color:var(--acc-text)}
+.node.acc{border-color:var(--acc);box-shadow:0 0 0 4px var(--acc-soft)}
+.node.acc .t{color:var(--acc-text)}
+.node.center{align-items:center;text-align:center}
+.frame{border:1px solid var(--acc);border-radius:10px;background:transparent}
+.frame .chip-l{position:absolute;left:18px;top:-9px;padding:5px 9px 4px;background:var(--bg);color:var(--acc-text);font:400 10.5px/1 var(--sans);letter-spacing:.02em}
+
+/* ---------- Decision fork ---------- */
+.opts{display:flex;gap:16px}
+.opts.col{flex-direction:column;gap:12px}
+.opt{position:relative;flex:1;display:flex;flex-direction:column;gap:5.5px;padding:15px 16px 14px;border:1px solid var(--rule);border-radius:6px;color:var(--ink-3);background:transparent;min-height:72px}
+.opt .tag{font:400 10.5px/1 var(--sans);letter-spacing:.02em;color:var(--ink-3);opacity:.85}
+.opt .l{font:400 15.5px/1.3 var(--sans);letter-spacing:.005em}
+.opt.chosen{border:1.5px solid var(--acc);color:var(--ink);background:var(--paper);box-shadow:0 0 0 4px var(--acc-soft)}
+.opt.chosen .tag{color:var(--acc-text);opacity:1}
+.opt.chosen .l{font-weight:400}
+.opt .to{margin-top:1.5px;font:300 12.5px/1.45 var(--sans);color:var(--ink-3)}
+.opt .to b{font:400 10px/1 var(--sans);letter-spacing:.02em;color:var(--ink-3);opacity:.8;margin-right:8px;vertical-align:0}
+.opt.chosen .to{color:var(--ink-2)}
+.opt.chosen .to b{color:var(--acc-text);opacity:1}
+.chip{position:absolute;top:-10px;right:14px;padding:6px 9px 5px;border-radius:999px;background:var(--chip-bg);color:var(--chip-fg);font:400 10px/1 var(--sans);letter-spacing:.03em}
+.why{margin:0;font:italic 400 17px/1.4 var(--serif-i);color:var(--ink-2)}
+.why b{font:400 10.5px/1 var(--sans);letter-spacing:.02em;color:var(--ink-3);font-style:normal;margin-right:10px;vertical-align:.06em}
+
+/* ---------- before / after compare (slide 6) ---------- */
+.cmp{cursor:ew-resize;touch-action:pan-y;-webkit-user-select:none;user-select:none}
+.cmp-in{display:grid;gap:26px;padding-left:34px}
+.cmp-row{display:grid}
+.cmp-row>.cmp-l{grid-area:1/1;min-width:0}
+.cmp-copy>.cmp-l{align-self:end}
+.cmp-h{margin:6.5px 0 0;font:400 26px/1.16 var(--serif);letter-spacing:-.014em;color:var(--ink)}
+.cmp-p{margin:7px 0 0;font:400 12.5px/1.5 var(--sans);color:var(--ink-2);text-wrap:pretty}
+.cmp-l.before .cmp-p{max-width:600px}
+.cmp-l.after{display:grid;grid-template-columns:repeat(5,1fr);gap:23.5px}
+.cmp-l.after>div{grid-column:2/5;text-align:right}
+.cmp-l.after .cmp-h{font-size:21px}
+.cmp-scr>.cmp-l{display:grid;grid-template-columns:repeat(5,1fr);gap:23.5px;list-style:none;margin:0;padding:0}
+.cmp-scr>.cmp-l.after>li:first-child{grid-column-start:2}
+/* the after layer is centred between the option column's right edge (420) and the
+   divider's home at the card's right edge (1368) — 894, which is 57px left of the
+   panel's own centre, hence the 114px of padding held on the right. */
+/* narrower than the shared 600px so the paragraph breaks after "to a" and keeps
+   "already left." on the line above rather than alone on its own */
+#s6cmp .cmp-l.before .cmp-p{max-width:520px}
+#s6cmp .cmp-l.after{grid-template-columns:repeat(3,148px);justify-content:center;padding-right:114px}
+#s6cmp .cmp-copy>.cmp-l.after>div{grid-column:1/4}
+#s6cmp .cmp-scr>.cmp-l.after>li:first-child{grid-column-start:1}
+#s6cmp .iphone{--sh:calc(var(--sw)*2.272)}
+#s6wire{transition:opacity .3s var(--ease)}
+.cmp-div{position:absolute;top:-37px;bottom:-37px;width:2px;transform:translateX(-1px);background:var(--acc);z-index:10;pointer-events:none}
+.cmp-nub{position:absolute;top:50%;z-index:11;display:flex;align-items:center;justify-content:center;gap:1px;width:38px;height:38px;padding:0;border-radius:50%;transform:translate(-50%,-50%);background:var(--paper);color:var(--ink-2);border:2px solid var(--acc);cursor:ew-resize;transition:transform .22s var(--ease)}
+.cmp-nub::after{content:"";position:absolute;inset:-1px;border-radius:50%;box-shadow:0 1px 2px -1px rgba(42,33,18,.22),0 8px 18px -8px rgba(42,33,18,.34)}
+.cmp-nub:hover,.cmp-nub:focus-visible{transform:translate(-50%,-50%) scale(1.07)}
+.cmp-nub:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.cmp-nub svg{display:block;width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+
+/* Slide 9 wears the same card in gold, but with one row per layer instead of two:
+   the live handset needs the card's whole height, which a shared screens row caps. */
+#s9cmp .cmp-div{background:var(--sun)}
+#s9cmp .cmp-nub{border-color:var(--sun)}
+#s9cmp .cmp-in{gap:0}
+/* the panel is pinned to the divider track, not the card: 5px inside each end of the
+   handle's rail, which is the card bled 37px top and bottom */
+#s9cmp .cmp-row{height:494px}
+#s9cmp .cmp-l.before{display:flex;flex-direction:column;justify-content:space-between;
+  height:calc(100% + 64px);margin:-32px 0}
+#s9cmp .sys{display:flex;align-items:baseline;margin:0;padding:0;list-style:none;white-space:nowrap}
+#s9cmp .sys li{padding:0 13px;border-left:1px solid var(--rule);
+  font:300 11.5px/1.45 var(--sans);color:var(--ink-2)}
+#s9cmp .sys li:first-child{padding-left:0;border-left:0;
+  font:400 10px/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+/* the eyebrow introduces the rail, so it takes no divider of its own */
+#s9cmp .sys li:nth-child(2){border-left:0;padding-left:11px}
+/* a three-line block sits above and a single hairline rail below, so geometrically
+   equal gaps read low: 18px of extra margin under the handsets lifts them 9px. */
+#s9cmp .shots{display:grid;grid-template-columns:repeat(4,1fr);gap:23.5px;justify-items:center;
+  margin:0 0 18px;padding:0;list-style:none}
+/* the copy column is cut just under "communication" so the title breaks after "parent",
+   which keeps the copy + handset group readable as one centred object */
+#s9cmp .cmp-l.after{display:grid;grid-template-columns:var(--cw) var(--lw);gap:40px;
+  align-items:center;justify-content:center;padding-right:114px}
+#s9cmp .cmp-l.after>.live-copy{grid-column:1;text-align:right}
+#s9cmp .cmp-l.after .cmp-h{font-size:26px}
+#s9cmp .live-scr{grid-column:2;cursor:default}
+#s9cmp .live{position:absolute;left:0;top:0;width:375px;transform-origin:0 0;border:0;
+  background:#fff}
+
+/* ---------- Wires ---------- */
+.wire{left:0;top:0;width:1440px;height:810px;pointer-events:none;overflow:visible}
+.wire path,.wire line{fill:none;stroke:var(--acc);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.wire .mute{stroke:var(--ph-line);stroke-width:1.25}
+.wire .hair{stroke:var(--rule);stroke-width:1}
+.wire circle{fill:var(--acc)}
+.wire circle.mute{fill:var(--ph-line)}
+.wire text{font:400 11px var(--sans);letter-spacing:.02em;fill:var(--ink-3)}
+
+/* ---------- Scalable diagram block ----------
+   The wrapper holds the diagram's natural box (--dw × --dh) and is anchored on the slide;
+   the inner layer scales from the bottom-right, so the anchor never moves as --s changes.
+   Scaling the inner layer keeps the per-element build (--i) on the children intact. */
+.diag>.diag-in{position:absolute;left:0;top:0;width:var(--dw);height:var(--dh);
+  transform:scale(var(--s,1));transform-origin:100% 100%}
+.diag-in>*{position:absolute}
+.diag-in>.wire{left:0;top:0;width:var(--dw);height:var(--dh)}
+
+/* ---------- Builds ---------- */
+.b{opacity:0;transform:translateY(8px)}
+.is-active .b{animation:rise .6s var(--ease) forwards;animation-delay:calc(140ms + var(--i,0)*80ms)}
+.is-leaving .b{opacity:1;transform:none;animation:none}
+@keyframes rise{to{opacity:1;transform:none}}
+.draw{stroke-dasharray:1;stroke-dashoffset:1}
+.is-active .draw{animation:draw .9s var(--ease) forwards;animation-delay:calc(360ms + var(--i,0)*90ms)}
+.is-leaving .draw{stroke-dashoffset:0;animation:none}
+@keyframes draw{to{stroke-dashoffset:0}}
+.eq span{display:inline-block}
+@media (prefers-reduced-motion:reduce){
+  .b,.is-active .b{animation:none;opacity:1;transform:none}
+  .draw,.is-active .draw{animation:none;stroke-dashoffset:0}
+  .slide{transition:none}
+  .progress span{transition:none}
+}
+
+/* ---------- Talking points drawer ---------- */
+.tab{position:fixed;right:0;top:50%;transform:translateY(-50%) rotate(180deg);writing-mode:vertical-rl;padding:16px 10px 16px 9px;background:var(--paper);border:1px solid var(--rule);border-right:0;border-radius:0 6px 6px 0;font:500 11px/1 var(--sans);letter-spacing:.04em;color:var(--ink-2);z-index:40;transition:right .45s var(--ease),color .2s;box-shadow:-6px 0 20px -12px rgba(0,0,0,.2)}
+.tab:hover{color:var(--ink)}
+.tab .k{opacity:.5;margin-top:10px}
+body.drawer-open .tab{right:400px;border-right:0}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:400px;background:var(--paper);border-left:1px solid var(--rule);box-shadow:-30px 0 60px -30px rgba(30,20,0,.25);transform:translateX(100%);visibility:hidden;transition:transform .45s var(--ease),visibility 0s linear .45s;z-index:39;display:flex;flex-direction:column;padding:28px 32px 22px}
+body.drawer-open .drawer{transform:none;visibility:visible;transition:transform .45s var(--ease)}
+.d-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:16px;border-bottom:1px solid var(--rule)}
+.d-eyebrow{font:500 11px/1 var(--sans);letter-spacing:.02em;color:var(--ink-3)}
+.d-close{width:32px;height:32px;border:1px solid var(--rule);border-radius:50%;display:grid;place-items:center;color:var(--ink-2)}
+.d-close:hover{border-color:var(--ink);color:var(--ink)}
+.d-close svg{width:12px;height:12px;stroke:currentColor;stroke-width:1.6;stroke-linecap:round}
+.d-body{flex:1;overflow:auto;padding:22px 0 10px;scrollbar-width:thin}
+.d-title{margin:0 0 18px;font:400 25px/1.15 var(--serif);letter-spacing:-.01em;color:var(--ink)}
+.d-points{margin:0;padding:0;list-style:none;counter-reset:pt}
+.d-points li{position:relative;padding:0 0 14px 30px;font:300 14.5px/1.5 var(--sans);color:var(--ink);counter-increment:pt}
+.d-points li::before{content:counter(pt,decimal-leading-zero);position:absolute;left:0;top:3px;font:400 10.5px/1 var(--sans);letter-spacing:.04em;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.d-points li:last-child{padding-bottom:0}
+.d-notes{margin-top:22px;padding-top:16px;border-top:1px solid var(--rule)}
+.d-notes h3{margin:0 0 8px;font:500 11px/1 var(--sans);letter-spacing:.02em;color:var(--terra)}
+.d-notes p{margin:0;font:300 13.5px/1.5 var(--sans);color:var(--ink-2)}
+.d-notes p em{font-style:normal;color:var(--ink);font-weight:400}
+.d-foot{padding-top:16px;border-top:1px solid var(--rule);display:flex;flex-direction:column;gap:10px}
+.d-time{display:flex;justify-content:space-between;font:400 11px/1 var(--sans);letter-spacing:.02em;color:var(--ink-3)}
+.d-time b{font-weight:500;color:var(--ink)}
+.d-keys{font:400 10.5px/1.7 var(--sans);letter-spacing:.01em;color:var(--ink-3)}
+.d-keys kbd{font:inherit;color:var(--ink-2);border:1px solid var(--rule);border-radius:3px;padding:1px 4px 0;margin-right:2px}
+
+/* ---------- Slide-specific ---------- */
+/* 1 */
+#s1 .hl{left:72px;top:190px;width:700px}
+#s1 .sub{left:72px;top:446px;width:600px}
+#s1 .idx{left:72px;top:636px}
+
+/* 3 — the equation, solved one variable at a time */
+.eq{left:72px;top:132px;width:1296px;margin:0;font:400 46px/1.1 var(--serif);letter-spacing:-.01em;color:var(--ink);white-space:nowrap}
+.eq .op{font:400 30px/1 var(--serif);color:var(--acc-text);opacity:.55;margin:0 14px;vertical-align:.12em;transition:opacity .5s var(--ease)}
+.eq .tm{position:relative;color:var(--ink-3);transition:color .55s var(--ease)}
+.eq .tm::after{content:"";position:absolute;left:-.02em;right:-.02em;height:2px;background:var(--terra);
+  transform:scaleX(0);transform-origin:left center;transition:transform .55s var(--ease)}
+.eq .tm.u::after{bottom:-.02em}
+.eq .tm.s::after{top:.52em}
+
+/* accumulating marks — each stop keeps every mark before it */
+#s3 .eq .flex{color:var(--ink)}
+#s3 .eq .flex::after{transform:scaleX(1)}
+#s3:is([data-step="1"],[data-step="2"],[data-step="3"],[data-step="4"]) .eq .fric::after{transform:scaleX(1)}
+#s3:is([data-step="2"],[data-step="3"],[data-step="4"]) .eq .tran{color:var(--ink)}
+#s3:is([data-step="2"],[data-step="3"],[data-step="4"]) .eq .tran::after{transform:scaleX(1)}
+#s3:is([data-step="3"],[data-step="4"]) .eq .ctrl{color:var(--ink)}
+#s3:is([data-step="3"],[data-step="4"]) .eq .ctrl::after{transform:scaleX(1)}
+#s3[data-step="4"] .eq .trst{color:var(--ink)}
+#s3[data-step="4"] .eq .op{opacity:1}
+
+/* left column — step counter, heading, body */
+.s3-txt{left:936px;top:240px;width:432px}
+.s3-slots{position:relative;height:300px}
+.s3-slot{position:absolute;inset:0 0 auto;opacity:0;visibility:hidden;transform:translateY(10px);
+  transition:opacity .45s var(--ease),transform .45s var(--ease),visibility 0s .45s}
+.s3-slot.is-on{opacity:1;visibility:visible;transform:none;transition-delay:0s,0s,0s}
+.s3-slot h2{margin:0;font:400 34px/1.14 var(--serif);letter-spacing:-.018em;color:var(--ink)}
+.s3-slot p{margin:12px 0 0;font:400 17px/1.6 var(--sans);color:var(--ink-2)}
+
+/* phone stage */
+.s3-stage{left:72px;top:206px;width:840px;height:490px}
+.s3-set{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:30px;
+  opacity:0;visibility:hidden;transition:opacity .45s var(--ease),visibility 0s .45s}
+.s3-set.is-on{opacity:1;visibility:visible;transition-delay:0s,0s}
+.s3-set .iphone{opacity:0;transform:translateY(14px)}
+.s3-set.is-on .iphone{animation:rise .6s var(--ease) forwards;animation-delay:calc(120ms + var(--i,0)*110ms)}
+.s3-set[data-s="3"]{gap:24px}
+.s3-set .out{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:22px}
+.s3-set .one{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0}
+/* three pages converge on the middle phone; the consolidated screen fades in on top at matching size, then grows */
+.s3-set.is-on .out>.iphone:nth-child(1){animation:rise .6s var(--ease) 120ms forwards,convL .9s cubic-bezier(.4,0,.2,1) 1250ms forwards}
+.s3-set.is-on .out>.iphone:nth-child(2){animation:rise .6s var(--ease) 230ms forwards,midOut .07s linear 2600ms forwards}
+.s3-set.is-on .out>.iphone:nth-child(3){animation:rise .6s var(--ease) 340ms forwards,convR .9s cubic-bezier(.4,0,.2,1) 1250ms forwards}
+.s3-set.is-on .one{animation:oneIn 1.23s 2100ms forwards}
+@keyframes convL{0%{opacity:1;transform:none}60%{opacity:1}100%{opacity:0;transform:translateX(190px)}}
+@keyframes convR{0%{opacity:1;transform:none}60%{opacity:1}100%{opacity:0;transform:translateX(-190px)}}
+@keyframes midOut{to{opacity:0}}
+/* fade in at the middle phone's exact size, then scale up and forward */
+@keyframes oneIn{
+  0%{opacity:0;transform:scale(.757);animation-timing-function:cubic-bezier(.4,0,.3,1)}
+  41%{opacity:1;transform:scale(.757);animation-timing-function:linear}
+  47%{opacity:1;transform:scale(.757);animation-timing-function:cubic-bezier(.3,.02,.2,1)}
+  100%{opacity:1;transform:scale(1)}}
+.s3-out{margin:0;width:100%;text-align:center;font:400 46px/1.2 var(--serif);letter-spacing:-.018em;color:var(--ink)}
+.s3-out em{font-family:var(--serif-i);font-style:italic}
+
+/* step rail */
+.s3-rail{left:936px;top:706px;display:flex;align-items:center;gap:8px}
+.s3-rail i{display:block;width:44px;height:2px;background:var(--rule);transition:background .45s var(--ease)}
+.s3-rail i.done{background:var(--ink-3)}
+.s3-rail i.now{background:var(--terra)}
+.s3-rail em{margin-left:16px;font:400 10.5px/1 var(--sans);font-style:normal;letter-spacing:.02em;
+  color:var(--ink-3)}
+
+/* 5 — flows */
+.flow{display:flex;align-items:center;justify-content:space-between;padding:0 18px;height:60px;width:380px;background:var(--ph);border:1px dashed var(--ph-line);border-radius:6px;color:var(--ph-text)}
+.flow::before{content:"";position:absolute;inset:5px;border:1px solid rgba(9,9,9,.045);border-radius:inherit;pointer-events:none}
+.flow .t{font:400 10.5px/1 var(--sans);letter-spacing:.02em;color:var(--ink-3)}
+.flow .d{font:400 13px/1 var(--sans)}
+.flow .m{font:400 10.5px/1 var(--sans);letter-spacing:.02em;color:var(--ink-3);padding:5px 7px 4px;border:1px solid var(--rule);border-radius:999px}
+
+/* 7 — before/after */
+.step{margin:0;text-align:center}
+.step .label{display:block;margin-bottom:10px}
+.step .txt{font:400 30px/1.1 var(--serif);letter-spacing:-.015em;color:var(--ink);white-space:nowrap}
+.step .txt .arrow{font-family:var(--sans);font-size:.55em;color:var(--acc-text);vertical-align:.2em;margin:0 .25em}
+
+/* 7 — credit portfolio ledger.
+   Product rows are card art + name + figure; the ruled header borrows the
+   deck's mono label rather than the source site's large serif headings. */
+.ledger .hd{display:flex;align-items:center;gap:16px;margin:0 0 11px}
+.ledger .hd .rule{flex:1;height:1px;background:var(--rule)}
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);align-items:end;gap:0 24px}
+.pgrid .cell{margin:0}
+.pgrid .art{display:block;width:62px;height:39px;border-radius:5px;object-fit:cover;
+  box-shadow:0 1px 2px rgba(9,9,9,.16),0 8px 16px -10px rgba(9,9,9,.4)}
+.pgrid .nm{display:block;margin-top:10px;font:300 13.5px/1 var(--sans);color:var(--ink-2)}
+.pgrid .v{display:block;width:fit-content;margin-top:6px;font:400 38px/.9 var(--serif);letter-spacing:-.03em;
+  color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+.pgrid .v .u{display:block;margin-top:4px;font:400 11px/1.3 var(--sans);letter-spacing:.02em;
+  color:var(--ink-3);text-align:right}
+.pgrid .tot .v{margin-top:0}
+.pgrid .tot .nm{margin-top:4px;font:400 11px/1.3 var(--sans);letter-spacing:.02em;color:var(--ink-3)}
+
+/* 7 — portfolio bars. Deck palette only: paper track, tinted 2023 baseline,
+   solid accent for the gain measured against it. */
+.axis{display:grid;grid-template-columns:144px 1fr;gap:0 30px;margin:0}
+.axis .sc{display:flex;justify-content:space-between}
+.pbar{display:grid;grid-template-columns:144px 1fr;align-items:center;gap:0 30px;margin:18px 0 0}
+.axis+.pbar{margin-top:11px}
+.pbar .k{font:300 13.5px/1.3 var(--sans);color:var(--ink-2)}
+.pbar .tr{position:relative;height:36px;border-radius:5px;background:var(--ph);
+  box-shadow:inset 0 0 0 1px rgba(9,9,9,.045)}
+.pbar .seg{position:absolute;left:0;top:0;bottom:0;border-radius:5px 0 0 5px;background:var(--bar-soft)}
+.pbar .seg .val{position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  font:400 19px/1 var(--serif);color:var(--ink-2);font-variant-numeric:tabular-nums}
+.pbar .lift{position:absolute;top:0;bottom:0;border-radius:0 5px 5px 0;background:var(--bar)}
+.pbar .now{position:absolute;top:50%;transform:translateY(-50%);font:400 26px/1 var(--serif);
+  letter-spacing:-.02em;color:var(--ink);font-variant-numeric:tabular-nums}
+@keyframes wipe{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+.is-active .pbar .lift{animation:wipe .8s var(--ease) backwards;animation-delay:calc(320ms + var(--i,0)*80ms)}
+@media (prefers-reduced-motion:reduce){.is-active .pbar .seg,.is-active .pbar .lift{animation:none}}
+
+/* 10 — human impact, and the flow that produces it.
+   The nine frames sit stacked in one handset screen; a timer swaps which one is opaque,
+   because the case-study page they come from scrubs them on scroll and a deck has none. */
+.s10-group{display:flex;align-items:center;gap:50px}
+.s10-col{display:flex;flex-direction:column;gap:34px;width:404px}
+.s10-imp{margin:0}
+.s10-imp .label{display:block;margin-bottom:9px}
+.s10-imp .stat{display:block;font:400 34px/1.12 var(--serif);letter-spacing:-.016em;
+  color:var(--ink);font-variant-numeric:tabular-nums}
+.s10-imp p{margin:9px 0 0;font:400 14.5px/1.55 var(--sans);color:var(--ink-2);
+  text-wrap:pretty}
+#s10flow .screen>img{opacity:0;transition:opacity .5s var(--ease)}
+#s10flow .screen>img.on{opacity:1}
+@media (prefers-reduced-motion:reduce){#s10flow .screen>img{transition:none}}
+
+/* 11 — closing mark */
+#s11 .s11-kick{left:72px;top:116px;width:900px;margin:0;
+  font:400 22px/1.35 var(--serif);letter-spacing:-.006em;color:var(--ink-3)}
+#s11 .s11-say{left:72px;top:158px;width:940px;margin:0;
+  font:400 56px/1.14 var(--serif);letter-spacing:-.018em;color:var(--ink)}
+#s11 .s11-zones{left:72px;top:334px;width:1296px;
+  display:grid;grid-template-columns:repeat(3,1fr);align-items:end}
+#s11 .s11-zone{margin:0}
+#s11 .s11-zone .label{display:block;margin-bottom:10px;
+  font-size:10px;letter-spacing:.16em;text-transform:uppercase}
+#s11 .s11-zone .say{font:400 22px/1.2 var(--serif);letter-spacing:-.012em;color:var(--ink)}
+#s11 .s11-zone.mid{text-align:center}
+#s11 .s11-zone.end{text-align:right}
+#s11 .s11-mark{left:72px;top:412px;width:1296px;height:240px;overflow:visible}
+#s11 .s11-mark .ln{fill:none;stroke:var(--ink);stroke-width:1.5;stroke-linecap:round}
+#s11 .s11-mark .nd{fill:var(--ink)}
+#s11 .s11-mark .nd.open{fill:var(--bg);stroke:var(--ink);stroke-width:1.25}
+#s11 .s11-mark .ring{fill:none;stroke:var(--terra);stroke-width:1.5}
+#s11 .s11-mark .core{fill:var(--terra)}
+#s11 .s11-src{left:72px;top:696px;width:1296px;margin:0;
+  font:400 10px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+
+/* ---------- Print / PDF ---------- */
+@media print{
+  @page{size:1440px 810px;margin:0}
+  html,body{background:#fff;overflow:visible;height:auto}
+  .stage{position:static;transform:none!important;zoom:1!important;width:1440px;height:auto;box-shadow:none;overflow:visible}
+  .slide{position:relative;inset:auto;width:1440px;height:810px;opacity:1!important;visibility:visible!important;overflow:hidden;background:var(--bg);page-break-after:always;break-after:page}
+  .slide:last-of-type{page-break-after:auto;break-after:auto}
+  .b,.is-active .b{opacity:1!important;transform:none!important;animation:none!important}
+  .is-active .pbar .seg,.is-active .pbar .lift{animation:none!important;clip-path:none!important}
+  .draw,.is-active .draw{stroke-dashoffset:0!important;animation:none!important}
+  .tab,.drawer,.hud,.progress,.grain{display:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- iOS status-bar glyphs, referenced by every device mock -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+  <symbol id="ic-cell" viewBox="0 0 18 12">
+    <rect x="0" y="8" width="3" height="4" rx="1"/>
+    <rect x="5" y="5.6" width="3" height="6.4" rx="1"/>
+    <rect x="10" y="3.1" width="3" height="8.9" rx="1"/>
+    <rect x="15" y="0.5" width="3" height="11.5" rx="1"/>
+  </symbol>
+  <symbol id="ic-wifi" viewBox="0 0 17 12">
+    <path d="M1.15 4.35 A 11 11 0 0 1 15.85 4.35" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"/>
+    <path d="M4.15 7.5 A 6.4 6.4 0 0 1 12.85 7.5" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"/>
+    <circle cx="8.5" cy="10.55" r="1.45"/>
+  </symbol>
+  <symbol id="ic-batt" viewBox="0 0 27 13">
+    <rect x=".5" y=".5" width="23" height="12" rx="3.9" fill="none" stroke="currentColor" stroke-width="1" opacity=".38"/>
+    <rect x="2" y="2" width="17.6" height="9" rx="2.6"/>
+    <path d="M25 4.4a2.6 2.6 0 0 1 0 4.2z" opacity=".42"/>
+  </symbol>
+</svg>
+
+<div class="stage" id="stage" aria-label="Presentation canvas">
+
+<!-- ================= SLIDE 1 ================= -->
+<section class="slide" id="s1" data-project="tv" aria-label="Slide 1">
+  <header class="eyebrow b" style="--i:0">
+    <span class="pill"><i class="dot"></i>Tim Valderrama — Lead Product Designer</span>
+    <span class="stage-tag">Portfolio talk · <b>≈ 13 min</b></span>
+  </header>
+  <h1 class="hl xl b" style="--i:1">I turn consequential friction into repeatable product systems.</h1>
+  <p class="sub b" style="--i:2">Three stories of strategy, systems, craft—and results.</p>
+  <div class="idx b" style="--i:3">
+    <span><code>01</code><i></i>PayPal Germany</span>
+    <span><code>02</code><i></i>PayPal credit portfolio</span>
+    <span><code>03</code><i class="s"></i>Ms. Sunshine</span>
+  </div>
+  <!-- Fanned device trio: 01 PayPal Germany · 02 PayPal credit · 03 Ms. Sunshine -->
+  <div class="dev back b" style="--i:4;left:764px;top:216px">
+    <div class="iphone" style="--w:305px;--rot:-11deg;--scr:#f1f2f3;--op:center bottom">
+      <div class="body">
+        <div class="screen">
+          <img src="Images/Slide1/QuantumLeap.png" alt="PayPal credit checkout — Pay in 4">
+          <div class="status">
+            <span class="t">9:41</span>
+            <span class="ico"><svg class="cell"><use href="#ic-cell"/></svg><svg class="wifi"><use href="#ic-wifi"/></svg><svg class="batt"><use href="#ic-batt"/></svg></span>
+          </div>
+          <div class="island"></div>
+          <div class="gloss"></div>
+        </div>
+      </div>
+      <i class="l act"></i><i class="l vup"></i><i class="l vdn"></i>
+      <i class="r pwr"></i><i class="r cam"></i>
+    </div>
+  </div>
+  <div class="dev back b" style="--i:5;left:984px;top:216px">
+    <div class="iphone" style="--w:305px;--rot:11deg;--scr:#f5f5f5">
+      <div class="body">
+        <div class="screen">
+          <img src="Images/Slide1/MsSunshineApp.png" alt="Ms. Sunshine activity feed">
+          <div class="status">
+            <span class="t">9:41</span>
+            <span class="ico"><svg class="cell"><use href="#ic-cell"/></svg><svg class="wifi"><use href="#ic-wifi"/></svg><svg class="batt"><use href="#ic-batt"/></svg></span>
+          </div>
+          <div class="island"></div>
+          <div class="home"></div>
+          <div class="gloss"></div>
+        </div>
+      </div>
+      <i class="l act"></i><i class="l vup"></i><i class="l vdn"></i>
+      <i class="r pwr"></i><i class="r cam"></i>
+    </div>
+  </div>
+  <div class="dev b" style="--i:6;left:848px;top:136px;z-index:3">
+    <div class="iphone" style="--w:357px;--scr:#f1f2f3">
+      <div class="body">
+        <div class="screen">
+          <img src="Images/Slide1/PayPalDE.png" alt="PayPal Germany checkout">
+          <div class="status">
+            <span class="t">9:41</span>
+            <span class="ico"><svg class="cell"><use href="#ic-cell"/></svg><svg class="wifi"><use href="#ic-wifi"/></svg><svg class="batt"><use href="#ic-batt"/></svg></span>
+          </div>
+          <div class="island"></div>
+          <div class="gloss"></div>
+        </div>
+      </div>
+      <i class="l act"></i><i class="l vup"></i><i class="l vdn"></i>
+      <i class="r pwr"></i><i class="r cam"></i>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SLIDE 2 ================= -->
+<section class="slide" id="s2" data-project="pp" aria-label="Slide 2">
+  <header class="eyebrow b" style="--i:0">
+    <span class="pill"><i class="dot"></i>PayPal Germany</span>
+    <span class="stage-tag">01 · <b>Customer problem</b> → Business consequence</span>
+  </header>
+  <figure class="fig lift b" style="--i:1;left:72px;top:118px;width:1296px;height:600px;--op:center 4%">
+    <img src="Images/Slide2/WomanOnHerPhone.png" alt="A woman at her kitchen counter checking the PayPal app on her phone, next to a delivered order that arrived broken.">
+    <span class="scrim" aria-hidden="true"></span>
+    <div class="ghost" aria-hidden="true" style="top:105.3px;right:12.2px">01</div>
+    <h2 class="hl lg on-img b" style="--i:2;left:32px;top:28px;width:900px">German customers wanted flexibility through responsible credit.</h2>
+    <div class="fig-copy b" style="--i:3;left:32px;bottom:56px;width:616px">
+      <p class="state on-img"><span class="label">Customer</span>More time and predictable payments—without uncertainty.</p>
+      <p class="state on-img"><span class="label">Business</span>Grow responsible credit adoption without hiding cost or commitment.</p>
+    </div>
+  </figure>
+</section>
+
+<!-- ================= SLIDE 3 ================= -->
+<section class="slide" id="s3" data-project="pp" data-steps="5" data-step="0" aria-label="Slide 3">
+      <header class="eyebrow b" style="--i:0">
+        <span class="pill"><i class="dot"></i>PayPal Germany</span>
+        <span class="stage-tag">01 · Options → <b>Strategic choice</b> → Repeatable system</span>
+      </header>
+      <p class="label b" style="--i:1;left:72px;top:104px">Solving the equation, one variable at a time</p>
+      <p class="eq b" style="--i:2" aria-label="Trust equals flexibility minus friction plus transparency plus control">
+        <span class="tm trst">Trust</span><span class="op">=</span><span class="tm flex u">Flexibility</span><span class="op">−</span><span class="tm fric s">Friction</span><span class="op">+</span><span class="tm tran u">Transparency</span><span class="op">+</span><span class="tm ctrl u">Control</span>
+      </p>
+
+      <div class="s3-txt b" style="--i:3">
+        <div class="s3-slots">
+          <div class="s3-slot is-on" data-s="0"><h2>Two needs. Two products.</h2><p>I designed two paths: time before payment with <b>Pay in 30 Days</b>, and predictable installments with <b>Ratenzahlung</b>.</p></div>
+          <div class="s3-slot" data-s="1"><h2>Why did flexibility<br>require three pages?</h2><p>I consolidated three application pages into one by aligning with my checkout partner to surface installment options earlier and streamline terms behind links.</p></div>
+          <div class="s3-slot" data-s="2"><h2>What am I agreeing to?</h2><p>Customers saw every option and its estimated cost inside checkout, with the full terms before commitment.</p></div>
+          <div class="s3-slot" data-s="3"><h2>What if I need more time?</h2><p>Customers could reschedule after reviewing the new date and fee—adding control, and a new revenue stream.</p></div>
+          <div class="s3-slot" data-s="4"><h2>The outcome.</h2><p>Four variables, four decisions. Together they changed what customers were willing to do.</p></div>
+        </div>
+      </div>
+
+      <div class="s3-stage b" style="--i:4">
+        <div class="s3-set is-on" data-s="0">
+          <div class="iphone" style="--i:0;--w:222px;--scr:#fff">
+            <div class="body"><div class="screen"><img src="Images/Slide3/P30_1.png" alt="Pay in 30 Days offer"><div class="gloss"></div></div></div>
+            <i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i>
+          </div>
+          <div class="iphone" style="--i:1;--w:222px;--scr:#fff">
+            <div class="body"><div class="screen"><img src="Images/Slide3/RZ_1.png" alt="Ratenzahlung installment offer"><div class="gloss"></div></div></div>
+            <i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i>
+          </div>
+        </div>
+        <div class="s3-set" data-s="1">
+          <div class="out">
+            <div class="iphone" style="--i:0;--w:168px;--scr:#fff">
+              <div class="body"><div class="screen">
+                <img src="Images/Slide3/1.png" alt="Review your plan">
+                <div class="status">
+                  <span class="t">9:41</span>
+                  <span class="ico"><svg class="cell"><use href="#ic-cell"/></svg><svg class="wifi"><use href="#ic-wifi"/></svg><svg class="batt"><use href="#ic-batt"/></svg></span>
+                </div>
+                <div class="island"></div>
+                <div class="status"><span class="t">9:41</span><span class="ico"><svg class="cell"><use href="#ic-cell"/></svg><svg class="wifi"><use href="#ic-wifi"/></svg><svg class="batt"><use href="#ic-batt"/></svg></span></div>
+                <div class="island"></div>
+                <div class="gloss"></div>
+              </div></div>
+              <i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i>
+            </div>
+            <div class="iphone" style="--i:1;--w:168px;--scr:#fff">
+              <div class="body"><div class="screen">
+                <img src="Images/Slide3/2.png" alt="Confirm your information">
+                <div class="status">
+                  <span class="t">9:41</span>
+                  <span class="ico"><svg class="cell"><use href="#ic-cell"/></svg><svg class="wifi"><use href="#ic-wifi"/></svg><svg class="batt"><use href="#ic-batt"/></svg></span>
+                </div>
+                <div class="island"></div>
+                <div class="status"><span class="t">9:41</span><span class="ico"><svg class="cell"><use href="#ic-cell"/></svg><svg class="wifi"><use href="#ic-wifi"/></svg><svg class="batt"><use href="#ic-batt"/></svg></span></div>
+                <div class="island"></div>
+                <div class="gloss"></div>
+              </div></div>
+              <i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i>
+            </div>
+            <div class="iphone" style="--i:2;--w:168px;--scr:#fff">
+              <div class="body"><div class="screen">
+                <img src="Images/Slide3/3.png" alt="Installment agreement approved">
+                <div class="status">
+                  <span class="t">9:41</span>
+                  <span class="ico"><svg class="cell"><use href="#ic-cell"/></svg><svg class="wifi"><use href="#ic-wifi"/></svg><svg class="batt"><use href="#ic-batt"/></svg></span>
+                </div>
+                <div class="island"></div>
+                <div class="status"><span class="t">9:41</span><span class="ico"><svg class="cell"><use href="#ic-cell"/></svg><svg class="wifi"><use href="#ic-wifi"/></svg><svg class="batt"><use href="#ic-batt"/></svg></span></div>
+                <div class="island"></div>
+                <div class="gloss"></div>
+              </div></div>
+              <i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i>
+            </div>
+          </div>
+          <div class="one">
+            <div class="iphone" style="--i:0;--w:222px;--scr:#fff">
+              <div class="body"><div class="screen"><img src="Images/Slide3/RZ_5.png" alt="One consolidated application page"><div class="gloss"></div></div></div>
+              <i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i>
+            </div>
+          </div>
+        </div>
+        <div class="s3-set" data-s="2">
+          <div class="iphone" style="--i:0;--w:222px;--scr:#fff">
+            <div class="body"><div class="screen"><img src="Images/Slide3/P30_2.png" alt="Pay in 30 Days selected in checkout, showing the autopay date, funding account, and the exact amount due"><div class="gloss"></div></div></div>
+            <i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i>
+          </div>
+          <div class="iphone" style="--i:1;--w:222px;--scr:#fff">
+            <div class="body"><div class="screen"><img src="Images/Slide3/RZ_6.png" alt="Ratenzahlung selected in checkout, showing the monthly amount, number of installments, interest, and total before commitment"><div class="gloss"></div></div></div>
+            <i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i>
+          </div>
+        </div>
+        <div class="s3-set" data-s="3">
+          <div class="iphone" style="--i:0;--w:186px;--scr:#fff">
+            <div class="body"><div class="screen">
+              <img src="Images/Slide3/LoanDetails.png" alt="Pay in 30 Days with the postpone offer">
+              <div class="status">
+                <span class="t">9:41</span>
+                <span class="ico"><svg class="cell"><use href="#ic-cell"/></svg><svg class="wifi"><use href="#ic-wifi"/></svg><svg class="batt"><use href="#ic-batt"/></svg></span>
+              </div>
+              <div class="island"></div>
+              <div class="gloss"></div>
+            </div></div>
+            <i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i>
+          </div>
+          <div class="iphone" style="--i:1;--w:186px;--scr:#fff">
+            <div class="body"><div class="screen">
+              <img src="Images/Slide3/Schedule.png" alt="Schedule a new date with each fee shown">
+              <div class="status">
+                <span class="t">9:41</span>
+                <span class="ico"><svg class="cell"><use href="#ic-cell"/></svg><svg class="wifi"><use href="#ic-wifi"/></svg><svg class="batt"><use href="#ic-batt"/></svg></span>
+              </div>
+              <div class="island"></div>
+              <div class="gloss"></div>
+            </div></div>
+            <i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i>
+          </div>
+          <div class="iphone" style="--i:2;--w:186px;--scr:#fff">
+            <div class="body"><div class="screen">
+              <img src="Images/Slide3/ConfirmYourNewDate2.png" alt="Confirm the new date and new total">
+              <div class="status">
+                <span class="t">9:41</span>
+                <span class="ico"><svg class="cell"><use href="#ic-cell"/></svg><svg class="wifi"><use href="#ic-wifi"/></svg><svg class="batt"><use href="#ic-batt"/></svg></span>
+              </div>
+              <div class="island"></div>
+              <div class="gloss"></div>
+            </div></div>
+            <i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i>
+          </div>
+          <div class="iphone" style="--i:3;--w:186px;--scr:#fff">
+            <div class="body"><div class="screen">
+              <img src="Images/Slide3/LoanDetialsSnoozed.png" alt="Rescheduled, with the fee in the activity log">
+              <div class="status">
+                <span class="t">9:41</span>
+                <span class="ico"><svg class="cell"><use href="#ic-cell"/></svg><svg class="wifi"><use href="#ic-wifi"/></svg><svg class="batt"><use href="#ic-batt"/></svg></span>
+              </div>
+              <div class="island"></div>
+              <div class="gloss"></div>
+            </div></div>
+            <i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i>
+          </div>
+        </div>
+        <div class="s3-set" data-s="4">
+          <p class="s3-out">Trust changed<br><em>customer behavior.</em></p>
+        </div>
+      </div>
+
+      <div class="s3-rail b" style="--i:5">
+        <i class="now"></i><i></i><i></i><i></i><i></i>
+        <em>← → to step through</em>
+      </div>
+    </section>
+
+<!-- ================= SLIDE 4 ================= -->
+<section class="slide" id="s4" data-project="pp" aria-label="Slide 4">
+  <header class="eyebrow b" style="--i:0">
+    <span class="pill"><i class="dot"></i>PayPal Germany</span>
+    <span class="stage-tag">01 · Crafted experience → <b>Result</b></span>
+  </header>
+  <h2 class="hl b" style="--i:1;left:72px;top:112px;width:900px">Clarity and control changed behavior.</h2>
+
+  <div class="b" style="--i:2;left:452px;top:206px">
+    <div class="iphone" style="--w:246px;--scr:#fff">
+      <div class="body"><div class="screen">
+        <div class="walk" data-walk="p30">
+          <img class="fr" src="Images/Slide4/RZ_0.png" alt="PayPal checkout with payment options">
+          <img class="fr" src="Images/Slide4/P30_1.png" alt="Pay in 30 Days selected">
+          <img class="fr" src="Images/Slide4/P30_2.png" alt="Pay in 30 Days terms confirmed">
+          <img class="fr" src="Images/Slide4/P30_3.png" alt="Purchase complete">
+          <span class="pt"><span class="wdot"></span></span>
+        </div>
+        <div class="gloss"></div>
+      </div></div>
+      <div class="cur" aria-hidden="true"><span class="pt"><img src="Images/Slide4/hand.png" alt=""></span></div>
+      <i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i>
+    </div>
+  </div>
+
+  <div class="b" style="--i:3;left:742px;top:206px">
+    <div class="iphone" style="--w:246px;--scr:#fff">
+      <div class="body"><div class="screen">
+        <div class="walk" data-walk="rz">
+          <img class="fr" src="Images/Slide4/RZ_0.png" alt="PayPal checkout with payment options">
+          <img class="fr" src="Images/Slide4/RZ_1.png" alt="Ratenzahlung selected">
+          <img class="fr" src="Images/Slide4/RZ_3.png" alt="Installment plans compared">
+          <img class="fr" src="Images/Slide4/RZ_4.png" alt="Plan details and total cost">
+          <img class="fr" src="Images/Slide4/RZ_5.png" alt="Instalment schedule">
+          <img class="fr" src="Images/Slide4/RZ_6.png" alt="Plan confirmed">
+          <img class="fr" src="Images/Slide4/RZ_7.png" alt="Purchase complete">
+          <span class="pt"><span class="wdot"></span></span>
+        </div>
+        <div class="gloss"></div>
+      </div></div>
+      <div class="cur" aria-hidden="true"><span class="pt"><img src="Images/Slide4/hand.png" alt=""></span></div>
+      <i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i>
+    </div>
+  </div>
+
+  <div class="res b" style="--i:5;left:212px;top:352px;width:188px">
+    <span class="label">Pay in 30 Days</span>
+    <span class="kpi"><span class="n" data-count="48.78" data-decimals="2" data-prefix="+" data-suffix="%">+48.78%</span><span class="u">Monthly TPV</span></span>
+    <span class="kpi"><span class="n" data-count="17.33" data-decimals="2" data-prefix="+" data-suffix="%">+17.33%</span><span class="u">Annual incremental revenue</span></span>
+  </div>
+
+  <div class="res b" style="--i:6;left:1059.89px;top:352px;width:188px">
+    <span class="label">Ratenzahlung</span>
+    <span class="kpi"><span class="n" data-count="14.92" data-decimals="2" data-prefix="+" data-suffix="%">+14.92%</span><span class="u">Monthly TPV</span></span>
+    <span class="kpi"><span class="n" data-count="25.44" data-decimals="2" data-prefix="+" data-suffix="%">+25.44%</span><span class="u">Annual incremental revenue</span></span>
+  </div>
+
+  <p class="foot b" style="--i:8;left:440px;top:760px;width:560px;text-align:center">Measured against each product’s preceding production version.</p>
+</section>
+
+<!-- ================= SLIDE 5 ================= -->
+<section class="slide" id="s5" data-project="pp" aria-label="Slide 5">
+  <div class="ghost" aria-hidden="true" style="top:59.5px">02</div>
+  <header class="eyebrow b" style="--i:0">
+    <span class="pill"><i class="dot"></i>PayPal credit portfolio · US + UK</span>
+    <span class="stage-tag">02 · <b>Customer problem</b> → Business consequence</span>
+  </header>
+
+  <figure class="wf up b" style="--i:2;left:72px;top:146px"><img src="Images/Slide5/PayIn4_US.png" alt="Pay in 4 application wireframe, United States"><figcaption class="cap"><span class="n">Pay in 4</span><span class="m">United States</span></figcaption></figure>
+  <figure class="wf up b" style="--i:3;left:228px;top:146px"><img src="Images/Slide5/PayMonthly_US.png" alt="Pay Monthly application wireframe, United States"><figcaption class="cap"><span class="n">Pay Monthly</span><span class="m">United States</span></figcaption></figure>
+  <figure class="wf up b" style="--i:4;left:384px;top:146px"><img src="Images/Slide5/Credit_US.png" alt="PayPal Credit application wireframe, United States"><figcaption class="cap"><span class="n">PayPal Credit</span><span class="m">United States</span></figcaption></figure>
+  <figure class="wf dn b" style="--i:5;left:72px;top:460px"><img src="Images/Slide5/Mastercard_US.png" alt="PayPal Mastercard application wireframe, United States"><figcaption class="cap"><span class="n">PayPal Mastercard</span><span class="m">United States</span></figcaption></figure>
+  <figure class="wf dn b" style="--i:6;left:228px;top:460px"><img src="Images/Slide5/PayIn3_UK.png" alt="Pay in 3 application wireframe, United Kingdom"><figcaption class="cap"><span class="n">Pay in 3</span><span class="m">United Kingdom</span></figcaption></figure>
+  <figure class="wf dn b" style="--i:7;left:384px;top:460px"><img src="Images/Slide5/Credit_UK.png" alt="PayPal Credit application wireframe, United Kingdom"><figcaption class="cap"><span class="n">PayPal Credit</span><span class="m">United Kingdom</span></figcaption></figure>
+
+  <h2 class="hl b" style="--i:1;left:700px;top:338.5px;width:648px">Six Credit Products.<br>One Clearer Path<br>Through Checkout.</h2>
+
+  <div class="states b" style="--i:9;left:700px;top:529px;width:600px">
+    <p class="state"><span class="label">Customer</span>Reapplying for installments with every purchase created checkout friction and discouraged repeat use.</p>
+    <p class="state"><span class="label">Business</span>Credit products generate 5% of total revenue&#8212;making increased utilization a billion-dollar growth opportunity.</p>
+  </div>
+
+  <svg class="wire" viewBox="0 0 1440 810" aria-hidden="true">
+    <path class="draw" style="--i:2" d="M118 381 V 383 A 35 35 0 0 0 153 418" pathLength="1"/>
+    <path class="draw" style="--i:3" d="M274 381 V 383 A 35 35 0 0 0 309 418" pathLength="1"/>
+    <path class="draw" style="--i:4" d="M430 381 V 383 A 35 35 0 0 0 465 418" pathLength="1"/>
+    <path class="draw" style="--i:5" d="M118 455 V 453 A 35 35 0 0 1 153 418" pathLength="1"/>
+    <path class="draw" style="--i:6" d="M274 455 V 453 A 35 35 0 0 1 309 418" pathLength="1"/>
+    <path class="draw" style="--i:7" d="M430 455 V 453 A 35 35 0 0 1 465 418" pathLength="1"/>
+    <path class="draw" style="--i:8" d="M153 418 H 658" pathLength="1"/>
+    <path class="draw" style="--i:8" d="M680 338.5 q -11 0 -11 11 V 407 q 0 11 -11 11 q 11 0 11 11 V 486.5 q 0 11 11 11" pathLength="1"/>
+    <circle class="b" style="--i:2" cx="118" cy="381" r="3.5"/>
+    <circle class="b" style="--i:3" cx="274" cy="381" r="3.5"/>
+    <circle class="b" style="--i:4" cx="430" cy="381" r="3.5"/>
+    <circle class="b" style="--i:5" cx="118" cy="455" r="3.5"/>
+    <circle class="b" style="--i:6" cx="274" cy="455" r="3.5"/>
+    <circle class="b" style="--i:7" cx="430" cy="455" r="3.5"/>
+  </svg>
+</section>
+
+<!-- ================= SLIDE 6 ================= -->
+<section class="slide" id="s6" data-project="pp" aria-label="Slide 6">
+  <header class="eyebrow b" style="--i:0">
+    <span class="pill"><i class="dot"></i>PayPal credit portfolio · US + UK</span>
+    <span class="stage-tag">02 · Options → <b>Strategic choice</b> → Repeatable system</span>
+  </header>
+  <h2 class="hl b" style="--i:1;left:72px;top:118px;width:760px">One core flow. Controlled variants.</h2>
+  <p class="label b" style="--i:2;left:72px;top:214px">Options considered</p>
+  <div class="opts col b" style="--i:3;left:72px;top:236px;width:348px">
+    <div class="opt"><span class="tag">Option 01</span><span class="l">Framework-Aligned Experience Migration</span><span class="to"><b>Trade-off</b>Fastest and lowest effort, but preserves existing UX issues and may create future redesign work.</span></div>
+    <div class="opt"><span class="tag">Option 02</span><span class="l">End-to-End Checkout Transformation</span><span class="to"><b>Trade-off</b>Greatest UX improvement potential, but requires the most time and effort and carries the highest launch risk.</span></div>
+    <div class="opt chosen"><span class="chip">Chosen</span><span class="tag">Option 03</span><span class="l">Validated Pattern-Led Optimization</span><span class="to"><b>Trade-off</b>Balances effort, speed, and risk, but may limit product-specific optimization or carry Pay in 4’s constraints into other flows.</span></div>
+  </div>
+  <p class="why b" style="--i:6;left:72px;top:645px;width:348px"><b>Why</b>One common journey with room for real product and regulatory differences.</p>
+
+  <div class="cmp b" id="s6cmp" style="--i:4;left:500px;top:230px;width:868px">
+    <div class="cmp-in">
+      <div class="cmp-row cmp-copy">
+        <div class="cmp-l before">
+          <p class="label">Before · Legacy Pay in 4</p>
+          <h3 class="cmp-h">Three application steps stood between the offer and the purchase.</h3>
+          <p class="cmp-p">Choosing the product dropped customers into a separate application, then returned them to a checkout they had already left.</p>
+        </div>
+        <div class="cmp-l after">
+          <div>
+            <p class="label">After · Redesigned Pay in 4</p>
+            <h3 class="cmp-h">One page brought the decision back into checkout.</h3>
+            <p class="cmp-p">Offer context, customer details, autopay and the agreements collapse into a single review-and-apply page, and the approval returns to the purchase in progress.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cmp-row cmp-scr">
+        <ol class="cmp-l before">
+        <li><div class="iphone" style="--w:148px;--scr:#fff"><div class="body"><div class="screen"><img src="Images/Slide6/Pi4_3-1.png" alt="Legacy Pay in 4, screen one: the PayPal checkout wallet, with Pay in 4 chosen under Pay Later."><div class="gloss"></div></div></div><i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i></div></li>
+        <li><div class="iphone" style="--w:148px;--scr:#fff"><div class="body"><div class="screen"><img src="Images/Slide6/Pi4_3-2.png" alt="Legacy Pay in 4, screen two: the offer, showing four payments of $71.25 and the terms attached to them."><div class="gloss"></div></div></div><i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i></div></li>
+        <li><div class="iphone" style="--w:148px;--scr:#fff"><div class="body"><div class="screen"><img src="Images/Slide6/Pi4_3-3.png" alt="Legacy Pay in 4, screen three: a Review your info step for billing address and phone number, ending in Agree and Apply."><div class="gloss"></div></div></div><i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i></div></li>
+        <li><div class="iphone" style="--w:148px;--scr:#fff"><div class="body"><div class="screen"><img src="Images/Slide6/Pi4_3-4.png" alt="Legacy Pay in 4, screen four: an autopay step for choosing a payment method and accepting the loan agreement."><div class="gloss"></div></div></div><i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i></div></li>
+        <li><div class="iphone" style="--w:148px;--scr:#fff"><div class="body"><div class="screen"><img src="Images/Slide6/Pi4_3-5.png" alt="Legacy Pay in 4, screen five: checkout again, with Pay in 4 approved and a Complete Purchase button."><div class="gloss"></div></div></div><i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i></div></li>
+        </ol>
+        <ol class="cmp-l after">
+        <li><div class="iphone" style="--w:148px;--scr:#fff"><div class="body"><div class="screen"><img src="Images/Slide6/Pi4_1-1.png" alt="Redesigned Pay in 4, screen one: checkout with Pay in 4 pre-approved, showing four payments of $52.50 and their due dates in place."><div class="gloss"></div></div></div><i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i></div></li>
+        <li><div class="iphone" style="--w:148px;--scr:#fff"><div class="body"><div class="screen"><img src="Images/Slide6/Pi4_1-2.png" alt="Redesigned Pay in 4, screen two: a single Confirm a few details to apply page holding billing address, autopay, date of birth and the agreements, ending in Agree and Apply."><div class="gloss"></div></div></div><i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i></div></li>
+        <li><div class="iphone" style="--w:148px;--scr:#fff"><div class="body"><div class="screen"><img src="Images/Slide6/Pi4_1-3.png" alt="Redesigned Pay in 4, screen three: checkout with Pay in 4 approved, a You are approved confirmation, and a Pay $52.50 Today button."><div class="gloss"></div></div></div><i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i></div></li>
+        </ol>
+      </div>
+    </div>
+    <span class="cmp-div" aria-hidden="true"></span>
+    <button type="button" class="cmp-nub" role="slider" tabindex="0"
+      aria-label="Reveal the redesigned Pay in 4 flow" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6 9 12l6 6"/></svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+  </div>
+
+  <svg class="wire" viewBox="0 0 1440 810" aria-hidden="true">
+    <path class="draw" id="s6wire" style="--i:4" d="M421 551.3 H433 A24 24 0 0 0 457 527.3 V476.5 A24 24 0 0 1 481 452.5" pathLength="1"/>
+  </svg>
+</section>
+
+<!-- ================= SLIDE 7 ================= -->
+<section class="slide" id="s7" data-project="pp" aria-label="Slide 7">
+  <header class="eyebrow b" style="--i:0">
+    <span class="pill"><i class="dot"></i>PayPal credit portfolio · US + UK</span>
+    <span class="stage-tag">02 · Crafted experience → <b>Result</b></span>
+  </header>
+  <h2 class="hl md b" style="--i:1;left:72px;top:108px;width:1000px">From one winning flow to a reusable system.</h2>
+
+  <p class="res b" style="--i:2;left:72px;top:496px;width:155px">
+    <span class="kpi"><span class="n"><span data-count="2.08" data-decimals="2" data-suffix="×">2.08×</span></span><span class="u">Application completion</span></span>
+    <span class="kpi"><span class="n"><span data-count="67" data-suffix="%">67%</span></span><span class="u">TPV</span></span>
+  </p>
+
+  <!-- left third — the Pay in 4 walkthrough, in the deck's white shell -->
+  <div class="b" style="--i:3;left:267px;top:196px">
+    <div class="iphone" style="--w:234px;--scr:#fff">
+      <div class="body"><div class="screen">
+        <div class="walk" data-walk="pi4">
+            <img class="fr" src="Images/Slide7/Pi4_0.png" alt="Nike product page with Pay in 4 offered under the price">
+            <img class="fr" src="Images/Slide7/Pi4_1.png" alt="Pay in 4 explained in place, with a continue action">
+            <img class="fr" src="Images/Slide7/Pi4_2.png" alt="PayPal checkout with Pay in 4 pre-approved and the payment schedule shown">
+            <img class="fr" src="Images/Slide7/Pi4_3.png" alt="One review-and-apply page: details prefilled, terms in context">
+            <img class="fr" src="Images/Slide7/Pi4_4.png" alt="Date of birth entered on the same page">
+            <img class="fr" src="Images/Slide7/Pi4_5.png" alt="Autopay consent accepted on the same page">
+            <img class="fr" src="Images/Slide7/Pi4_6.png" alt="Approval returned inside checkout, ready to pay $52.50 today">
+            <img class="fr" src="Images/Slide7/Pi4_7.png" alt="Nike order confirmation">
+          <span class="pt"><span class="wdot"></span></span>
+        </div>
+        <div class="gloss"></div>
+      </div></div>
+      <div class="cur" aria-hidden="true"><span class="pt"><img src="Images/Slide7/hand.png" alt=""></span></div>
+      <i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i>
+    </div>
+  </div>
+
+  <!-- right two thirds — portfolio ledger -->
+  <div class="b" style="--i:4;left:556px;top:178px;width:812px">
+    <div class="axis"><span></span><span class="sc"><span class="label">2023</span><span class="label">H1 2024</span></span></div>
+    <p class="pbar">
+      <span class="k">Credit portfolio utilization</span>
+      <span class="tr">
+        <span class="seg" style="width:38%"><span class="val"><span data-count="38" data-suffix="%">38%</span></span></span>
+        <span class="lift" style="left:38%;width:9%"></span>
+        <span class="now" style="left:calc(47% + 14px)"><span data-count="47" data-suffix="%">47%</span></span>
+      </span>
+    </p>
+    <p class="pbar">
+      <span class="k">Credit portfolio conversion</span>
+      <span class="tr">
+        <span class="seg" style="width:51%"><span class="val"><span data-count="51" data-suffix="%">51%</span></span></span>
+        <span class="lift" style="left:51%;width:28%"></span>
+        <span class="now" style="left:calc(79% + 14px)"><span data-count="79" data-suffix="%">79%</span></span>
+      </span>
+    </p>
+    <p class="foot" style="margin:10px 0 0 174px;color:var(--ink-2);text-align:right">51% to 79%, an increase of 28 percentage points</p>
+  </div>
+  <div class="ledger b" style="--i:5;left:556px;top:354px;width:812px">
+    <div class="hd"><span class="label cap">US Credit</span><span class="rule"></span></div>
+    <div class="pgrid">
+          <p class="cell"><img class="art" src="Images/Slide7/PayIn4_CardArt.png" alt=""><span class="nm">Pay in 4</span><span class="v"><span data-count="67" data-suffix="%">67%</span><span class="u">TPV</span></span></p>
+          <p class="cell"><img class="art" src="Images/Slide7/PayMonthly_CardArt.png" alt=""><span class="nm">Pay Monthly</span><span class="v"><span data-count="5.45" data-decimals="2" data-suffix="%">5.45%</span><span class="u">iRev</span></span></p>
+          <p class="cell"><img class="art" src="Images/Slide7/PayPalCredit_CardArt.png" alt=""><span class="nm">PayPal Credit</span><span class="v"><span data-count="10.32" data-decimals="2" data-suffix="%">10.32%</span><span class="u">iRev</span></span></p>
+          <p class="cell"><img class="art" src="Images/Slide7/PayPalMastercard_CardArt.png" alt=""><span class="nm">PayPal Mastercard</span><span class="v"><span data-count="7.61" data-decimals="2" data-suffix="%">7.61%</span><span class="u">iRev</span></span></p>
+    </div>
+  </div>
+  <div class="ledger b" style="--i:6;left:556px;top:521px;width:812px">
+    <div class="hd"><span class="label cap">UK Credit</span><span class="rule"></span></div>
+    <div class="pgrid">
+          <p class="cell"><img class="art" src="Images/Slide7/PayIn3_CardArt.png" alt=""><span class="nm">Pay in 3</span><span class="v"><span data-count="37" data-suffix="%">37%</span><span class="u">TPV</span></span></p>
+          <p class="cell"><img class="art" src="Images/Slide7/PayPalCredit_CardArt.png" alt=""><span class="nm">PayPal Credit</span><span class="v"><span data-count="2.22" data-decimals="2" data-suffix="%">2.22%</span><span class="u">iRev</span></span></p>
+          <p class="cell"></p>
+          <p class="cell tot"><span class="v"><span data-count="25.6" data-decimals="1" data-suffix="%">25.6%</span></span><span class="nm">Total annual iRev increase<sup class="fnm">†</sup></span></p>
+    </div>
+  </div>
+  <p class="foot fn b" style="--i:7;left:556px;top:719px;width:812px"><span class="fnm">†</span> Each iRev figure is that product’s share of the 25.6% annual increase rather than an independent gain; the TPV figures are payment volume, not revenue. The portfolio rows above measure the 2023 baseline against H1 2024.</p>
+
+</section>
+
+<!-- ================= SLIDE 8 ================= -->
+<section class="slide" id="s8" data-project="sun" aria-label="Slide 8">
+  <div class="ghost" aria-hidden="true">03</div>
+  <header class="eyebrow b" style="--i:0">
+    <span class="pill"><i class="dot"></i>Ms. Sunshine · Preschool operations</span>
+    <span class="stage-tag">03 · <b>Customer problem</b> → Business consequence</span>
+  </header>
+  <h2 class="hl b" style="--i:1;left:72px;top:118px;width:640px">Two hours of teacher time disappeared into reporting.</h2>
+  <p class="metric b" style="--i:2;right:72px;top:149.2px;text-align:right">
+    <span class="num" style="font-size:84px">~2 hours<span style="font-size:.5em;letter-spacing:0">/day</span></span>
+    <span class="unit">Spent rewriting reports<sup class="fnm">†</sup></span>
+  </p>
+
+  <!-- Diagram: natural box 600×294, anchored bottom-right 50px above the nav arrows -->
+  <div class="diag" style="--dw:600px;--dh:294px;--s:1.4779;right:276.65px;bottom:110px;width:600px;height:294px">
+    <div class="diag-in">
+      <figure class="fig circ b" style="--i:3;left:0;top:0;width:172px;height:172px"><img src="Images/Slide8/01-assistant-teacher-ipad-circle.png" alt="An assistant teacher in a preschool classroom writing activity notes on a tablet."><figcaption>Assistant teacher writing<br>activity notes</figcaption></figure>
+      <figure class="fig circ b" style="--i:4;left:214px;top:0;width:172px;height:172px"><img src="Images/Slide8/02-head-teacher-laptop-circle.png" alt="A head teacher at a laptop in the evening, rewriting the day's reports."><figcaption>Head teacher rewriting every child’s report</figcaption></figure>
+      <figure class="fig circ b" style="--i:5;left:428px;top:0;width:172px;height:172px"><img src="Images/Slide8/03-distracted-parent-meeting-circle.png" alt="A parent sitting in a meeting, distracted, waiting for news about their child's day."><figcaption>Parent waiting until pickup<br>for an update</figcaption></figure>
+      <p class="why b" style="--i:7;left:0;top:266px;width:600px;text-align:center;font-size:20px">Information recorded twice. Delivered too late.</p>
+      <svg class="wire" viewBox="0 0 600 294" aria-hidden="true">
+        <path class="draw" style="--i:4" d="M182 86 H204 M198 81 L204 86 L198 91" pathLength="1"/>
+        <path class="draw" style="--i:5" d="M396 86 H418 M412 81 L418 86 L412 91" pathLength="1"/>
+        <path class="draw hair" style="--i:6" d="M0 248 H600" pathLength="1"/>
+        <circle class="b mute" style="--i:7" cx="86" cy="248" r="3"/>
+        <circle class="b mute" style="--i:8" cx="300" cy="248" r="3"/>
+        <circle class="b mute" style="--i:9" cx="514" cy="248" r="3"/>
+      </svg>
+    </div>
+  </div>
+
+  <p class="foot fn b" style="--i:8;right:72px;bottom:71.5px;width:560px;text-align:right"><span class="fnm">†</span> Estimate from observing the workflow</p>
+</section>
+
+<!-- ================= SLIDE 9 ================= -->
+<section class="slide" id="s9" data-project="sun" aria-label="Slide 9">
+  <header class="eyebrow b" style="--i:0">
+    <span class="pill"><i class="dot"></i>Ms. Sunshine · Preschool operations</span>
+    <span class="stage-tag">03 · Options → <b>Strategic choice</b> → Repeatable system</span>
+  </header>
+  <h2 class="hl b" style="--i:1;left:72px;top:118px;width:760px">Capture the day once. Use it twice.</h2>
+  <p class="label b" style="--i:2;left:72px;top:214px">Options considered</p>
+  <div class="opts col b" style="--i:3;left:72px;top:236px;width:348px">
+    <div class="opt"><span class="tag">Option 01</span><span class="l">Batch reports at the end of the day</span><span class="to"><b>Trade-off</b>Minimizes classroom disruption, but relies on recall and delays parent visibility.</span></div>
+    <div class="opt"><span class="tag">Option 02</span><span class="l">Generate reports from passive signals</span><span class="to"><b>Trade-off</b>Reduces teacher input, but increases system complexity and lowers confidence in accuracy and context.</span></div>
+    <div class="opt chosen"><span class="chip">Chosen</span><span class="tag">Option 03</span><span class="l">One activity record powers both</span><span class="to"><b>Trade-off</b>Requires lightweight, real-time capture, but eliminates duplicate work and creates immediate parent value.</span></div>
+  </div>
+  <p class="why b" style="--i:6;left:72px;top:645px;width:348px"><b>Why</b>Removed duplicate work while creating immediate parent value.</p>
+
+  <div class="cmp b" id="s9cmp" style="--i:4;left:500px;top:214px;width:868px">
+    <div class="cmp-in">
+      <div class="cmp-row">
+        <div class="cmp-l before">
+          <div class="lead">
+            <p class="label">Activity recorded</p>
+            <h3 class="cmp-h">Log once by a teacher</h3>
+            <p class="cmp-p">Start from a child or from an activity, add details, a photo, or a note, and log it for everyone who took part.</p>
+          </div>
+          <ol class="shots">
+            <li><div class="iphone" style="--w:176px;--scr:#fff"><div class="body"><div class="screen"><img src="Images/Slide9/Home.png" alt="The Ms. Sunshine home screen: today's classroom, with the children and the activities a teacher can log from."><div class="status"><span class="t">9:41</span><span class="ico"><svg class="cell"><use href="#ic-cell"/></svg><svg class="wifi"><use href="#ic-wifi"/></svg><svg class="batt"><use href="#ic-batt"/></svg></span></div><div class="island"></div><div class="gloss"></div></div></div><i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i></div></li>
+            <li><div class="iphone" style="--w:176px;--scr:#fff"><div class="body"><div class="screen"><img src="Images/Slide9/4%20children%20selected.png" alt="Four children selected at once, ready to take the same activity."><div class="status"><span class="t">9:41</span><span class="ico"><svg class="cell"><use href="#ic-cell"/></svg><svg class="wifi"><use href="#ic-wifi"/></svg><svg class="batt"><use href="#ic-batt"/></svg></span></div><div class="island"></div><div class="gloss"></div></div></div><i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i></div></li>
+            <li><div class="iphone" style="--w:176px;--scr:#fff"><div class="body"><div class="screen"><img src="Images/Slide9/7%20snack%20items%20selected.png" alt="The snack step: seven items picked for the group, with room for a note or a photo."><div class="status"><span class="t">9:41</span><span class="ico"><svg class="cell"><use href="#ic-cell"/></svg><svg class="wifi"><use href="#ic-wifi"/></svg><svg class="batt"><use href="#ic-batt"/></svg></span></div><div class="island"></div><div class="gloss"></div></div></div><i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i></div></li>
+            <li><div class="iphone" style="--w:176px;--scr:#fff"><div class="body"><div class="screen"><img src="Images/Slide9/9%20Success.png" alt="Confirmation that the activity was logged for everyone who took part."><div class="status"><span class="t">9:41</span><span class="ico"><svg class="cell"><use href="#ic-cell"/></svg><svg class="wifi"><use href="#ic-wifi"/></svg><svg class="batt"><use href="#ic-batt"/></svg></span></div><div class="island"></div><div class="gloss"></div></div></div><i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i></div></li>
+          </ol>
+          <ul class="sys">
+            <li>Systems</li>
+            <li>Multi-child bulk actions</li>
+            <li>Teacher and guardian permissions</li>
+            <li>One child, approved guardians only</li>
+            <li>Head-teacher review before publishing</li>
+          </ul>
+        </div>
+        <div class="cmp-l after" style="--lw:205px;--cw:275px">
+          <div class="live-copy">
+            <p class="label">Parent’s view</p>
+            <h3 class="cmp-h">Live parent communication</h3>
+            <p class="cmp-p">The tile lands in each child’s private feed. Only that child’s guardians see it. They’re notified, and can like or comment — which reaches the head teacher.</p>
+          </div>
+          <div class="live-scr nodrag">
+            <div class="iphone" style="--w:205px;--scr:#fff">
+              <div class="body"><div class="screen">
+                <iframe class="live" src="https://ms-sunshine-app-prototype.vercel.app/school/c01?view=parent"
+                  title="The Ms. Sunshine prototype running the parent view of Mei’s newsfeed"
+                  sandbox="allow-scripts allow-same-origin"></iframe>
+                <div class="status"><span class="t">9:41</span><span class="ico"><svg class="cell"><use href="#ic-cell"/></svg><svg class="wifi"><use href="#ic-wifi"/></svg><svg class="batt"><use href="#ic-batt"/></svg></span></div>
+                <div class="island"></div>
+                <div class="gloss"></div>
+              </div></div>
+              <i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <span class="cmp-div" aria-hidden="true"></span>
+    <button type="button" class="cmp-nub" role="slider" tabindex="0"
+      aria-label="Reveal the live parent feed" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6 9 12l6 6"/></svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+  </div>
+
+  <svg class="wire" viewBox="0 0 1440 810" aria-hidden="true">
+    <path class="draw" id="s9wire" style="--i:4;stroke:var(--sun)" d="M421 544.8 H433 A24 24 0 0 0 457 520.8 V482.6 A24 24 0 0 1 481 458.6" pathLength="1"/>
+  </svg>
+</section>
+
+<!-- ================= SLIDE 10 ================= -->
+<section class="slide" id="s10" data-project="sun" aria-label="Slide 10">
+  <header class="eyebrow b" style="--i:0">
+    <span class="pill"><i class="dot"></i>Ms. Sunshine · Preschool operations</span>
+    <span class="stage-tag">03 · Crafted experience → <b>Result</b></span>
+  </header>
+  <h2 class="hl b" style="--i:1;left:72px;top:118px;width:820px">Human impact, business value.</h2>
+
+  <div class="s10-group" style="left:50%;top:203px;transform:translateX(-50%)">
+  <div class="b" style="--i:2">
+    <div class="iphone" id="s10flow" style="--w:240px;--scr:#fff">
+      <div class="body"><div class="screen">
+        <img class="on" src="Images/Slide10/flow-1-activities.png" alt="The activity log in Ms. Sunshine: a teacher picks an activity, marks who took part, records what they ate, and publishes it to the day.">
+        <img src="Images/Slide10/flow-2-roster.png" alt="">
+        <img src="Images/Slide10/flow-3-roster-ethan.png" alt="">
+        <img src="Images/Slide10/flow-4-roster-oliver.png" alt="">
+        <img src="Images/Slide10/flow-5-roster-ready.png" alt="">
+        <img src="Images/Slide10/flow-6-meals.png" alt="">
+        <img src="Images/Slide10/flow-7-meals-banana.png" alt="">
+        <img src="Images/Slide10/flow-8-meals-ready.png" alt="">
+        <img src="Images/Slide10/flow-9-success.png" alt="">
+        <div class="status"><span class="t">9:41</span><span class="ico"><svg class="cell"><use href="#ic-cell"/></svg><svg class="wifi"><use href="#ic-wifi"/></svg><svg class="batt"><use href="#ic-batt"/></svg></span></div><div class="island"></div><div class="gloss"></div>
+      </div></div>
+      <i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i>
+    </div>
+  </div>
+
+  <div class="s10-col">
+  <div class="s10-imp b" style="--i:3">
+    <span class="label">Teacher Impact</span>
+    <span class="stat">~<span data-count="2">2</span> hours/day reclaimed</span>
+    <p>The app generates reports at checkout for quick approval—replacing a manual task estimated at two hours daily.<sup class="fnm">†</sup></p>
+  </div>
+  <div class="s10-imp b" style="--i:4">
+    <span class="label">Parent Impact</span>
+    <span class="stat">Real-time visibility</span>
+    <p>Guardians can follow, like, and comment on activities as they happen—not hours later at pickup.</p>
+  </div>
+  <div class="s10-imp b" style="--i:5">
+    <span class="label">Business Impact</span>
+    <span class="stat">~<span data-count="524">524</span> staff hours/year returned</span>
+    <p>Across 262 days, the MVP could redirect roughly 524 hours annually to classroom care and school operations.<sup class="fnm">†</sup></p>
+  </div>
+  </div>
+  </div>
+
+  <p class="foot fn b" style="--i:6;right:72px;bottom:71.5px;width:640px;text-align:right"><span class="fnm">†</span> Estimates reflect the head teacher’s prior workflow; post-MVP time savings have not yet been measured.</p>
+</section>
+
+<!-- ================= SLIDE 11 ================= -->
+<section class="slide" id="s11" data-project="tv" aria-label="Slide 11">
+    <header class="eyebrow b" style="--i:0">
+      <span class="pill"><i class="dot"></i>Tim Valderrama</span>
+      <span class="stage-tag">Strategy · Systems · Craft</span>
+    </header>
+
+    <p class="s11-kick b" style="--i:1">I don't just design the successful flow.</p>
+    <h2 class="s11-say b" style="--i:2">I design how the organization can produce the next successful flow.</h2>
+
+    <div class="s11-zones">
+      <p class="s11-zone b" style="--i:5"><span class="label">Strategy</span><span class="say">Four variables, one equation.</span></p>
+      <p class="s11-zone mid b" style="--i:8"><span class="label">Systems</span><span class="say">Six products, one core flow.</span></p>
+      <p class="s11-zone end b" style="--i:10"><span class="label">Craft</span><span class="say">One record, two audiences.</span></p>
+    </div>
+
+    <svg class="s11-mark" viewBox="0 0 1296 240" role="img"
+         aria-label="Many concerns converge into one encoded decision, which then expands into many considered outcomes.">
+      <path class="ln draw" style="--i:2" d="M8 60 H390 A20 20 0 0 1 410 80 V100 A20 20 0 0 0 430 120" pathLength="1"/>
+      <path class="ln draw" style="--i:2" d="M8 120 H628" pathLength="1"/>
+      <path class="ln draw" style="--i:2" d="M8 180 H390 A20 20 0 0 0 410 160 V140 A20 20 0 0 1 430 120" pathLength="1"/>
+
+      <circle class="nd b" style="--i:4" cx="8" cy="60" r="3.5"/>
+      <circle class="nd b" style="--i:4" cx="8" cy="120" r="3.5"/>
+      <circle class="nd b" style="--i:4" cx="8" cy="180" r="3.5"/>
+
+      <circle class="ring b" style="--i:11" cx="648" cy="120" r="13"/>
+      <circle class="core b" style="--i:11" cx="648" cy="120" r="5"/>
+
+      <path class="ln draw" style="--i:7" d="M668 120 H1288" pathLength="1"/>
+      <path class="ln draw" style="--i:7" d="M866 120 A20 20 0 0 0 886 100 A20 20 0 0 1 906 80 H1288" pathLength="1"/>
+      <path class="ln draw" style="--i:7" d="M886 100 V60 A20 20 0 0 1 906 40 H1288" pathLength="1"/>
+      <path class="ln draw" style="--i:7" d="M866 120 A20 20 0 0 1 886 140 A20 20 0 0 0 906 160 H1288" pathLength="1"/>
+      <path class="ln draw" style="--i:7" d="M886 140 V180 A20 20 0 0 0 906 200 H1288" pathLength="1"/>
+
+      <circle class="nd open b" style="--i:21" cx="1288" cy="40" r="3.5"/>
+      <circle class="nd open b" style="--i:21" cx="1288" cy="80" r="3.5"/>
+      <circle class="nd open b" style="--i:21" cx="1288" cy="120" r="3.5"/>
+      <circle class="nd open b" style="--i:21" cx="1288" cy="160" r="3.5"/>
+      <circle class="nd open b" style="--i:21" cx="1288" cy="200" r="3.5"/>
+    </svg>
+
+    <p class="s11-src b" style="--i:22">PayPal Germany &nbsp;·&nbsp; PayPal Credit Portfolio &nbsp;·&nbsp; Ms. Sunshine</p>
+  </section>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"><span id="bar"></span></div>
+<div class="hud">
+  <div class="counter" aria-live="polite"><b id="cur">01</b> / 11</div>
+  <div class="navbtns">
+    <button id="prev" aria-label="Previous slide"><svg viewBox="0 0 16 16"><path d="M10 3 5 8l5 5"/></svg></button>
+    <button id="next" aria-label="Next slide"><svg viewBox="0 0 16 16"><path d="m6 3 5 5-5 5"/></svg></button>
+  </div>
+</div>
+</div><!-- /stage -->
+
+<button class="tab" id="tab" aria-controls="drawer" aria-expanded="false">Talking points <span class="k">T</span></button>
+<aside class="drawer" id="drawer" role="dialog" aria-label="Talking points" aria-hidden="true">
+  <div class="d-head">
+    <span class="d-eyebrow" id="d-eyebrow">Talking points · Slide 01 of 11</span>
+    <button class="d-close" id="d-close" aria-label="Close talking points"><svg viewBox="0 0 12 12"><path d="M1 1l10 10M11 1 1 11"/></svg></button>
+  </div>
+  <div class="d-body">
+    <h2 class="d-title" id="d-title" aria-live="polite"></h2>
+    <ol class="d-points" id="d-points"></ol>
+    <div class="d-notes" id="d-notes"><h3>Metric notes</h3><p id="d-notes-p"></p></div>
+  </div>
+  <div class="d-foot">
+    <div class="d-time"><span>Est. time <b id="d-time"></b></span><span>Deck <b id="d-total"></b></span></div>
+    <div class="d-keys"><kbd>←</kbd><kbd>→</kbd> navigate · <kbd>T</kbd> notes · <kbd>Esc</kbd> close · <kbd>F</kbd> fullscreen · <kbd>H</kbd> hide chrome · <kbd>⌘P</kbd> PDF</div>
+  </div>
+</aside>
+
+<script>
+(() => {
+  const NOTES = [
+    { title: 'I turn consequential friction into repeatable product systems', time: 45,
+      points: [
+        'I’m a lead product designer working where customer trust, operational complexity, and business performance meet—FinTech, complex systems, 0→1 products, and AI-enabled product development.',
+        'Three stories: PayPal Germany, the PayPal credit portfolio across the US and UK, and Ms. Sunshine, a preschool operations product built from zero.',
+        'Every story follows one arc: customer problem → business consequence → options considered → strategic choice → repeatable system → crafted experience → result.',
+        'Strategy directs the craft. Systems make the good decision repeatable. Craft makes the strategy tangible—and believable.'
+      ],
+      notes: 'No metrics on this slide. The three placeholders stand in for a checkout hero, the shared credit framework, and the Ms. Sunshine feed.' },
+    { title: 'German customers wanted flexibility—not pressure', time: 60,
+      points: [
+        'Customers wanted time to inspect a purchase before paying (Pay in 30 Days) and predictable installments for larger expenses (Ratenzahlung).',
+        'Wherever cost or commitment felt uncertain, trust weakened and customers hesitated. Friction was not a usability nuisance—it was a trust problem.',
+        'PayPal’s goal: grow responsible credit adoption and revenue.',
+        'The governing constraint: simplifying credit could not come at the expense of an informed commitment. That tension shaped every later decision.'
+      ],
+      notes: 'The customer-need statements paraphrase research; cite the source out loud. <em>[Tim: interviews, support data, or usability sessions]</em>' },
+    { title: 'The trust equation became the strategy', time: 90,
+      points: [
+        'Evidence: caution appeared wherever cost or commitment was unclear—at the handoffs between checkout, application, and servicing, not on one screen. <em>[Tim: name the study]</em>',
+        'Option 1 kept every disclosure and the friction. Option 2 shipped faster but left the handoffs where trust broke. Option 3 cost more and was the only one letting flexibility, transparency, and control reinforce each other.',
+        'Constraints: German credit disclosure rules and PayPal’s frameworks set what could move. Decided with product, compliance, research, engineering. <em>[Tim: confirm partners]</em>',
+        'Repeatable through shared trust rules across checkout, application, and servicing—carried into two products via customer testing, cross-functional review, and measurement.',
+        'After testing I changed: <em>[Tim: one concrete revision]</em>.'
+      ],
+      notes: 'Options 1–2 are proposed framings; don’t imply they reached high fidelity or testing. Options section ≈ 40 seconds.' },
+    { title: 'Clarity and control changed behavior', time: 75,
+      points: [
+        'The craft follows the equation: clearer side-by-side payment choices, terms shown at the moment of decision, a four-page application collapsed to one page.',
+        'Post-purchase control: rescheduling a payment shows the new date and fee before the customer confirms—transparency at the exact point of commitment.',
+        'Each detail removes friction or adds transparency and control—never one at the other’s expense.',
+        'Results: Pay in 30 Days +48.78% monthly TPV and +17.33% annual incremental revenue; Ratenzahlung +14.92% monthly TPV and +25.44% annual incremental revenue.'
+      ],
+      notes: 'All four figures are <em>measured</em> and compare the latest redesign with each product’s preceding production version. TPV = total payment volume. Percentages are relative changes, not percentage points. <em>[Tim: confirm measurement window]</em>' },
+    { title: 'Six products shared one expensive interruption', time: 60,
+      points: [
+        'Six credit products in two markets: Pay in 4, Pay Monthly, PayPal Credit, and PayPal Mastercard in the US; Pay in 3 and PayPal Credit in the UK.',
+        'Each had different requirements, metrics, and regulations—so the default assumption was six unrelated redesigns.',
+        'Mapping the whole portfolio exposed one repeated break: customers were pulled out of checkout to apply, then had to find their way back.',
+        'Business consequence: every interruption was a lost or delayed purchase, multiplied across six funnels.',
+        'That reframed the assignment from six projects into one systemic opportunity.'
+      ],
+      notes: 'No outcome metrics yet—the counts (6, 2, 1) are portfolio facts, not results.' },
+    { title: 'One core flow. Controlled variants.', time: 90,
+      points: [
+        'Evidence: the portfolio map plus each product’s requirements and disclosure rules.',
+        'Six bespoke redesigns preserved flexibility but repeated work and produced inconsistency. One rigid template scaled but could not responsibly carry legitimate product and regulatory differences.',
+        'A shared core with controlled variants fixed the journey where customers felt the break, and gave product fields, underwriting requirements, and US/UK disclosures a governed place to differ.',
+        'Constraints: underwriting and US/UK disclosure rules defined the variant boundaries. Research, legal, product, design, and leadership reviews carried the system through more than 40 iterations. <em>[Tim: name key partners]</em>',
+        'What changed after review: <em>[Tim: one concrete revision]</em>.'
+      ],
+      notes: '“More than 40 iterations” counts design iterations, not experiments. Options 1–2 are proposed framings—confirm before presenting. ≈ 40 seconds on options.' },
+    { title: 'From one winning flow to a reusable system', time: 75,
+      points: [
+        'Craft details that made the shared system feel clear: value and the payment schedule above the fold; the customer’s preferred payment method already selected; information editable in place; terms at the moment of decision.',
+        'Three application steps became one review-and-apply page. The offer and the approval both live inside checkout, so the customer never leaves.',
+        'Results: Pay in 4 completion 2.08×; portfolio conversion 51% → 79%; portfolio utilization 38% → 47%.',
+        'Across the portfolio: US — Pay in 4 67% of TPV, Pay Monthly 5.45% iRev, PayPal Credit 10.32%, PayPal Mastercard 7.61%. UK — Pay in 3 37% of TPV, PayPal Credit 2.22%. Together a 25.6% annual iRev increase.'
+      ],
+      notes: '51 → 79 and 38 → 47 are absolute rates—a 28-point and a 9-point change, not relative growth. 2.08× is a multiple of the prior completion rate. <em>[Tim: confirm baseline periods and whether figures are portfolio-wide or per product]</em>' },
+    { title: 'Two hours of teacher time disappeared into reporting', time: 60,
+      points: [
+        'The manual workflow: assistant teachers wrote activity notes through the day; the head teacher rewrote every child’s report by hand; parents heard nothing until pickup.',
+        'Human cost: roughly two hours a day of teacher time went to rewriting—time that belonged to children and running the school.',
+        'Operational cost: the same information entered twice, and delivered too late to matter.',
+        'The opportunity was not a digital form. It was returning that capacity to the classroom.'
+      ],
+      notes: '~2 hours/day is an <em>estimate</em> from observing the workflow, not a measured baseline. <em>[Tim: confirm how it was derived]</em>' },
+    { title: 'Capture the day once. Use it twice.', time: 90,
+      points: [
+        'Evidence: the observed twice-written day and the parent’s wait until pickup.',
+        'Digitizing the existing report was fastest and improved the format—but left duplicate work and the delay intact. Separate live-update and reporting tools solved both symptoms but doubled the workflow teachers had to maintain.',
+        'One activity record powering both outputs removed the duplicate entirely and gave parents value the moment something happened.',
+        'Constraints that shaped the model: one child, approved guardians only; teacher and guardian permissions; head-teacher review before anything publishes. <em>[Tim: name who was involved in the decision]</em>',
+        'After critique: <em>[Tim: one concrete revision]</em>.'
+      ],
+      notes: 'Options 1–2 are proposed framings—confirm they were actually weighed. ≈ 40 seconds on options.' },
+    { title: 'Human impact, business value', time: 75,
+      points: [
+        'Craft in the details: few-tap logging, multi-child selection with bulk actions, photos and notes, private per-child feeds with comments, and an editable end-of-day summary written in the head teacher’s voice.',
+        'The teacher logs once; the parent sees it live; the head teacher reviews and publishes the summary.',
+        'A working MVP shipped in three weeks and is in daily use.',
+        'Say it plainly: the time-saving figure is an estimate, not a post-launch measurement.'
+      ],
+      notes: '~524 staff hours/year is <em>derived</em> from the ~2 hours/day estimate—it is not measured. “In daily use” is confirmed; “real-time visibility” describes product behavior, not a measured outcome.' },
+    { title: 'Strategy that scales. Systems with soul.', time: 60,
+      points: [
+        'I don’t only present polished final screens. I explore credible paths, make the tradeoffs visible, and choose with customer and business evidence.',
+        'Then I encode the choice so the organization can reuse it: trust rules, a shared core with controlled variants, a capture-once record.',
+        'Craft is where the strategy becomes believable—the moment a hiring manager, a customer, or a teacher can feel it.',
+        'Frame → Explore → Choose → Encode → Refine → Measure is the loop that ran through all three stories.',
+        'Close on the line: I don’t just design the successful flow. I design how the organization can produce the next successful flow.'
+      ],
+      notes: 'Total run time ≈ 13 minutes, leaving room for questions in a 15-minute slot.' }
+  ];
+
+  const $ = (s, r = document) => r.querySelector(s);
+  const stage = $('#stage');
+  const slides = [...document.querySelectorAll('.slide')];
+  const total = slides.length;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const totalSec = NOTES.reduce((a, n) => a + n.time, 0);
+  let cur = -1, leaveTimer = 0;
+
+  /* ---- fit the 1440×810 canvas to the viewport ----
+     `zoom`, not `transform: scale()`: a transformed layer is rastered once at the
+     layout size and then resampled by the compositor, which turns the handset
+     screenshots to mush. `zoom` scales the layout itself, so every image and glyph
+     is rendered straight to device pixels and stays crisp at any window size. */
+  function fit() {
+    const s = Math.min(innerWidth / 1440, innerHeight / 810);
+    stage.style.zoom = s;
+  }
+  addEventListener('resize', fit); fit();
+
+  /* ---- metric count-ups ---- */
+  function countUp(el) {
+    const end = parseFloat(el.dataset.count), dec = +(el.dataset.decimals || 0);
+    const pre = el.dataset.prefix || '', suf = el.dataset.suffix || '', dur = 1200, t0 = performance.now();
+    const step = t => {
+      const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+      el.textContent = pre + (end * e).toFixed(dec) + suf;
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  /* ---- stepped slides: a slide can hold its own internal stops ---- */
+  const stepsOf = el => (el && +el.dataset.steps) || 0;
+
+  function setStep(el, s) {
+    el.dataset.step = s;
+    el.querySelectorAll('.s3-slot, .s3-set').forEach(n => n.classList.toggle('is-on', +n.dataset.s === s));
+    el.querySelectorAll('.s3-rail i').forEach((d, i) => {
+      d.classList.toggle('done', i < s); d.classList.toggle('now', i === s);
+    });
+  }
+
+  /* arrows walk the stops first, then fall through to the next slide */
+  function advance(dir) {
+    const el = slides[cur], n = stepsOf(el);
+    if (n) {
+      const t = (+el.dataset.step || 0) + dir;
+      if (t >= 0 && t < n) { setStep(el, t); return; }
+    }
+    go(cur + dir);
+  }
+
+  /* ---- navigation ---- */
+  function go(n, push = true) {
+    n = Math.max(0, Math.min(total - 1, n));
+    if (n === cur) return;
+    const back = n < cur;
+    const prev = slides[cur], next = slides[n];
+    if (prev) {
+      prev.classList.remove('is-active'); prev.classList.add('is-leaving');
+      clearTimeout(leaveTimer);
+      leaveTimer = setTimeout(() => prev.classList.remove('is-leaving'), 500);
+    }
+    next.classList.add('is-active');
+    if (stepsOf(next)) setStep(next, back ? stepsOf(next) - 1 : 0);
+    cur = n;
+    $('#cur').textContent = String(n + 1).padStart(2, '0');
+    $('#bar').style.width = ((n + 1) / total * 100) + '%';
+    $('#prev').disabled = n === 0; $('#next').disabled = n === total - 1;
+    if (!reduce) setTimeout(() => next.querySelectorAll('[data-count]').forEach(countUp), 380);
+    renderNotes(n);
+    if (push) history.replaceState(null, '', '#' + (n + 1));
+  }
+  $('#prev').addEventListener('click', () => advance(-1));
+  $('#next').addEventListener('click', () => advance(1));
+
+  /* ---- talking points drawer ---- */
+  const drawer = $('#drawer'), tab = $('#tab'), closeBtn = $('#d-close');
+  function renderNotes(n) {
+    const d = NOTES[n];
+    $('#d-eyebrow').textContent = `Talking points · Slide ${String(n + 1).padStart(2, '0')} of ${total}`;
+    $('#d-title').textContent = d.title;
+    $('#d-points').innerHTML = d.points.map(p => `<li>${p}</li>`).join('');
+    $('#d-notes').hidden = !d.notes;
+    $('#d-notes-p').innerHTML = d.notes || '';
+    $('#d-time').textContent = d.time >= 60 ? (d.time % 60 ? `${Math.floor(d.time / 60)} min ${d.time % 60} s` : `${Math.floor(d.time / 60)} min`) : `${d.time} s`;
+    $('#d-total').textContent = `≈ ${Math.round(totalSec / 60)} min`;
+  }
+  function setDrawer(open) {
+    document.body.classList.toggle('drawer-open', open);
+    tab.setAttribute('aria-expanded', open);
+    drawer.setAttribute('aria-hidden', !open);
+    if (open) setTimeout(() => closeBtn.focus(), 460); else tab.focus();
+  }
+  const isOpen = () => document.body.classList.contains('drawer-open');
+  tab.addEventListener('click', () => setDrawer(!isOpen()));
+  closeBtn.addEventListener('click', () => setDrawer(false));
+
+  /* ---- keyboard ---- */
+  addEventListener('keydown', e => {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    const onButton = e.target.closest && e.target.closest('button');
+    switch (e.key) {
+      case 'ArrowRight': case 'ArrowDown': case 'PageDown': e.preventDefault(); advance(1); break;
+      case ' ': case 'Enter': if (onButton) return; e.preventDefault(); advance(e.shiftKey ? -1 : 1); break;
+      case 'ArrowLeft': case 'ArrowUp': case 'PageUp': case 'Backspace': e.preventDefault(); advance(-1); break;
+      case 'Home': e.preventDefault(); go(0); break;
+      case 'End': e.preventDefault(); go(total - 1); break;
+      case 'Escape': if (isOpen()) setDrawer(false); break;
+      case 't': case 'T': setDrawer(!isOpen()); break;
+      case 'h': case 'H': document.body.classList.toggle('clean'); break;
+      case 'f': case 'F': document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.(); break;
+    }
+  });
+
+  /* ---- slides 4 + 7 - device walkthroughs (ported from tim-ai-design.com) ---- */
+  (function walkthroughs() {
+    const HOSTS = ['s4', 's7'].map(id => document.getElementById(id)).filter(Boolean);
+    if (!HOSTS.length) return;
+    const HOME = { x: .45, y: 1.16 }, EXIT = { x: .58, y: 1.16 }, Z = 3408 / 1572;
+    const ez = e => e < .5 ? 4 * e ** 3 : 1 - Math.pow(-2 * e + 2, 3) / 2;
+
+    /* stops are screen fractions; each press cross-fades to the next frame */
+    function build(stops, tail) {
+      const travels = [], presses = [], fades = [];
+      let t = .35, from = HOME;
+      stops.forEach((s, i) => {
+        const d = Math.min(1.4, .46 + .74 * Math.hypot(s.x - from.x, (s.y - from.y) * Z));
+        travels.push({ from, to: s, start: t, duration: d, a0: i ? 1 : 0, a1: 1 });
+        t += d + .24; from = s;
+        if (!s.press) { t += .5 + (s.hold || 0); return; }
+        presses.push(t);
+        fades.push({ layer: s.press.layer, start: t + .17, duration: s.press.fade });
+        t += .69 + (s.hold || 0);
+      });
+      travels.push({ from, to: EXIT, start: t, duration: .62, a0: 1, a1: 0 });
+      t += .62;
+      for (const s of tail) { t += s.wait; fades.push({ layer: s.layer, start: t, duration: s.fade }); t += s.fade; }
+      return { stops, travels, presses, fades, run: t + .15 };
+    }
+
+    function sample(sc, t) {
+      let pos = HOME, alpha = 0;
+      for (const tr of sc.travels) {
+        if (t < tr.start) break;
+        if (t < tr.start + tr.duration) {
+          const e = ez((t - tr.start) / tr.duration);
+          const dx = tr.to.x - tr.from.x, dy = tr.to.y - tr.from.y;
+          const len = Math.hypot(dx, dy * Z) || 1, bow = Math.sin(Math.PI * e) * len * .07;
+          return {
+            x: tr.from.x + dx * e - dy * Z / len * bow,
+            y: tr.from.y + dy * e + dx / len / Z * bow,
+            alpha: tr.a0 + (tr.a1 - tr.a0) * e, press: 0
+          };
+        }
+        pos = tr.to; alpha = tr.a1;
+      }
+      let press = 0;
+      for (const p of sc.presses) {
+        if (t >= p && t < p + .43) {
+          const e = t - p; press = e < .17 ? ez(e / .17) : 1 - ez((e - .17) / .26); break;
+        }
+      }
+      return { x: pos.x, y: pos.y, alpha, press };
+    }
+
+    const SCRIPTS = {
+      p30: build([
+        { x: .2023, y: .206 },
+        { x: .6409, y: .206, press: { layer: 1, fade: .34 } },
+        { x: .2974, y: .206 },
+        { x: .4997, y: .9024, press: { layer: 2, fade: .3 } },
+        { x: .4997, y: .9024, press: { layer: 3, fade: .3 } }
+      ], [{ layer: 0, wait: 2.6, fade: .56 }]),
+      rz: build([
+        { x: .2023, y: .206 },
+        { x: .949, y: .206, press: { layer: 1, fade: .34 } },
+        { x: .6476, y: .206 },
+        { x: .4809, y: .9026, press: { layer: 2, fade: .38 } },
+        { x: .4873, y: .5059, press: { layer: 3, fade: .24 } },
+        { x: .0808, y: .5854, press: { layer: 4, fade: .24 } },
+        { x: .4835, y: .9038, press: { layer: 5, fade: .38 } }
+      ], [{ layer: 6, wait: .5, fade: .38 }, { layer: 0, wait: 2.1, fade: .56 }]),
+      pi4: build([
+        { x: .8511, y: .7961, press: { layer: 1, fade: .38 } },
+        { x: .5, y: .9023, press: { layer: 2, fade: .38 }, hold: 3.4 },
+        { x: .4994, y: .9024, press: { layer: 3, fade: .38 }, hold: .7 },
+        { x: .5025, y: .512, press: { layer: 4, fade: .24 }, hold: .7 },
+        { x: .0827, y: .674, press: { layer: 5, fade: .24 } },
+        { x: .4975, y: .9041, press: { layer: 6, fade: .38 } },
+        { x: .4975, y: .8947, press: { layer: 7, fade: .38 } }
+      ], [{ layer: 0, wait: 2.1, fade: .56 }])
+    };
+
+    const rigsFor = host => [...host.querySelectorAll('.walk')].map(el => {
+      const phone = el.closest('.iphone');
+      const W = parseFloat(getComputedStyle(phone).getPropertyValue('--w')) || 0;
+      const sc = SCRIPTS[el.dataset.walk], s0 = sc.stops[0];
+      const dotPt = el.querySelector('.pt'), handPt = phone.querySelector('.cur .pt');
+      /* screen sits inset by (rim + bezel) = .033w and measures .934w x 2.0305w */
+      dotPt.style.left = (s0.x * 100).toFixed(3) + '%';
+      dotPt.style.top = (s0.y * 100).toFixed(3) + '%';
+      handPt.style.left = ((.033 + .934 * s0.x) * W).toFixed(2) + 'px';
+      handPt.style.top = ((.033 + 2.0305 * s0.y) * W).toFixed(2) + 'px';
+      return {
+        sc, s0, sw: W * .934, sh: W * .934 * 2.174, t: 0, dotPt, handPt,
+        dot: el.querySelector('.wdot'), hand: phone.querySelector('.cur img'),
+        frames: [...el.querySelectorAll('.fr')], op: []
+      };
+    });
+
+    function draw(r, t) {
+      const s = sample(r.sc, t);
+      const tf = 'translate3d(' + ((s.x - r.s0.x) * r.sw).toFixed(2) + 'px,' +
+        ((s.y - r.s0.y) * r.sh).toFixed(2) + 'px,0)';
+      r.dotPt.style.transform = tf; r.handPt.style.transform = tf;
+      const a = s.alpha.toFixed(3);
+      r.dot.style.opacity = a; r.dot.style.transform = 'scale(' + (1 - .12 * s.press).toFixed(4) + ')';
+      r.hand.style.opacity = a; r.hand.style.transform = 'scale(' + (1 - .06 * s.press).toFixed(4) + ')';
+      const o = r.op; o.length = r.frames.length; o.fill(0); o[0] = 1;
+      for (const f of r.sc.fades) {
+        if (t <= f.start) break;
+        const k = Math.min(1, (t - f.start) / f.duration);
+        for (let i = 0; i < o.length; i++) o[i] *= 1 - k;
+        o[f.layer] += k;
+      }
+      for (let i = 0; i < r.frames.length; i++) r.frames[i].style.opacity = o[i].toFixed(3);
+    }
+
+    /* one rAF loop per slide, gated on that slide being the active one */
+    for (const host of HOSTS) {
+      const rigs = rigsFor(host);
+      if (!rigs.length) continue;
+      let raf = 0, last = 0;
+      const tick = now => {
+        raf = requestAnimationFrame(tick);
+        const dt = last ? Math.min((now - last) / 1000, .064) : 0; last = now;
+        for (const r of rigs) { r.t += dt; if (r.t >= r.sc.run) r.t -= r.sc.run; draw(r, r.t); }
+      };
+      const start = () => {
+        if (raf || reduce) return;
+        last = 0; rigs.forEach(r => { r.t = 0; draw(r, 0); });
+        raf = requestAnimationFrame(tick);
+      };
+      const stop = () => { if (raf) cancelAnimationFrame(raf); raf = 0; };
+      new MutationObserver(() => host.classList.contains('is-active') ? start() : stop())
+        .observe(host, { attributes: true, attributeFilter: ['class'] });
+    }
+  })();
+
+  /* ---- before/after compare (ported from tim-ai-design.com/work/paypal) ---- */
+  [['s6cmp', 's6wire', 's6'], ['s9cmp', 's9wire', 's9']].forEach(([cmpId, wireId, slideId]) => {
+    const cmp = document.getElementById(cmpId);
+    if (!cmp) return;
+    const nub = cmp.querySelector('.cmp-nub'), div = cmp.querySelector('.cmp-div');
+    const wire = document.getElementById(wireId);
+    const before = [...cmp.querySelectorAll('.cmp-l.before')];
+    const after = [...cmp.querySelectorAll('.cmp-l.after')];
+    const BLEED = '-14px -34px -76px';
+    let p = 0;
+
+    function set(v) {
+      p = Math.max(0, Math.min(100, v));
+      div.style.left = nub.style.left = p + '%';
+      /* the outer three sides are pushed past the phone shadows so only the wipe edge cuts them */
+      before.forEach(e => e.style.clipPath = p >= 100 ? 'inset(0 0 0 100%)' : `inset(${BLEED} ${p}%)`);
+      after.forEach(e => e.style.clipPath = p <= 0 ? 'inset(0 100% 0 0)' : `inset(-14px ${p >= 100 ? '-34px' : (100 - p) + '%'} -76px -34px)`);
+      if (wire) wire.style.opacity = p > 0 ? '0' : '1';
+      nub.setAttribute('aria-valuenow', Math.round(p));
+      nub.setAttribute('aria-valuetext', Math.round(p) + '% redesigned');
+    }
+    const at = e => { const r = cmp.getBoundingClientRect(); set((e.clientX - r.left) / r.width * 100); };
+
+    cmp.addEventListener('pointerdown', e => {
+      if (e.button) return;
+      e.preventDefault();
+      cmp.setPointerCapture(e.pointerId);
+      at(e);
+    });
+    cmp.addEventListener('pointermove', e => { if (cmp.hasPointerCapture(e.pointerId)) at(e); });
+    const drop = e => { if (cmp.hasPointerCapture(e.pointerId)) cmp.releasePointerCapture(e.pointerId); };
+    cmp.addEventListener('pointerup', drop);
+    cmp.addEventListener('pointercancel', drop);
+
+    /* the live prototype is meant to be used, so its handset never grabs the divider */
+    cmp.querySelectorAll('.nodrag').forEach(el =>
+      el.addEventListener('pointerdown', e => e.stopPropagation()));
+
+    /* the deck owns the arrow keys, so the handle claims them only while focused */
+    nub.addEventListener('keydown', e => {
+      const step = e.shiftKey ? 10 : 2;
+      let to = null;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowUp') to = p + step;
+      else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') to = p - step;
+      else if (e.key === 'Home') to = 0;
+      else if (e.key === 'End') to = 100;
+      else return;
+      e.preventDefault(); e.stopPropagation(); set(to);
+    });
+
+    new MutationObserver(() => { if (!cmp.closest('.slide').classList.contains('is-active')) set(0); })
+      .observe(document.getElementById(slideId), { attributes: true, attributeFilter: ['class'] });
+    set(0);
+  });
+
+  /* ---- slide 10: the activity-logging flow, on a timer ----
+     the case study these frames come from scrubs them on scroll; a deck has no scroll,
+     so the sequence runs itself, and only while its slide is on screen. */
+  (() => {
+    const rig = document.getElementById('s10flow'), slide = document.getElementById('s10');
+    if (!rig || !slide) return;
+    const frames = [...rig.querySelectorAll('.screen > img')];
+    if (frames.length < 2) return;
+    /* first and last frames read as statements, the ones between them as motion */
+    const hold = [1900, 1150, 950, 950, 1350, 1150, 950, 1350, 2400];
+    let i = 0, timer = 0;
+    const show = n => frames.forEach((f, k) => f.classList.toggle('on', k === n));
+    const step = () => { i = (i + 1) % frames.length; show(i); timer = setTimeout(step, hold[i]); };
+    const start = () => { if (timer || reduce) return; i = 0; show(0); timer = setTimeout(step, hold[0]); };
+    const stop = () => { clearTimeout(timer); timer = 0; show(0); };
+    new MutationObserver(() => slide.classList.contains('is-active') ? start() : stop())
+      .observe(slide, { attributes: true, attributeFilter: ['class'] });
+  })();
+
+  /* ---- live prototype embed (same method as tim-ai-design.com/work/MsSunshineApp) ----
+     the prototype is built for a 375pt phone, so it renders at that width and is scaled
+     to whatever the deck's handset screen happens to be. */
+  document.querySelectorAll('iframe.live').forEach(frame => {
+    const screen = frame.parentElement;
+    const fit = () => {
+      const w = screen.clientWidth;
+      if (!w) return;
+      frame.style.transform = `scale(${w / 375})`;
+      frame.style.height = Math.round(screen.clientHeight / (w / 375)) + 'px';
+    };
+    new ResizeObserver(fit).observe(screen);
+    fit();
+  });
+
+  /* ---- deep links (#3) ---- */
+  const fromHash = () => { const n = parseInt(location.hash.slice(1), 10); return Number.isFinite(n) ? n - 1 : 0; };
+  addEventListener('hashchange', () => go(fromHash(), false));
+  go(fromHash(), false);
+})();
+</script>
+</body>
+</html>
