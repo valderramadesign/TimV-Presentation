@@ -1027,7 +1027,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
 
   <p class="res b" style="--i:2;left:72px;top:496px;width:155px">
     <span class="kpi"><span class="n"><span data-count="2.08" data-decimals="2" data-suffix="×">2.08×</span></span><span class="u">Application completion</span></span>
-    <span class="kpi"><span class="n"><span data-count="67" data-suffix="%">67%</span></span><span class="u">TPV</span></span>
+    <span class="kpi"><span class="n"><span data-count="67" data-prefix="+" data-suffix="%">+67%</span></span><span class="u">TPV</span></span>
   </p>
 
   <!-- left third — the Pay in 4 walkthrough, in the deck's white shell -->
@@ -1076,7 +1076,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
   <div class="ledger b" style="--i:5;left:556px;top:354px;width:812px">
     <div class="hd"><span class="label cap">US Credit</span><span class="rule"></span></div>
     <div class="pgrid">
-          <p class="cell"><img class="art" src="Images/Slide7/PayIn4_CardArt.png" alt=""><span class="nm">Pay in 4</span><span class="v"><span data-count="67" data-suffix="%">67%</span><span class="u">TPV</span></span></p>
+          <p class="cell"><img class="art" src="Images/Slide7/PayIn4_CardArt.png" alt=""><span class="nm">Pay in 4</span><span class="v"><span data-count="67" data-prefix="+" data-suffix="%">+67%</span><span class="u">TPV</span></span></p>
           <p class="cell"><img class="art" src="Images/Slide7/PayMonthly_CardArt.png" alt=""><span class="nm">Pay Monthly</span><span class="v"><span data-count="5.45" data-decimals="2" data-suffix="%">5.45%</span><span class="u">iRev</span></span></p>
           <p class="cell"><img class="art" src="Images/Slide7/PayPalCredit_CardArt.png" alt=""><span class="nm">PayPal Credit</span><span class="v"><span data-count="10.32" data-decimals="2" data-suffix="%">10.32%</span><span class="u">iRev</span></span></p>
           <p class="cell"><img class="art" src="Images/Slide7/PayPalMastercard_CardArt.png" alt=""><span class="nm">PayPal Mastercard</span><span class="v"><span data-count="7.61" data-decimals="2" data-suffix="%">7.61%</span><span class="u">iRev</span></span></p>
@@ -1085,13 +1085,13 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
   <div class="ledger b" style="--i:6;left:556px;top:521px;width:812px">
     <div class="hd"><span class="label cap">UK Credit</span><span class="rule"></span></div>
     <div class="pgrid">
-          <p class="cell"><img class="art" src="Images/Slide7/PayIn3_CardArt.png" alt=""><span class="nm">Pay in 3</span><span class="v"><span data-count="37" data-suffix="%">37%</span><span class="u">TPV</span></span></p>
+          <p class="cell"><img class="art" src="Images/Slide7/PayIn3_CardArt.png" alt=""><span class="nm">Pay in 3</span><span class="v"><span data-count="37" data-prefix="+" data-suffix="%">+37%</span><span class="u">TPV</span></span></p>
           <p class="cell"><img class="art" src="Images/Slide7/PayPalCredit_CardArt.png" alt=""><span class="nm">PayPal Credit</span><span class="v"><span data-count="2.22" data-decimals="2" data-suffix="%">2.22%</span><span class="u">iRev</span></span></p>
           <p class="cell"></p>
           <p class="cell tot"><span class="v"><span data-count="25.6" data-decimals="1" data-suffix="%">25.6%</span></span><span class="nm">Total annual iRev increase<sup class="fnm">†</sup></span></p>
     </div>
   </div>
-  <p class="foot fn b" style="--i:7;left:556px;top:719px;width:812px"><span class="fnm">†</span> Each iRev figure is that product’s share of the 25.6% annual increase rather than an independent gain; the TPV figures are payment volume, not revenue. The portfolio rows above measure the 2023 baseline against H1 2024.</p>
+  <p class="foot fn b" style="--i:7;left:556px;top:719px;width:812px"><span class="fnm">†</span> Each iRev figure is that product’s share of the 25.6% annual increase rather than an independent gain; the TPV figures are increases in payment volume, not revenue. The portfolio rows above measure the 2023 baseline against H1 2024.</p>
 
 </section>
 
@@ -1316,7 +1316,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
   <div class="d-body">
     <h2 class="d-title" id="d-title" aria-live="polite"></h2>
     <ol class="d-points" id="d-points"></ol>
-    <div class="d-notes" id="d-notes"><h3>Metric notes</h3><p id="d-notes-p"></p></div>
+    <div class="d-notes" id="d-notes"><h3>Notes</h3><p id="d-notes-p"></p></div>
   </div>
   <div class="d-foot">
     <div class="d-time"><span>Est. time <b id="d-time"></b></span><span>Deck <b id="d-total"></b></span></div>
@@ -1329,97 +1329,99 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
   const NOTES = [
     { title: 'I turn consequential friction into repeatable product systems', time: 45,
       points: [
-        'I’m a lead product designer working where customer trust, operational complexity, and business performance meet—FinTech, complex systems, 0→1 products, and AI-enabled product development.',
-        'Three stories: PayPal Germany, the PayPal credit portfolio across the US and UK, and Ms. Sunshine, a preschool operations product built from zero.',
-        'Every story follows one arc: customer problem → business consequence → options considered → strategic choice → repeatable system → crafted experience → result.',
-        'Strategy directs the craft. Systems make the good decision repeatable. Craft makes the strategy tangible—and believable.'
+        'Consequential friction is the hesitation that costs a customer trust and a business revenue—in credit checkout, in an application, in a teacher’s evening.',
+        'Three stories, one arc: customer problem → business consequence → options → strategic choice → repeatable system → crafted experience → result.',
+        'PayPal Germany. The PayPal credit portfolio across the US and UK. Ms. Sunshine, a preschool operations product built from zero.',
+        'What to listen for: I won’t only show the winning screen. I’ll show the options I rejected, why, and what I encoded so the next team can reuse the decision.'
       ],
-      notes: 'No metrics on this slide. The three placeholders stand in for a checkout hero, the shared credit framework, and the Ms. Sunshine feed.' },
-    { title: 'German customers wanted flexibility—not pressure', time: 60,
+      notes: 'The only number on this slide is the run time—≈ 13 minutes, matching the drawer total. The three handsets are real screens: PayPal Germany checkout, Pay in 4, the Ms. Sunshine feed.' },
+    { title: 'German customers wanted flexibility through responsible credit', time: 60,
       points: [
-        'Customers wanted time to inspect a purchase before paying (Pay in 30 Days) and predictable installments for larger expenses (Ratenzahlung).',
-        'Wherever cost or commitment felt uncertain, trust weakened and customers hesitated. Friction was not a usability nuisance—it was a trust problem.',
-        'PayPal’s goal: grow responsible credit adoption and revenue.',
-        'The governing constraint: simplifying credit could not come at the expense of an informed commitment. That tension shaped every later decision.'
+        'Two customer needs, from a market study our German research lead ran across the country: time to inspect a purchase before paying, and predictable installments for larger expenses.',
+        'Wherever cost or commitment felt uncertain, customers hesitated. That is a trust problem, not a usability nuisance.',
+        'The business goal: grow responsible credit adoption—without hiding cost or commitment to get there.',
+        'That tension—simpler credit versus an informed commitment—is the constraint every later decision answers to.'
       ],
-      notes: 'The customer-need statements paraphrase research; cite the source out loud. <em>[Tim: interviews, support data, or usability sessions]</em>' },
-    { title: 'The trust equation became the strategy', time: 90,
+      notes: 'Source: a market study by the research lead in the German office—interviews across Germany on financial practices, attitudes toward credit products, and shopping habits. Name it when you state the needs.' },
+    { title: 'Solving the equation, one variable at a time', time: 90,
       points: [
-        'Evidence: caution appeared wherever cost or commitment was unclear—at the handoffs between checkout, application, and servicing, not on one screen. <em>[Tim: name the study]</em>',
-        'Option 1 kept every disclosure and the friction. Option 2 shipped faster but left the handoffs where trust broke. Option 3 cost more and was the only one letting flexibility, transparency, and control reinforce each other.',
-        'Constraints: German credit disclosure rules and PayPal’s frameworks set what could move. Decided with product, compliance, research, engineering. <em>[Tim: confirm partners]</em>',
-        'Repeatable through shared trust rules across checkout, application, and servicing—carried into two products via customer testing, cross-functional review, and measurement.',
-        'After testing I changed: <em>[Tim: one concrete revision]</em>.'
+        'The strategy in one line: Trust = Flexibility − Friction + Transparency + Control. Every decision that follows moves exactly one variable.',
+        'Flexibility — two needs, two products. Pay in 30 Days for time; Ratenzahlung for predictable installments.',
+        'Friction — flexibility shouldn’t take three pages. With the checkout partner I surfaced installment options earlier, tucked terms behind links, and collapsed three application pages into one.',
+        'Transparency — every option and its estimated cost sit inside checkout, with the full terms before commitment.',
+        'Control — customers can reschedule a payment after seeing the new date and fee. That added control for them and a new revenue stream for PayPal.'
       ],
-      notes: 'Options 1–2 are proposed framings; don’t imply they reached high fidelity or testing. Options section ≈ 40 seconds.' },
+      notes: 'Five steps, ← → to advance—≈ 15 seconds each, then land on “Trust changed customer behavior.” The numbers live on the next slide; don’t pre-empt them here.' },
     { title: 'Clarity and control changed behavior', time: 75,
       points: [
-        'The craft follows the equation: clearer side-by-side payment choices, terms shown at the moment of decision, a four-page application collapsed to one page.',
-        'Post-purchase control: rescheduling a payment shows the new date and fee before the customer confirms—transparency at the exact point of commitment.',
-        'Each detail removes friction or adds transparency and control—never one at the other’s expense.',
-        'Results: Pay in 30 Days +48.78% monthly TPV and +17.33% annual incremental revenue; Ratenzahlung +14.92% monthly TPV and +25.44% annual incremental revenue.'
+        'Watch the two flows: payment choices side by side, terms at the moment of decision, one application page instead of three.',
+        'After purchase, rescheduling shows the new date and fee before the customer confirms—control at the exact point of commitment.',
+        'Every detail either removes friction or adds transparency and control. Never one at the other’s expense.',
+        'Pay in 30 Days: +48.78% monthly TPV, +17.33% annual incremental revenue. Ratenzahlung: +14.92% monthly TPV, +25.44% annual incremental revenue.'
       ],
-      notes: 'All four figures are <em>measured</em> and compare the latest redesign with each product’s preceding production version. TPV = total payment volume. Percentages are relative changes, not percentage points. <em>[Tim: confirm measurement window]</em>' },
-    { title: 'Six products shared one expensive interruption', time: 60,
+      notes: 'All four figures are <em>measured</em> one year after launch, against each product’s preceding production version. TPV = total payment volume. Percentages are relative changes, not points.' },
+    { title: 'Six credit products. One clearer path through checkout.', time: 60,
       points: [
-        'Six credit products in two markets: Pay in 4, Pay Monthly, PayPal Credit, and PayPal Mastercard in the US; Pay in 3 and PayPal Credit in the UK.',
-        'Each had different requirements, metrics, and regulations—so the default assumption was six unrelated redesigns.',
-        'Mapping the whole portfolio exposed one repeated break: customers were pulled out of checkout to apply, then had to find their way back.',
-        'Business consequence: every interruption was a lost or delayed purchase, multiplied across six funnels.',
-        'That reframed the assignment from six projects into one systemic opportunity.'
+        'Six products, two markets: Pay in 4, Pay Monthly, PayPal Credit and PayPal Mastercard in the US; Pay in 3 and PayPal Credit in the UK. Each with its own requirements, metrics and regulations.',
+        'The customer problem: reapplying for installments with every purchase. Friction at checkout, and no reason to come back.',
+        'The business consequence: credit is 5% of total revenue, so utilization is a billion-dollar lever.',
+        'The default assumption was six unrelated redesigns. Mapping the portfolio turned that into one systemic opportunity.'
       ],
-      notes: 'No outcome metrics yet—the counts (6, 2, 1) are portfolio facts, not results.' },
+      notes: '5% of total revenue is a portfolio fact, not a result. “Billion-dollar” sizes the utilization opportunity—expect the follow-up on how it was derived.' },
     { title: 'One core flow. Controlled variants.', time: 90,
       points: [
-        'Evidence: the portfolio map plus each product’s requirements and disclosure rules.',
-        'Six bespoke redesigns preserved flexibility but repeated work and produced inconsistency. One rigid template scaled but could not responsibly carry legitimate product and regulatory differences.',
-        'A shared core with controlled variants fixed the journey where customers felt the break, and gave product fields, underwriting requirements, and US/UK disclosures a governed place to differ.',
-        'Constraints: underwriting and US/UK disclosure rules defined the variant boundaries. Research, legal, product, design, and leadership reviews carried the system through more than 40 iterations. <em>[Tim: name key partners]</em>',
-        'What changed after review: <em>[Tim: one concrete revision]</em>.'
+        'Three real options. Framework-aligned migration: fastest, but it carries today’s UX problems forward. End-to-end transformation: the biggest upside, the most time and launch risk.',
+        'I recommended validated pattern-led optimization: extend the pattern already proven in Pay in 4 across the portfolio. It balances effort, speed and risk.',
+        'The trade-off, said out loud: it can carry Pay in 4’s constraints into other flows. Controlled variants give real product and regulatory differences a governed place to live.',
+        'Before and after: legacy Pay in 4 pulled customers out of checkout for three application steps. The redesign folds them into one review-and-apply page, and approval lands back in the purchase.',
+        'How the call was made: I lay out the options with the trade-offs explicit; product owns the decision, and took this one. Variant boundaries came from underwriting and US/UK disclosure rules.'
       ],
-      notes: '“More than 40 iterations” counts design iterations, not experiments. Options 1–2 are proposed framings—confirm before presenting. ≈ 40 seconds on options.' },
+      notes: '≈ 40 s on options, ≈ 30 s on the slider. The 42 iterations were review cycles with leadership, my team and product—say that if you’re asked what an iteration was.' },
     { title: 'From one winning flow to a reusable system', time: 75,
       points: [
-        'Craft details that made the shared system feel clear: value and the payment schedule above the fold; the customer’s preferred payment method already selected; information editable in place; terms at the moment of decision.',
-        'Three application steps became one review-and-apply page. The offer and the approval both live inside checkout, so the customer never leaves.',
-        'Results: Pay in 4 completion 2.08×; portfolio conversion 51% → 79%; portfolio utilization 38% → 47%.',
-        'Across the portfolio: US — Pay in 4 67% of TPV, Pay Monthly 5.45% iRev, PayPal Credit 10.32%, PayPal Mastercard 7.61%. UK — Pay in 3 37% of TPV, PayPal Credit 2.22%. Together a 25.6% annual iRev increase.'
+        'The winning flow, Pay in 4: the offer explained in place, checkout pre-approved with the schedule visible, one review-and-apply page with details prefilled, approval returned inside checkout.',
+        'Pay in 4: application completion 2.08×, US TPV up 67%. In the UK, Pay in 3 TPV up 37%.',
+        'Then the system carried it across the portfolio: conversion 51% → 79%, utilization 38% → 47%, 2023 against H1 2024.',
+        'Together, a 25.6% annual increase in incremental revenue. Pay Monthly 5.45, PayPal Credit 10.32, PayPal Mastercard 7.61 and UK PayPal Credit 2.22 are that total’s components, not separate wins.',
+        'The point for this room: one crafted flow is a win. A system that reproduces it across six products is leverage.'
       ],
-      notes: '51 → 79 and 38 → 47 are absolute rates—a 28-point and a 9-point change, not relative growth. 2.08× is a multiple of the prior completion rate. <em>[Tim: confirm baseline periods and whether figures are portfolio-wide or per product]</em>' },
+      notes: '51 → 79 and 38 → 47 are absolute rates—28 and 9 points, not relative growth. 2.08× is a multiple of the prior rate. The 67% and 37% are TPV <em>increases</em> for Pay in 4 and Pay in 3, not shares of their markets.' },
     { title: 'Two hours of teacher time disappeared into reporting', time: 60,
       points: [
-        'The manual workflow: assistant teachers wrote activity notes through the day; the head teacher rewrote every child’s report by hand; parents heard nothing until pickup.',
-        'Human cost: roughly two hours a day of teacher time went to rewriting—time that belonged to children and running the school.',
-        'Operational cost: the same information entered twice, and delivered too late to matter.',
-        'The opportunity was not a digital form. It was returning that capacity to the classroom.'
+        'I interviewed the head teacher. Her priority wasn’t paperwork—it was transparent daily communication with parents, which her school’s reputation runs on.',
+        'The manual day: assistant teachers wrote activity notes; the head teacher rewrote every child’s report by hand each evening; parents heard nothing until pickup.',
+        'Human cost: roughly two hours a day of a head teacher’s time—time that belonged to children and running the school.',
+        'Operational cost: the same information recorded twice, and delivered too late to matter.',
+        'The opportunity was never a digital form. It was returning that capacity to the classroom.'
       ],
-      notes: '~2 hours/day is an <em>estimate</em> from observing the workflow, not a measured baseline. <em>[Tim: confirm how it was derived]</em>' },
+      notes: '~2 hours/day is an <em>estimate</em> from observing the workflow, not a measured baseline. The footnote says so—say it too.' },
     { title: 'Capture the day once. Use it twice.', time: 90,
       points: [
-        'Evidence: the observed twice-written day and the parent’s wait until pickup.',
-        'Digitizing the existing report was fastest and improved the format—but left duplicate work and the delay intact. Separate live-update and reporting tools solved both symptoms but doubled the workflow teachers had to maintain.',
-        'One activity record powering both outputs removed the duplicate entirely and gave parents value the moment something happened.',
-        'Constraints that shaped the model: one child, approved guardians only; teacher and guardian permissions; head-teacher review before anything publishes. <em>[Tim: name who was involved in the decision]</em>',
-        'After critique: <em>[Tim: one concrete revision]</em>.'
+        'Three real options. End-of-day batch reports: least disruptive, but built on recall, and parents still wait. Passive-signal reports: less teacher input, but more complexity and less confidence in accuracy.',
+        'I brought the head teacher the options; together we chose one activity record that powers both the parent feed and the report. The cost: lightweight, real-time capture. The payoff: no duplicate work.',
+        'Left, the teacher: start from a child or an activity, add a photo or note, log once for everyone who took part—bulk actions make it a few taps.',
+        'Right, the parent: a live prototype. The tile lands in each child’s private feed; only approved guardians see it; a like or comment reaches the head teacher.',
+        'System rules: one child, approved guardians only; teacher and guardian permissions; head-teacher review before anything publishes.'
       ],
-      notes: 'Options 1–2 are proposed framings—confirm they were actually weighed. ≈ 40 seconds on options.' },
+      notes: '≈ 40 seconds on options. The right handset is the real prototype—drag the slider, then scroll the feed live. Have one concrete revision from critique ready for Q&A.' },
     { title: 'Human impact, business value', time: 75,
       points: [
-        'Craft in the details: few-tap logging, multi-child selection with bulk actions, photos and notes, private per-child feeds with comments, and an editable end-of-day summary written in the head teacher’s voice.',
-        'The teacher logs once; the parent sees it live; the head teacher reviews and publishes the summary.',
-        'A working MVP shipped in three weeks and is in daily use.',
-        'Say it plainly: the time-saving figure is an estimate, not a post-launch measurement.'
+        'Watch the loop: pick the activity, mark who took part, record the meal, publish. The teacher logs once.',
+        'Teacher impact: reports are generated at checkout for quick approval, replacing a manual task estimated at two hours a day.',
+        'Parent impact: guardians follow, like and comment as the day happens—not hours later at pickup.',
+        'Business impact: across 262 school days, roughly 524 staff hours a year redirected to classroom care and operations.',
+        'Three weeks from kick-off to install, and in daily use since. Say the caveat yourself: one school, two classrooms, and the time savings are an estimate, not yet measured post-launch.'
       ],
-      notes: '~524 staff hours/year is <em>derived</em> from the ~2 hours/day estimate—it is not measured. “In daily use” is confirmed; “real-time visibility” describes product behavior, not a measured outcome.' },
-    { title: 'Strategy that scales. Systems with soul.', time: 60,
+      notes: '~524 hours/year is <em>derived</em>—2 hours × 262 days—from the observed-workflow estimate, not measured. “In daily use” is confirmed; “real-time visibility” describes product behavior, not a measured outcome.' },
+    { title: 'Strategy · Systems · Craft', time: 60,
       points: [
-        'I don’t only present polished final screens. I explore credible paths, make the tradeoffs visible, and choose with customer and business evidence.',
-        'Then I encode the choice so the organization can reuse it: trust rules, a shared core with controlled variants, a capture-once record.',
-        'Craft is where the strategy becomes believable—the moment a hiring manager, a customer, or a teacher can feel it.',
-        'Frame → Explore → Choose → Encode → Refine → Measure is the loop that ran through all three stories.',
-        'Close on the line: I don’t just design the successful flow. I design how the organization can produce the next successful flow.'
+        'All three stories have the same shape: many concerns converge into one encoded decision, and that decision multiplies out.',
+        'Strategy — four variables, one equation. Deciding what matters and why, before any screen exists.',
+        'Systems — six products, one core flow. Making the good decision repeatable, so quality doesn’t depend on who is in the room.',
+        'Craft — one record, two audiences. The moment a customer, a teacher or a hiring manager can feel the strategy.',
+        'Close on the line, then stop: I don’t just design the successful flow. I design how the organization can produce the next successful flow.'
       ],
-      notes: 'Total run time ≈ 13 minutes, leaving room for questions in a 15-minute slot.' }
+      notes: 'Total run time ≈ 13 minutes, leaving room for questions in a 15-minute slot. The mark: three solid dots in, five open dots out—leverage, not volume.' }
   ];
 
   const $ = (s, r = document) => r.querySelector(s);
