@@ -425,6 +425,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
 .d-points li:last-child{padding-bottom:0}
 .d-notes{margin-top:22px;padding-top:16px;border-top:1px solid var(--rule)}
 .d-notes h3{margin:0 0 8px;font:500 11px/1 var(--sans);letter-spacing:.02em;color:var(--terra)}
+#d-notes h3{color:var(--ink-3)}
 .d-notes p{margin:0;font:300 13.5px/1.5 var(--sans);color:var(--ink-2)}
 .d-notes p em{font-style:normal;color:var(--ink);font-weight:400}
 .d-foot{padding-top:16px;border-top:1px solid var(--rule);display:flex;flex-direction:column;gap:10px}
@@ -1340,6 +1341,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
   <div class="d-body">
     <h2 class="d-title" id="d-title" aria-live="polite"></h2>
     <ol class="d-points" id="d-points"></ol>
+    <div class="d-notes" id="d-retro" hidden><h3>What I would do differently</h3><p id="d-retro-p"></p></div>
     <div class="d-notes" id="d-notes"><h3>Notes</h3><p id="d-notes-p"></p></div>
   </div>
   <div class="d-foot">
@@ -1378,7 +1380,8 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
         "After purchase, rescheduling showed the revised date and fee before customers committed.",
         "One year after launch, Pay in 30 Days grew monthly TPV by 48.78% and annual incremental revenue by 17.33%. Ratenzahlung grew TPV by 14.92% and incremental revenue by 25.44%."
       ],
-      notes: "All four figures were measured against each product’s preceding production version. TPV means total payment volume. Percentages are relative changes." },
+      notes: "All four figures were measured against each product’s preceding production version. TPV means total payment volume. Percentages are relative changes.",
+      retro: "I would present both products as one decision. The customer picks the need, and we route them to the right product." },
     { title: "Six credit products. One clearer path through checkout.", time: 60,
       points: [
         "I led experience strategy across six credit products in the US and UK. I defined the shared pattern while product leaders made the final business decisions.",
@@ -1399,7 +1402,8 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
         "I defined a reusable core: explain the offer in context, keep one review-and-apply step, and return approval to the active checkout.",
         "I adapted that core to the 5 other products’ underwriting and disclosure requirements. Portfolio conversion rose from 51% to 79%, while utilization rose from 38% to 47%."
       ],
-      notes: "The portfolio rates compare the 2023 baseline with H1 2024. They are absolute rates, not relative growth. Product metrics use each product’s preceding annual baseline." },
+      notes: "The portfolio rates compare the 2023 baseline with H1 2024. They are absolute rates, not relative growth. Product metrics use each product’s preceding annual baseline.",
+      retro: "I would freeze the shared UI kit first. Then every review is about what is truly different per product, not the parts that should stay the same." },
     { title: "Two hours of teacher time disappeared into reporting", time: 60,
       points: [
         "Ms. Sunshine was a zero-to-one product for one school and two classrooms. I led the design from kickoff to install in three weeks.",
@@ -1420,7 +1424,8 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
         "The app generates reports for quick approval and gives guardians updates while the day is still in progress.",
         "The estimated opportunity is 524 staff hours a year: two hours a day across 262 operating days. This is a model, not a measured post-launch result."
       ],
-      notes: "The time estimate reflects the prior workflow. The product is in daily use, but post-launch time savings still need measurement." },
+      notes: "The time estimate reflects the prior workflow. The product is in daily use, but post-launch time savings still need measurement.",
+      retro: "I would start from what parents need to see, then work back to the smallest thing a teacher has to log." },
     { title: "Strategy · Systems · Craft", time: 45,
       points: [
         "Each case turns a complex set of constraints into one clear decision that teams can reuse.",
@@ -1520,6 +1525,8 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
     $('#d-points').innerHTML = d.points.map(p => `<li>${p}</li>`).join('');
     $('#d-notes').hidden = !d.notes;
     $('#d-notes-p').innerHTML = d.notes || '';
+    $('#d-retro').hidden = !d.retro;
+    $('#d-retro-p').innerHTML = d.retro || '';
     $('#d-time').textContent = d.time >= 60 ? (d.time % 60 ? `${Math.floor(d.time / 60)} min ${d.time % 60} s` : `${Math.floor(d.time / 60)} min`) : `${d.time} s`;
     $('#d-total').textContent = `≈ ${Math.round(totalSec / 60)} min`;
   }
