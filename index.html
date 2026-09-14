@@ -563,7 +563,8 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
   text-wrap:pretty}
 .prototype-link{display:block;color:inherit;text-decoration:none;cursor:pointer}
 .prototype-link:focus-visible{outline:2px solid var(--sun);outline-offset:8px;border-radius:20px}
-#s10flow .screen>img{opacity:0;transition:opacity .5s var(--ease)}
+/* the flow captures sit ~5% of screen width higher than the slide 9 captures; nudge them down so the logo clears the island the same way */
+#s10flow .screen>img{top:calc(var(--sw)*.052);opacity:0;transition:opacity .5s var(--ease)}
 #s10flow .screen>img.on{opacity:1}
 @media (prefers-reduced-motion:reduce){#s10flow .screen>img{transition:none}}
 
@@ -1228,7 +1229,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
 
   <div class="s10-group" style="left:50%;top:203px;transform:translateX(-50%)">
   <a class="prototype-link b" style="--i:2" href="https://ms-sunshine-app-prototype.vercel.app/home" target="_blank" rel="noopener noreferrer" aria-label="Open the Ms. Sunshine prototype in a new tab">
-    <div class="iphone" id="s10flow" style="--w:240px;--scr:#fff">
+    <div class="iphone" id="s10flow" style="--w:240px;--scr:#f5f5f5">
       <div class="body"><div class="screen">
         <img class="on" src="Images/Slide10/flow-1-activities.png" alt="The activity log in Ms. Sunshine: a teacher picks an activity, marks who took part, records what they ate, and publishes it to the day.">
         <img src="Images/Slide10/flow-2-roster.png" alt="">
