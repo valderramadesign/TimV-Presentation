@@ -563,10 +563,11 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
   text-wrap:pretty}
 .prototype-link{display:block;color:inherit;text-decoration:none;cursor:pointer}
 .prototype-link:focus-visible{outline:2px solid var(--sun);outline-offset:8px;border-radius:20px}
-/* the flow captures sit ~5% of screen width higher than the slide 9 captures; nudge them down so the logo clears the island the same way */
-#s10flow .screen>img{top:calc(var(--sw)*.052);opacity:0;transition:opacity .5s var(--ease)}
-#s10flow .screen>img.on{opacity:1}
-@media (prefers-reduced-motion:reduce){#s10flow .screen>img{transition:none}}
+/* the flow captures sit ~5% of screen width higher than the slide 9 captures: the screen grows by that
+   much and the frames keep their own aspect, so the logo clears the island like slide 9 and nothing is cut */
+#s10flow{--sh:calc(var(--sw)*2.226)}
+#s10flow .walk{background:#f5f5f5}
+#s10flow .walk .fr{top:calc(var(--sw)*.052);height:auto}
 
 /* 11 — closing mark */
 #s11 .s11-kick{left:72px;top:116px;width:900px;margin:0;
@@ -1231,17 +1232,21 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
   <a class="prototype-link b" style="--i:2" href="https://ms-sunshine-app-prototype.vercel.app/home" target="_blank" rel="noopener noreferrer" aria-label="Open the Ms. Sunshine prototype in a new tab">
     <div class="iphone" id="s10flow" style="--w:240px;--scr:#f5f5f5">
       <div class="body"><div class="screen">
-        <img class="on" src="Images/Slide10/flow-1-activities.png" alt="The activity log in Ms. Sunshine: a teacher picks an activity, marks who took part, records what they ate, and publishes it to the day.">
-        <img src="Images/Slide10/flow-2-roster.png" alt="">
-        <img src="Images/Slide10/flow-3-roster-ethan.png" alt="">
-        <img src="Images/Slide10/flow-4-roster-oliver.png" alt="">
-        <img src="Images/Slide10/flow-5-roster-ready.png" alt="">
-        <img src="Images/Slide10/flow-6-meals.png" alt="">
-        <img src="Images/Slide10/flow-7-meals-banana.png" alt="">
-        <img src="Images/Slide10/flow-8-meals-ready.png" alt="">
-        <img src="Images/Slide10/flow-9-success.png" alt="">
+        <div class="walk" data-walk="ms" data-sh="2.226">
+          <img class="fr" src="Images/Slide10/flow-1-activities.png" alt="The activity log in Ms. Sunshine: a teacher picks an activity, marks who took part, records what they ate, and publishes it to the day.">
+          <img class="fr" src="Images/Slide10/flow-2-roster.png" alt="">
+          <img class="fr" src="Images/Slide10/flow-3-roster-ethan.png" alt="">
+          <img class="fr" src="Images/Slide10/flow-4-roster-oliver.png" alt="">
+          <img class="fr" src="Images/Slide10/flow-5-roster-ready.png" alt="">
+          <img class="fr" src="Images/Slide10/flow-6-meals.png" alt="">
+          <img class="fr" src="Images/Slide10/flow-7-meals-banana.png" alt="">
+          <img class="fr" src="Images/Slide10/flow-8-meals-ready.png" alt="">
+          <img class="fr" src="Images/Slide10/flow-9-success.png" alt="">
+          <span class="pt"><span class="wdot"></span></span>
+        </div>
         <div class="status"><span class="t">9:41</span><span class="ico"><svg class="cell"><use href="#ic-cell"/></svg><svg class="wifi"><use href="#ic-wifi"/></svg><svg class="batt"><use href="#ic-batt"/></svg></span></div><div class="island"></div><div class="gloss"></div>
       </div></div>
+      <div class="cur" aria-hidden="true"><span class="pt"><img src="Images/Slide4/hand.png" alt=""></span></div>
       <i class="l act"></i><i class="l vup"></i><i class="l vdn"></i><i class="r pwr"></i><i class="r cam"></i>
     </div>
   </a>
@@ -1547,7 +1552,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
 
   /* ---- slides 4 + 7 - device walkthroughs (ported from tim-ai-design.com) ---- */
   (function walkthroughs() {
-    const HOSTS = ['s4', 's7'].map(id => document.getElementById(id)).filter(Boolean);
+    const HOSTS = ['s4', 's7', 's10'].map(id => document.getElementById(id)).filter(Boolean);
     if (!HOSTS.length) return;
     const HOME = { x: .45, y: 1.16 }, EXIT = { x: .58, y: 1.16 }, Z = 3408 / 1572;
     const ez = e => e < .5 ? 4 * e ** 3 : 1 - Math.pow(-2 * e + 2, 3) / 2;
@@ -1621,7 +1626,18 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
         { x: .0827, y: .674, press: { layer: 5, fade: .24 } },
         { x: .4975, y: .9041, press: { layer: 6, fade: .38 } },
         { x: .4975, y: .8947, press: { layer: 7, fade: .38 } }
-      ], [{ layer: 0, wait: 2.1, fade: .56 }])
+      ], [{ layer: 0, wait: 2.1, fade: .56 }]),
+      /* slide 10 screen is 2.226 tall, so these y stops already include the .052 frame offset */
+      ms: build([
+        { x: .194, y: .410, press: { layer: 1, fade: .38 } },
+        { x: .5, y: .251, press: { layer: 2, fade: .24 } },
+        { x: .5, y: .476, press: { layer: 3, fade: .24 } },
+        { x: .5, y: .700, press: { layer: 4, fade: .24 }, hold: .5 },
+        { x: .5, y: .909, press: { layer: 5, fade: .38 } },
+        { x: .194, y: .314, press: { layer: 6, fade: .24 } },
+        { x: .5, y: .600, press: { layer: 7, fade: .24 }, hold: .5 },
+        { x: .5, y: .909, press: { layer: 8, fade: .38 } }
+      ], [{ layer: 0, wait: 2.4, fade: .56 }])
     };
 
     const rigsFor = host => [...host.querySelectorAll('.walk')].map(el => {
@@ -1632,10 +1648,11 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
       /* screen sits inset by (rim + bezel) = .033w and measures .934w x 2.0305w */
       dotPt.style.left = (s0.x * 100).toFixed(3) + '%';
       dotPt.style.top = (s0.y * 100).toFixed(3) + '%';
-      handPt.style.left = ((.033 + .934 * s0.x) * W).toFixed(2) + 'px';
-      handPt.style.top = ((.033 + 2.0305 * s0.y) * W).toFixed(2) + 'px';
+      const SW = W * .934, SH = SW * (parseFloat(el.dataset.sh) || 2.174);
+      handPt.style.left = (.033 * W + SW * s0.x).toFixed(2) + 'px';
+      handPt.style.top = (.033 * W + SH * s0.y).toFixed(2) + 'px';
       return {
-        sc, s0, sw: W * .934, sh: W * .934 * 2.174, t: 0, dotPt, handPt,
+        sc, s0, sw: SW, sh: SH, t: 0, dotPt, handPt,
         dot: el.querySelector('.wdot'), hand: phone.querySelector('.cur img'),
         frames: [...el.querySelectorAll('.fr')], op: []
       };
@@ -1734,25 +1751,6 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
       .observe(document.getElementById(slideId), { attributes: true, attributeFilter: ['class'] });
     set(0);
   });
-
-  /* ---- slide 10: the activity-logging flow, on a timer ----
-     the case study these frames come from scrubs them on scroll; a deck has no scroll,
-     so the sequence runs itself, and only while its slide is on screen. */
-  (() => {
-    const rig = document.getElementById('s10flow'), slide = document.getElementById('s10');
-    if (!rig || !slide) return;
-    const frames = [...rig.querySelectorAll('.screen > img')];
-    if (frames.length < 2) return;
-    /* first and last frames read as statements, the ones between them as motion */
-    const hold = [1900, 1150, 950, 950, 1350, 1150, 950, 1350, 2400];
-    let i = 0, timer = 0;
-    const show = n => frames.forEach((f, k) => f.classList.toggle('on', k === n));
-    const step = () => { i = (i + 1) % frames.length; show(i); timer = setTimeout(step, hold[i]); };
-    const start = () => { if (timer || reduce) return; i = 0; show(0); timer = setTimeout(step, hold[0]); };
-    const stop = () => { clearTimeout(timer); timer = 0; show(0); };
-    new MutationObserver(() => slide.classList.contains('is-active') ? start() : stop())
-      .observe(slide, { attributes: true, attributeFilter: ['class'] });
-  })();
 
   /* ---- live prototype embed (same method as tim-ai-design.com/work/MsSunshineApp) ----
      the prototype is built for a 375pt phone, so it renders at that width and is scaled
