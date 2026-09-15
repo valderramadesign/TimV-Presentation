@@ -435,10 +435,10 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
 #s-ai .ai-hl{left:72px;top:118px;width:1296px}
 #s-ai .wire path{stroke:var(--moss)}
 #s-ai .wire text{fill:var(--moss);letter-spacing:.04em}
-/* five stations sit on the top run. each one is a bg-coloured patch that knocks the line out behind it
+/* six stations sit on the top run. each one is a bg-coloured patch that knocks the line out behind it
    (the return label's trick); the icon box is pulled left 9px so the drawing, not the box, meets the copy edge */
 #s-ai .ai-stages{left:116px;top:202px;width:1208px;margin:0;padding:0;list-style:none;
-  display:grid;grid-template-columns:repeat(5,216px);column-gap:32px;grid-template-rows:96px auto auto}
+  display:grid;grid-template-columns:repeat(6,174px);column-gap:32px;grid-template-rows:96px auto auto}
 #s-ai .ai-stage{display:grid;grid-template-rows:subgrid;grid-row:span 3;min-width:0}
 #s-ai .ai-node{display:flex;align-items:center;gap:10px;justify-self:start;margin-left:-9px;padding-right:10px;background:var(--bg)}
 #s-ai .ai-ic{flex:none;width:96px;height:96px;color:var(--moss)}
@@ -671,6 +671,10 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
     <rect pathLength="1" x="4.7" y="22.7" width="3.6" height="3.6" rx=".8"/>
     <rect pathLength="1" x="23.7" y="5.7" width="3.6" height="3.6" rx=".8"/>
   </symbol>
+  <symbol id="ic-decide" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".5" stroke-linecap="round" stroke-linejoin="round">
+    <circle pathLength="1" cx="16" cy="16" r="11.5"/>
+    <path pathLength="1" d="m10.1 16.4 4 4.1 8-8.6"/>
+  </symbol>
   <symbol id="ic-build" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".5" stroke-linecap="round" stroke-linejoin="round">
     <rect pathLength="1" x="10.25" y="6.5" width="11.5" height="8.5" rx="2"/>
     <rect pathLength="1" x="3" y="18" width="11.5" height="8.5" rx="2"/>
@@ -754,14 +758,14 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
 </section>
 
 <!-- ================= 2 · HOW I WORK ================= -->
-<section class="slide" id="s-ai" data-project="tv" data-steps="5" data-step="0" aria-label="Slide 2">
+<section class="slide" id="s-ai" data-project="tv" data-steps="6" data-step="0" aria-label="Slide 2">
   <header class="eyebrow b" style="--i:0">
     <span class="pill"><i class="dot"></i>Tim Valderrama · Lead Product Designer</span>
-    <span class="stage-tag">How I work · <b>Evidence → Launch → Next decision</b></span>
+    <span class="stage-tag">How I work · <b>Ground → Learn → Next decision</b></span>
   </header>
   <h2 class="hl md ai-hl b" style="--i:1">AI expands, tests and connects the loop.</h2>
 
-  <!-- The thread: one loop, drawn clockwise from Align and back to it.
+  <!-- The thread: one loop, drawn clockwise from Ground and back to it.
        Two paths, so the return label sits inside the line rather than on top of it. -->
   <svg class="wire" viewBox="0 0 1440 810" aria-hidden="true">
     <path class="draw" style="--i:2;animation-duration:1.6s" d="M116 250 H1344 A24 24 0 0 1 1368 274 V606 A24 24 0 0 1 1344 630 H856" pathLength="1"/>
@@ -769,31 +773,36 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
     <text class="b" style="--i:21" x="720" y="630" text-anchor="middle" dominant-baseline="central">Signals become the next product decision</text>
   </svg>
 
-  <!-- Five stations on the top run. Align is there from the start; ← → brings in the rest one by one. -->
+  <!-- Six stations on the top run. Ground is there from the start; ← → brings in the rest one by one. -->
   <ol class="ai-stages">
     <li class="ai-stage acc" data-s="0">
-      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-align"/></svg><h3>Align</h3></div>
-      <p>Shared outcome, evidence and decision owner.</p>
-      <span class="to"><b>AI</b>Grounds the brief in signals</span>
+      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-align"/></svg><h3>Ground</h3></div>
+      <p>Evidence, context and signals.</p>
+      <span class="to"><b>AI</b>Synthesizes the brief</span>
     </li>
     <li class="ai-stage acc" data-s="1">
       <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-frame"/></svg><h3>Frame</h3></div>
-      <p>Success criteria, constraints and risk.</p>
-      <span class="to"><b>AI</b>Finds assumptions and edge cases</span>
+      <p>Outcome, constraints and success criteria.</p>
+      <span class="to"><b>AI</b>Finds gaps and edge cases</span>
     </li>
     <li class="ai-stage acc" data-s="2">
-      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-design"/></svg><h3>Design</h3></div>
-      <p>Figma turns intent into a testable system.</p>
-      <span class="to"><b>AI</b>Explores and critiques options</span>
+      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-design"/></svg><h3>Explore</h3></div>
+      <p>Figma turns intent into testable options.</p>
+      <span class="to"><b>AI</b>Expands and critiques directions</span>
     </li>
     <li class="ai-stage acc" data-s="3">
-      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-build"/></svg><h3>Build<br>+ verify</h3></div>
-      <p>MCP connects Figma to the component system.</p>
-      <span class="to"><b>AI</b>Builds, checks states and accessibility</span>
+      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-decide"/></svg><h3>Decide</h3></div>
+      <p>Team chooses the trade-off and accountable owner.</p>
+      <span class="to"><b>AI</b>Compares risks and evidence</span>
     </li>
     <li class="ai-stage acc" data-s="4">
-      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-launch"/></svg><h3>Launch<br>+ learn</h3></div>
-      <p>Release signals shape the next decision.</p>
+      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-build"/></svg><h3>Build<br>+ Verify</h3></div>
+      <p>MCP connects Figma, code and live UI.</p>
+      <span class="to"><b>AI</b>Builds, checks states and accessibility</span>
+    </li>
+    <li class="ai-stage acc" data-s="5">
+      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-launch"/></svg><h3>Learn</h3></div>
+      <p>Signals sharpen the next decision.</p>
       <span class="to"><b>AI</b>Synthesizes feedback and behavior</span>
     </li>
   </ol>
@@ -803,7 +812,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
     <li><b>Figma + Code Connect</b>design intent ↔ production components</li>
     <li><b>Figma MCP + AI agents</b>context, critique, implementation and QA</li>
   </ul>
-  <div class="s3-rail b" style="--i:5"><i class="now"></i><i></i><i></i><i></i><i></i><em>← → to step through</em></div>
+  <div class="s3-rail b" style="--i:5"><i class="now"></i><i></i><i></i><i></i><i></i><i></i><em>← → to step through</em></div>
 </section>
 
 <!-- ================= PAYPAL GERMANY OPENER ================= -->
@@ -1459,13 +1468,14 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
       notes: "The three handsets show real work: PayPal Germany checkout, Pay in 4, and the Ms. Sunshine parent feed." },
     { title: "AI expands, tests and connects the loop.", time: 55,
       points: [
-        "Start with the decision: a shared outcome, evidence, owner and success criteria.",
-        "AI grounds the brief, finds blind spots and expands options. The team chooses the trade-off.",
-        "Figma carries design intent; Code Connect and MCP keep components, implementation and live UI in the loop.",
-        "Before release, AI-assisted checks cover states, accessibility, content and visual drift. People accept quality and release.",
-        "Launch data, feedback and support signals become the next product decision."
+        "Ground the decision in evidence, then frame the outcome, constraints and success criteria with the team.",
+        "AI synthesizes context, expands options and critiques against the agreed bar; people choose the trade-off.",
+        "Figma carries design intent. Code Connect and Figma MCP keep components, implementation and live UI connected.",
+        "At Decide, the team commits the direction and owner before implementation begins.",
+        "Build + Verify checks states, accessibility, content and visual drift before people accept quality.",
+        "Learn from the release, then feed the signals into the next decision."
       ],
-      notes: "Step through one station at a time. Pause at Build + verify: Figma MCP keeps design intent connected to code and the live experience." },
+      notes: "Step through one station at a time. Pause at Decide to show ownership, then at Build + Verify to show the Figma MCP loop." },
     { title: "German customers wanted flexibility through responsible credit", time: 60,
       points: [
         "I owned the German credit checkout and application experience, working with the local research lead and checkout partner.",
