@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tim Valderrama — Strategy, Systems, Craft</title>
 <!--
-  Tim Valderrama · portfolio talk · 11 slides · 1440×810 canvas
+  Tim Valderrama · portfolio talk · 12 slides · 1440×810 canvas
   Keys: ← → navigate · Home/End · T talking points · Esc close · F fullscreen · H hide chrome (clean screenshots) · ⌘P print/PDF
   Every [TYPE — label] box is a placeholder for an asset Tim inserts later. Geometry is inline (left/top/width/height) so it is easy to adjust.
 -->
@@ -20,6 +20,7 @@
   --pp:#0070E0; --pp-text:#0059B8; --pp-deep:#003087;
   --sun:#F2B705; --terra:#C25B2B;
   --bar:#B4C615; --bar-soft:#DBE0AE;
+  --moss:#3A6A50; /* slide 2 only: the thread that ties the loop together */
   /* Two families only: Libertinus Serif sets headings and figures,
      League Spartan sets body copy and every label. */
   --serif:'Libertinus Serif',Georgia,'Times New Roman',serif;
@@ -390,6 +391,7 @@ sup.fnm{font-size:.72em;letter-spacing:0;margin-left:2px}
 @media (prefers-reduced-motion:reduce){
   .b,.is-active .b{animation:none;opacity:1;transform:none}
   .draw,.is-active .draw{animation:none;stroke-dashoffset:0}
+  .acc{transition:none}
   .slide{transition:none}
   .progress span{transition:none}
 }
@@ -429,6 +431,28 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
 #s1 .sub{left:72px;top:446px;width:600px}
 #s1 .idx{left:72px;top:636px}
 
+/* 2 — how I work: one thread from evidence to the next decision */
+#s-ai .ai-hl{left:72px;top:118px;width:1296px}
+#s-ai .wire path{stroke:var(--moss)}
+#s-ai .wire text{fill:var(--moss);letter-spacing:.04em}
+/* five stations sit on the top run. each one is a bg-coloured patch that knocks the line out behind it
+   (the return label's trick); the icon box is pulled left 9px so the drawing, not the box, meets the copy edge */
+#s-ai .ai-stages{left:116px;top:202px;width:1208px;margin:0;padding:0;list-style:none;
+  display:grid;grid-template-columns:repeat(5,216px);column-gap:32px;grid-template-rows:96px auto auto}
+#s-ai .ai-stage{display:grid;grid-template-rows:subgrid;grid-row:span 3;min-width:0}
+#s-ai .ai-node{display:flex;align-items:center;gap:10px;justify-self:start;margin-left:-9px;padding-right:10px;background:var(--bg)}
+#s-ai .ai-ic{flex:none;width:96px;height:96px;color:var(--moss)}
+#s-ai .ai-stage h3{margin:0;font:400 28px/1.05 var(--serif);letter-spacing:-.012em;color:var(--ink)}
+#s-ai .ai-stage p{margin:18px 0 0;font:300 15px/1.42 var(--sans);color:var(--ink-2);text-wrap:pretty}
+#s-ai .ai-stage .to{margin-top:12px;font:300 13px/1.45 var(--sans);color:var(--ink-3);text-wrap:pretty}
+#s-ai .ai-stage .to b{font:400 10px/1 var(--sans);letter-spacing:.02em;color:var(--ink-3);opacity:.8;margin-right:8px}
+#s-ai .ai-tools{left:116px;top:552px;display:flex;align-items:baseline;margin:0;padding:0;list-style:none;white-space:nowrap}
+#s-ai .ai-tools li{padding:0 13px;border-left:1px solid var(--rule);font:300 12.5px/1.45 var(--sans);color:var(--ink-2)}
+#s-ai .ai-tools li:first-child{padding-left:0;border-left:0;font:400 10px/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+#s-ai .ai-tools li:nth-child(2){border-left:0;padding-left:11px}
+#s-ai .ai-tools b{font-weight:400;color:var(--ink);margin-right:6px}
+#s-ai .s3-rail{left:72px}
+
 /* 3 — the equation, solved one variable at a time */
 .eq{left:72px;top:132px;width:1296px;margin:0;font:400 46px/1.1 var(--serif);letter-spacing:-.01em;color:var(--ink);white-space:nowrap}
 .eq .op{font:400 30px/1 var(--serif);color:var(--acc-text);opacity:.55;margin:0 14px;vertical-align:.12em;transition:opacity .5s var(--ease)}
@@ -455,6 +479,10 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
 .s3-slot{position:absolute;inset:0 0 auto;opacity:0;visibility:hidden;transform:translateY(10px);
   transition:opacity .45s var(--ease),transform .45s var(--ease),visibility 0s .45s}
 .s3-slot.is-on{opacity:1;visibility:visible;transform:none;transition-delay:0s,0s,0s}
+/* accumulating stop: arrives on its own stop and stays for every stop after it (slide 2 stations) */
+.acc{opacity:0;visibility:hidden;transform:translateY(10px);
+  transition:opacity .45s var(--ease),transform .45s var(--ease),visibility 0s .45s}
+.acc.is-on{opacity:1;visibility:visible;transform:none;transition-delay:0s,0s,0s}
 .s3-slot h2{margin:0;font:400 34px/1.14 var(--serif);letter-spacing:-.018em;color:var(--ink)}
 .s3-slot p{margin:12px 0 0;font:400 17px/1.6 var(--sans);color:var(--ink-2)}
 
@@ -594,6 +622,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
   .b,.is-active .b{opacity:1!important;transform:none!important;animation:none!important}
   .is-active .pbar .seg,.is-active .pbar .lift{animation:none!important;clip-path:none!important}
   .draw,.is-active .draw{stroke-dashoffset:0!important;animation:none!important}
+  .acc{opacity:1!important;visibility:visible!important;transform:none!important}
   .tab,.drawer,.hud,.progress,.grain{display:none!important}
 }
 </style>
@@ -617,6 +646,32 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
     <rect x=".5" y=".5" width="23" height="12" rx="3.9" fill="none" stroke="currentColor" stroke-width="1" opacity=".38"/>
     <rect x="2" y="2" width="17.6" height="9" rx="2.6"/>
     <path d="M25 4.4a2.6 2.6 0 0 1 0 4.2z" opacity=".42"/>
+  </symbol>
+  <!-- slide 2 stations: the tim-ai-design.com/work/meta line drawings, one idea each on a 32-unit grid.
+       stroke .5 is 1.5px at 96px, the weight of the wire they sit on -->
+  <symbol id="ic-align" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="11.8" cy="12.4" r="7.4"/>
+    <circle cx="20.2" cy="12.4" r="7.4"/>
+    <circle cx="16" cy="19.6" r="7.4"/>
+  </symbol>
+  <symbol id="ic-frame" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9V6.4A3.4 3.4 0 0 1 6.4 3H9M23 3h2.6A3.4 3.4 0 0 1 29 6.4V9M29 23v2.6a3.4 3.4 0 0 1-3.4 3.4H23M9 29H6.4A3.4 3.4 0 0 1 3 25.6V23"/>
+    <rect x="8.5" y="10.5" width="15" height="11" rx="2.2"/>
+  </symbol>
+  <symbol id="ic-design" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8.3 24.5C16.5 24.5 15.5 7.5 23.7 7.5"/>
+    <rect x="4.7" y="22.7" width="3.6" height="3.6" rx=".8"/>
+    <rect x="23.7" y="5.7" width="3.6" height="3.6" rx=".8"/>
+  </symbol>
+  <symbol id="ic-build" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="10.25" y="6.5" width="11.5" height="8.5" rx="2"/>
+    <rect x="3" y="18" width="11.5" height="8.5" rx="2"/>
+    <rect x="17.5" y="18" width="11.5" height="8.5" rx="2"/>
+  </symbol>
+  <symbol id="ic-launch" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="5" width="26" height="22" rx="3.6"/>
+    <path d="M8 21.5 13.2 15.5 17.6 18.6 24 10.5"/>
+    <path d="M20.6 10.5H24v3.4"/>
   </symbol>
 </svg>
 
@@ -690,8 +745,61 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
   </div>
 </section>
 
-<!-- ================= SLIDE 2 ================= -->
-<section class="slide" id="s2" data-project="pp" aria-label="Slide 2">
+<!-- ================= 2 · HOW I WORK ================= -->
+<section class="slide" id="s-ai" data-project="tv" data-steps="5" data-step="0" aria-label="Slide 2">
+  <header class="eyebrow b" style="--i:0">
+    <span class="pill"><i class="dot"></i>Tim Valderrama · Lead Product Designer</span>
+    <span class="stage-tag">How I work · <b>Evidence → Launch → Next decision</b></span>
+  </header>
+  <h2 class="hl md ai-hl b" style="--i:1">AI accelerates the work. People make the decisions.</h2>
+
+  <!-- The thread: one loop, drawn clockwise from Align and back to it.
+       Two paths, so the return label sits inside the line rather than on top of it. -->
+  <svg class="wire" viewBox="0 0 1440 810" aria-hidden="true">
+    <path class="draw" style="--i:2;animation-duration:1.6s" d="M116 250 H1344 A24 24 0 0 1 1368 274 V606 A24 24 0 0 1 1344 630 H856" pathLength="1"/>
+    <path class="draw" style="--i:17;animation-duration:.7s" d="M584 630 H96 A24 24 0 0 1 72 606 V274 A24 24 0 0 1 96 250 H116" pathLength="1"/>
+    <text class="b" style="--i:21" x="720" y="630" text-anchor="middle" dominant-baseline="central">What we learn becomes the next product decision</text>
+  </svg>
+
+  <!-- Five stations on the top run. Align is there from the start; ← → brings in the rest one by one. -->
+  <ol class="ai-stages">
+    <li class="ai-stage acc" data-s="0">
+      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-align"/></svg><h3>Align</h3></div>
+      <p>Product, research and engineering agree on the outcome.</p>
+      <span class="to"><b>AI</b>Synthesizes research and signals</span>
+    </li>
+    <li class="ai-stage acc" data-s="1">
+      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-frame"/></svg><h3>Frame</h3></div>
+      <p>Scope and constraints, set with engineering early.</p>
+      <span class="to"><b>AI</b>Surfaces gaps and edge cases</span>
+    </li>
+    <li class="ai-stage acc" data-s="2">
+      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-design"/></svg><h3>Design</h3></div>
+      <p>Figma is the living system the team shares.</p>
+      <span class="to"><b>AI</b>Explores more directions, faster</span>
+    </li>
+    <li class="ai-stage acc" data-s="3">
+      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-build"/></svg><h3>Build</h3></div>
+      <p>I stay with engineering, so the details survive.</p>
+      <span class="to"><b>AI</b>Documentation, states and QA</span>
+    </li>
+    <li class="ai-stage acc" data-s="4">
+      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-launch"/></svg><h3>Launch<br>+ learn</h3></div>
+      <p>We read the signals with product, data and support.</p>
+      <span class="to"><b>AI</b>Finds the patterns in feedback and data</span>
+    </li>
+  </ol>
+
+  <ul class="ai-tools b" style="--i:9">
+    <li>Tools</li>
+    <li><b>Figma</b>the shared source of truth for the experience</li>
+    <li><b>Claude + ChatGPT + Gemini</b>synthesis, exploration, prototyping, documentation and QA</li>
+  </ul>
+  <div class="s3-rail b" style="--i:5"><i class="now"></i><i></i><i></i><i></i><i></i><em>← → to step through</em></div>
+</section>
+
+<!-- ================= PAYPAL GERMANY OPENER ================= -->
+<section class="slide" id="s2" data-project="pp" aria-label="Slide 3">
   <header class="eyebrow b" style="--i:0">
     <span class="pill"><i class="dot"></i>PayPal Germany</span>
     <span class="stage-tag">01 · <b>Customer problem</b> → Business consequence</span>
@@ -708,8 +816,8 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
   </figure>
 </section>
 
-<!-- ================= SLIDE 3 ================= -->
-<section class="slide" id="s3" data-project="pp" data-steps="5" data-step="0" aria-label="Slide 3">
+<!-- ================= PAYPAL GERMANY STRATEGY ================= -->
+<section class="slide" id="s3" data-project="pp" data-steps="5" data-step="0" aria-label="Slide 4">
       <header class="eyebrow b" style="--i:0">
         <span class="pill"><i class="dot"></i>PayPal Germany</span>
         <span class="stage-tag">01 · Options → <b>Strategic choice</b> → Repeatable system</span>
@@ -864,7 +972,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
     </section>
 
 <!-- ================= SLIDE 4 ================= -->
-<section class="slide" id="s4" data-project="pp" aria-label="Slide 4">
+<section class="slide" id="s4" data-project="pp" aria-label="Slide 5">
   <header class="eyebrow b" style="--i:0">
     <span class="pill"><i class="dot"></i>PayPal Germany</span>
     <span class="stage-tag">01 · Crafted experience → <b>Result</b></span>
@@ -924,7 +1032,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
 </section>
 
 <!-- ================= SLIDE 5 ================= -->
-<section class="slide" id="s5" data-project="pp" aria-label="Slide 5">
+<section class="slide" id="s5" data-project="pp" aria-label="Slide 6">
   <div class="ghost" aria-hidden="true" style="top:59.5px">02</div>
   <header class="eyebrow b" style="--i:0">
     <span class="pill"><i class="dot"></i>PayPal credit portfolio · US + UK</span>
@@ -964,7 +1072,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
 </section>
 
 <!-- ================= SLIDE 6 ================= -->
-<section class="slide" id="s6" data-project="pp" aria-label="Slide 6">
+<section class="slide" id="s6" data-project="pp" aria-label="Slide 7">
   <header class="eyebrow b" style="--i:0">
     <span class="pill"><i class="dot"></i>PayPal credit portfolio · US + UK</span>
     <span class="stage-tag">02 · Options → <b>Strategic choice</b> → Repeatable system</span>
@@ -1023,7 +1131,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
 </section>
 
 <!-- ================= SLIDE 7 ================= -->
-<section class="slide" id="s7" data-project="pp" aria-label="Slide 7">
+<section class="slide" id="s7" data-project="pp" aria-label="Slide 8">
   <header class="eyebrow b" style="--i:0">
     <span class="pill"><i class="dot"></i>PayPal credit portfolio · US + UK</span>
     <span class="stage-tag">02 · Crafted experience → <b>Result</b></span>
@@ -1099,7 +1207,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
 </section>
 
 <!-- ================= SLIDE 8 ================= -->
-<section class="slide" id="s8" data-project="sun" aria-label="Slide 8">
+<section class="slide" id="s8" data-project="sun" aria-label="Slide 9">
   <div class="ghost" aria-hidden="true">03</div>
   <header class="eyebrow b" style="--i:0">
     <span class="pill"><i class="dot"></i>Ms. Sunshine · Preschool operations</span>
@@ -1133,7 +1241,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
 </section>
 
 <!-- ================= SLIDE 9 ================= -->
-<section class="slide" id="s9" data-project="sun" aria-label="Slide 9">
+<section class="slide" id="s9" data-project="sun" aria-label="Slide 10">
   <header class="eyebrow b" style="--i:0">
     <span class="pill"><i class="dot"></i>Ms. Sunshine · Preschool operations</span>
     <span class="stage-tag">03 · Options → <b>Strategic choice</b> → Repeatable system</span>
@@ -1204,7 +1312,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
 </section>
 
 <!-- ================= SLIDE 10 ================= -->
-<section class="slide" id="s10" data-project="sun" aria-label="Slide 10">
+<section class="slide" id="s10" data-project="sun" aria-label="Slide 11">
   <header class="eyebrow b" style="--i:0">
     <span class="pill"><i class="dot"></i>Ms. Sunshine · Preschool operations</span>
     <span class="stage-tag">03 · Crafted experience → <b>Result</b></span>
@@ -1257,7 +1365,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
 </section>
 
 <!-- ================= SLIDE 11 ================= -->
-<section class="slide" id="s11" data-project="tv" aria-label="Slide 11">
+<section class="slide" id="s11" data-project="tv" aria-label="Slide 12">
     <header class="eyebrow b" style="--i:0">
       <span class="pill"><i class="dot"></i>Tim Valderrama</span>
       <span class="stage-tag">Strategy · Systems · Craft</span>
@@ -1306,7 +1414,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
 <div class="grain" aria-hidden="true"></div>
 <div class="progress" aria-hidden="true"><span id="bar"></span></div>
 <div class="hud">
-  <div class="counter" aria-live="polite"><b id="cur">01</b> / 11</div>
+  <div class="counter" aria-live="polite"><b id="cur">01</b> / 12</div>
   <div class="navbtns">
     <button id="prev" aria-label="Previous slide"><svg viewBox="0 0 16 16"><path d="M10 3 5 8l5 5"/></svg></button>
     <button id="next" aria-label="Next slide"><svg viewBox="0 0 16 16"><path d="m6 3 5 5-5 5"/></svg></button>
@@ -1317,7 +1425,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
 <button class="tab" id="tab" aria-controls="drawer" aria-expanded="false">Talking points <span class="k">T</span></button>
 <aside class="drawer" id="drawer" role="dialog" aria-label="Talking points" aria-hidden="true">
   <div class="d-head">
-    <span class="d-eyebrow" id="d-eyebrow">Talking points · Slide 01 of 11</span>
+    <span class="d-eyebrow" id="d-eyebrow">Talking points · Slide 01 of 12</span>
     <button class="d-close" id="d-close" aria-label="Close talking points"><svg viewBox="0 0 12 12"><path d="M1 1l10 10M11 1 1 11"/></svg></button>
   </div>
   <div class="d-body">
@@ -1341,6 +1449,16 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
         "These three stories follow the same arc: a customer problem, a strategic decision, a reusable system, and a measurable result."
       ],
       notes: "The three handsets show real work: PayPal Germany checkout, Pay in 4, and the Ms. Sunshine parent feed." },
+    { title: "AI accelerates the work. People make the decisions.", time: 55,
+      points: [
+        "Align: product, research and engineering agree on the customer problem and the outcome we need. AI synthesizes the research, signals and assumptions.",
+        "Frame: we set scope, constraints and what good looks like, with engineering in the room early. AI surfaces gaps, risks and edge cases.",
+        "Design: Figma is the living system the team shares, not a handoff file. Edge cases are designed in. AI explores more directions, faster.",
+        "Build: I stay with engineering, so the experience ships coherent and the details survive. AI supports documentation, states and QA.",
+        "Launch + learn: we ship, measure the outcome and read the signals with product, data and support. AI finds the patterns in feedback and data.",
+        "I design the whole loop, not just the screens. What we learn becomes the next product decision, and a person owns every decision."
+      ],
+      notes: "Step through with the arrow keys, one station per stop. Trace the thread with your hand: evidence in at Align, out at Launch, back around as the next decision." },
     { title: "German customers wanted flexibility through responsible credit", time: 60,
       points: [
         "I owned the German credit checkout and application experience, working with the local research lead and checkout partner.",
@@ -1448,6 +1566,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
   function setStep(el, s) {
     el.dataset.step = s;
     el.querySelectorAll('.s3-slot, .s3-set').forEach(n => n.classList.toggle('is-on', +n.dataset.s === s));
+    el.querySelectorAll('.acc').forEach(n => n.classList.toggle('is-on', +n.dataset.s <= s));
     el.querySelectorAll('.s3-rail i').forEach((d, i) => {
       d.classList.toggle('done', i < s); d.classList.toggle('now', i === s);
     });
