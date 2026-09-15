@@ -442,6 +442,13 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
 #s-ai .ai-stage{display:grid;grid-template-rows:subgrid;grid-row:span 3;min-width:0}
 #s-ai .ai-node{display:flex;align-items:center;gap:10px;justify-self:start;margin-left:-9px;padding-right:10px;background:var(--bg)}
 #s-ai .ai-ic{flex:none;width:96px;height:96px;color:var(--moss)}
+/* the icon draws itself once the copy has settled (.45s = the .acc transition). Every shape carries
+   pathLength="1", so one dash pattern inherits through <use> and all strokes of an icon finish together —
+   the pen-tip look of 21st.dev's lucide-icon-drawer (anime.js createDrawable, inOutQuad, 1s).
+   The offset starts past 1 so no round-cap dot sits at the path start before the pen arrives. */
+#s-ai .acc.is-on .ai-ic{animation:ic-draw 1s cubic-bezier(.45,0,.55,1) .45s backwards}
+@keyframes ic-draw{from{stroke-dasharray:1 1.1;stroke-dashoffset:1.01}to{stroke-dasharray:1 1.1;stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){#s-ai .acc.is-on .ai-ic{animation:none}}
 #s-ai .ai-stage h3{margin:0;font:400 28px/1.05 var(--serif);letter-spacing:-.012em;color:var(--ink)}
 #s-ai .ai-stage p{margin:18px 0 0;font:300 15px/1.42 var(--sans);color:var(--ink-2);text-wrap:pretty}
 #s-ai .ai-stage .to{margin-top:12px;font:300 13px/1.45 var(--sans);color:var(--ink-3);text-wrap:pretty}
@@ -623,6 +630,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
   .is-active .pbar .seg,.is-active .pbar .lift{animation:none!important;clip-path:none!important}
   .draw,.is-active .draw{stroke-dashoffset:0!important;animation:none!important}
   .acc{opacity:1!important;visibility:visible!important;transform:none!important}
+  .ai-ic{animation:none!important}
   .tab,.drawer,.hud,.progress,.grain{display:none!important}
 }
 </style>
@@ -650,28 +658,28 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
   <!-- slide 2 stations: the tim-ai-design.com/work/meta line drawings, one idea each on a 32-unit grid.
        stroke .5 is 1.5px at 96px, the weight of the wire they sit on -->
   <symbol id="ic-align" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".5" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="11.8" cy="12.4" r="7.4"/>
-    <circle cx="20.2" cy="12.4" r="7.4"/>
-    <circle cx="16" cy="19.6" r="7.4"/>
+    <circle pathLength="1" cx="11.8" cy="12.4" r="7.4"/>
+    <circle pathLength="1" cx="20.2" cy="12.4" r="7.4"/>
+    <circle pathLength="1" cx="16" cy="19.6" r="7.4"/>
   </symbol>
   <symbol id="ic-frame" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M3 9V6.4A3.4 3.4 0 0 1 6.4 3H9M23 3h2.6A3.4 3.4 0 0 1 29 6.4V9M29 23v2.6a3.4 3.4 0 0 1-3.4 3.4H23M9 29H6.4A3.4 3.4 0 0 1 3 25.6V23"/>
-    <rect x="8.5" y="10.5" width="15" height="11" rx="2.2"/>
+    <path pathLength="1" d="M3 9V6.4A3.4 3.4 0 0 1 6.4 3H9M23 3h2.6A3.4 3.4 0 0 1 29 6.4V9M29 23v2.6a3.4 3.4 0 0 1-3.4 3.4H23M9 29H6.4A3.4 3.4 0 0 1 3 25.6V23"/>
+    <rect pathLength="1" x="8.5" y="10.5" width="15" height="11" rx="2.2"/>
   </symbol>
   <symbol id="ic-design" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M8.3 24.5C16.5 24.5 15.5 7.5 23.7 7.5"/>
-    <rect x="4.7" y="22.7" width="3.6" height="3.6" rx=".8"/>
-    <rect x="23.7" y="5.7" width="3.6" height="3.6" rx=".8"/>
+    <path pathLength="1" d="M8.3 24.5C16.5 24.5 15.5 7.5 23.7 7.5"/>
+    <rect pathLength="1" x="4.7" y="22.7" width="3.6" height="3.6" rx=".8"/>
+    <rect pathLength="1" x="23.7" y="5.7" width="3.6" height="3.6" rx=".8"/>
   </symbol>
   <symbol id="ic-build" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".5" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="10.25" y="6.5" width="11.5" height="8.5" rx="2"/>
-    <rect x="3" y="18" width="11.5" height="8.5" rx="2"/>
-    <rect x="17.5" y="18" width="11.5" height="8.5" rx="2"/>
+    <rect pathLength="1" x="10.25" y="6.5" width="11.5" height="8.5" rx="2"/>
+    <rect pathLength="1" x="3" y="18" width="11.5" height="8.5" rx="2"/>
+    <rect pathLength="1" x="17.5" y="18" width="11.5" height="8.5" rx="2"/>
   </symbol>
   <symbol id="ic-launch" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".5" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="3" y="5" width="26" height="22" rx="3.6"/>
-    <path d="M8 21.5 13.2 15.5 17.6 18.6 24 10.5"/>
-    <path d="M20.6 10.5H24v3.4"/>
+    <rect pathLength="1" x="3" y="5" width="26" height="22" rx="3.6"/>
+    <path pathLength="1" d="M8 21.5 13.2 15.5 17.6 18.6 24 10.5"/>
+    <path pathLength="1" d="M20.6 10.5H24v3.4"/>
   </symbol>
 </svg>
 
