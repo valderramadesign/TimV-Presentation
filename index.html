@@ -449,7 +449,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
 #s-ai .acc.is-on .ai-ic{animation:ic-draw 1s cubic-bezier(.45,0,.55,1) .45s backwards}
 @keyframes ic-draw{from{stroke-dasharray:1 1.1;stroke-dashoffset:1.01}to{stroke-dasharray:1 1.1;stroke-dashoffset:0}}
 @media (prefers-reduced-motion:reduce){#s-ai .acc.is-on .ai-ic{animation:none}}
-#s-ai .ai-stage h3{margin:0;font:400 28px/1.05 var(--serif);letter-spacing:-.012em;color:var(--ink)}
+#s-ai .ai-stage h3{margin:0;font:400 26px/1.05 var(--serif);letter-spacing:-.012em;color:var(--ink)}
 #s-ai .ai-stage p{margin:11px 0 0;font:300 15px/1.42 var(--sans);color:var(--ink-2);text-wrap:pretty}
 #s-ai .ai-stage .to{margin-top:12px;font:300 13px/1.45 var(--sans);color:var(--ink-3);text-wrap:pretty}
 #s-ai .ai-stage .to b{font:400 10px/1 var(--sans);letter-spacing:.02em;color:var(--ink-3);opacity:.8;margin-right:8px}
@@ -657,28 +657,25 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
   </symbol>
   <!-- slide 2 stations: the tim-ai-design.com/work/meta line drawings, one idea each on a 32-unit grid.
        stroke .83 is 1.5px at 58px, matching the weight of the wire they sit on -->
-  <symbol id="ic-align" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".83" stroke-linecap="round" stroke-linejoin="round">
-    <circle pathLength="1" cx="11.8" cy="12.4" r="7.4"/>
-    <circle pathLength="1" cx="20.2" cy="12.4" r="7.4"/>
-    <circle pathLength="1" cx="16" cy="19.6" r="7.4"/>
+  <symbol id="ic-empathize" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".83" stroke-linecap="round" stroke-linejoin="round">
+    <path pathLength="1" d="M16 27C16 27 4.5 20.2 4.5 12.2A6.2 6.2 0 0 1 16 8.9A6.2 6.2 0 0 1 27.5 12.2C27.5 20.2 16 27 16 27Z"/>
   </symbol>
-  <symbol id="ic-frame" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".83" stroke-linecap="round" stroke-linejoin="round">
-    <path pathLength="1" d="M3 9V6.4A3.4 3.4 0 0 1 6.4 3H9M23 3h2.6A3.4 3.4 0 0 1 29 6.4V9M29 23v2.6a3.4 3.4 0 0 1-3.4 3.4H23M9 29H6.4A3.4 3.4 0 0 1 3 25.6V23"/>
-    <rect pathLength="1" x="8.5" y="10.5" width="15" height="11" rx="2.2"/>
+  <symbol id="ic-define" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".83" stroke-linecap="round" stroke-linejoin="round">
+    <circle pathLength="1" cx="13.8" cy="13.8" r="9.3"/>
+    <path pathLength="1" d="M20.6 20.6 28 28"/>
   </symbol>
-  <symbol id="ic-design" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".83" stroke-linecap="round" stroke-linejoin="round">
-    <path pathLength="1" d="M8.3 24.5C16.5 24.5 15.5 7.5 23.7 7.5"/>
-    <rect pathLength="1" x="4.7" y="22.7" width="3.6" height="3.6" rx=".8"/>
-    <rect pathLength="1" x="23.7" y="5.7" width="3.6" height="3.6" rx=".8"/>
-  </symbol>
-  <symbol id="ic-decide" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".83" stroke-linecap="round" stroke-linejoin="round">
+  <symbol id="ic-ideate" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".83" stroke-linecap="round" stroke-linejoin="round">
     <circle pathLength="1" cx="16" cy="16" r="11.5"/>
-    <path pathLength="1" d="m10.1 16.4 4 4.1 8-8.6"/>
+    <circle pathLength="1" cx="16" cy="16" r="4.6"/>
   </symbol>
-  <symbol id="ic-build" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".83" stroke-linecap="round" stroke-linejoin="round">
-    <rect pathLength="1" x="10.25" y="6.5" width="11.5" height="8.5" rx="2"/>
-    <rect pathLength="1" x="3" y="18" width="11.5" height="8.5" rx="2"/>
-    <rect pathLength="1" x="17.5" y="18" width="11.5" height="8.5" rx="2"/>
+  <symbol id="ic-prototype" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".83" stroke-linecap="round" stroke-linejoin="round">
+    <path pathLength="1" d="M20.3 6.3a2.4 2.4 0 0 1 3.4 0l2 2a2.4 2.4 0 0 1 0 3.4L11.6 25.8 5 27l1.2-6.6Z"/>
+    <path pathLength="1" d="M18 8.6 23.4 14"/>
+  </symbol>
+  <symbol id="ic-test" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".83" stroke-linecap="round" stroke-linejoin="round">
+    <rect pathLength="1" x="4" y="7" width="10.5" height="4.6" rx="1.6"/><rect pathLength="1" x="17.5" y="7" width="10.5" height="4.6" rx="1.6"/>
+    <rect pathLength="1" x="4" y="13.7" width="10.5" height="4.6" rx="1.6"/><rect pathLength="1" x="17.5" y="13.7" width="10.5" height="4.6" rx="1.6"/>
+    <rect pathLength="1" x="4" y="20.4" width="10.5" height="4.6" rx="1.6"/><rect pathLength="1" x="17.5" y="20.4" width="10.5" height="4.6" rx="1.6"/>
   </symbol>
   <symbol id="ic-launch" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".83" stroke-linecap="round" stroke-linejoin="round">
     <rect pathLength="1" x="3" y="5" width="26" height="22" rx="3.6"/>
@@ -761,11 +758,11 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
 <section class="slide" id="s-ai" data-project="tv" data-steps="6" data-step="0" aria-label="Slide 2">
   <header class="eyebrow b" style="--i:0">
     <span class="pill"><i class="dot"></i>Tim Valderrama · Lead Product Designer</span>
-    <span class="stage-tag">How I work · <b>Ground → Learn → Next decision</b></span>
+    <span class="stage-tag">How I work · <b>Empathize → Implement → Next decision</b></span>
   </header>
   <h2 class="hl md ai-hl b" style="--i:1">AI expands, tests and connects the loop.</h2>
 
-  <!-- The thread: one loop, drawn clockwise from Ground and back to it.
+  <!-- The thread: one loop, drawn clockwise from Empathize and back to it.
        Two paths, so the return label sits inside the line rather than on top of it. -->
   <svg class="wire" viewBox="0 0 1440 810" aria-hidden="true">
     <path class="draw" style="--i:2;animation-duration:1.6s" d="M116 250 H1344 A24 24 0 0 1 1368 274 V606 A24 24 0 0 1 1344 630 H856" pathLength="1"/>
@@ -773,37 +770,37 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
     <text class="b" style="--i:21" x="720" y="630" text-anchor="middle" dominant-baseline="central">Signals become the next product decision</text>
   </svg>
 
-  <!-- Six stations on the top run. Ground is there from the start; ← → brings in the rest one by one. -->
+  <!-- Six stations on the top run. Empathize is there from the start; ← → brings in the rest one by one. -->
   <ol class="ai-stages">
     <li class="ai-stage acc" data-s="0">
-      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-align"/></svg><h3>Ground</h3></div>
-      <p>Evidence, context and signals.</p>
-      <span class="to"><b>AI</b>Synthesizes the brief</span>
+      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-empathize"/></svg><h3>Empathize</h3></div>
+      <p>Research with real people, not synthetic users.</p>
+      <span class="to"><b>AI</b>Drafts plans, guides and tags evidence</span>
     </li>
     <li class="ai-stage acc" data-s="1">
-      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-frame"/></svg><h3>Frame</h3></div>
-      <p>Outcome, constraints and success criteria.</p>
-      <span class="to"><b>AI</b>Finds gaps and edge cases</span>
+      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-define"/></svg><h3>Define</h3></div>
+      <p>Separate symptoms from the real root cause.</p>
+      <span class="to"><b>AI</b>Clusters themes and exposes contradictions</span>
     </li>
     <li class="ai-stage acc" data-s="2">
-      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-design"/></svg><h3>Explore</h3></div>
-      <p>Figma turns intent into testable options.</p>
-      <span class="to"><b>AI</b>Expands and critiques directions</span>
+      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-ideate"/></svg><h3>Ideate</h3></div>
+      <p>Decide which experience is worth pursuing.</p>
+      <span class="to"><b>AI</b>Explores directions and critiques concepts</span>
     </li>
     <li class="ai-stage acc" data-s="3">
-      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-decide"/></svg><h3>Decide</h3></div>
-      <p>Team chooses the trade-off and accountable owner.</p>
-      <span class="to"><b>AI</b>Compares risks and evidence</span>
+      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-prototype"/></svg><h3>Prototype</h3></div>
+      <p>Set the fidelity the learning goal needs.</p>
+      <span class="to"><b>AI</b>Adds states, content and variants</span>
     </li>
     <li class="ai-stage acc" data-s="4">
-      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-build"/></svg><h3>Build<br>+ Verify</h3></div>
-      <p>MCP connects Figma, code and live UI.</p>
-      <span class="to"><b>AI</b>Builds, checks states and accessibility</span>
+      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-test"/></svg><h3>Test</h3></div>
+      <p>Moderate real sessions and read behavior.</p>
+      <span class="to"><b>AI</b>Synthesizes sessions and ranks issues</span>
     </li>
     <li class="ai-stage acc" data-s="5">
-      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-launch"/></svg><h3>Learn</h3></div>
-      <p>Signals sharpen the next decision.</p>
-      <span class="to"><b>AI</b>Synthesizes feedback and behavior</span>
+      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-launch"/></svg><h3>Implement</h3></div>
+      <p>Decide launch readiness and own the outcome.</p>
+      <span class="to"><b>AI</b>Propagates fixes, specs and QA cases</span>
     </li>
   </ol>
 
@@ -1468,14 +1465,14 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
       notes: "The three handsets show real work: PayPal Germany checkout, Pay in 4, and the Ms. Sunshine parent feed." },
     { title: "AI expands, tests and connects the loop.", time: 55,
       points: [
-        "Ground the decision in evidence, then frame the outcome, constraints and success criteria with the team.",
-        "AI synthesizes context, expands options and critiques against the agreed bar; people choose the trade-off.",
-        "Figma carries design intent. Code Connect and Figma MCP keep components, implementation and live UI connected.",
-        "At Decide, the team commits the direction and owner before implementation begins.",
-        "Build + Verify checks states, accessibility, content and visual drift before people accept quality.",
-        "Learn from the release, then feed the signals into the next decision."
+        "Empathize. People pick who to study, sit with them, read emotion and hesitation, protect consent. AI preps guides, transcribes and mines the evidence.",
+        "Define. People own the diagnosis: pick credible evidence, block their bias, verify each conclusion. AI groups themes and drafts the problem.",
+        "Ideate. People set direction, keep ideas tied to research, judge function before looks, check accessibility. AI drafts low-fi options and edge cases.",
+        "Prototype. People pick the tools, fix errors before automating, verify the logic, polish before users see it. AI builds it fast and links design context to code via MCP.",
+        "Test. People pilot first, run real sessions, probe without leading, pick what to fix first. AI writes tasks, flags leading questions, splits said from did.",
+        "Implement. People match org readiness, align product, design, engineering and legal, set safeguards, own the outcome. AI carries changes across screens and writes QA cases. Never prompt, generate, ship."
       ],
-      notes: "Step through one station at a time. Pause at Decide to show ownership, then at Build + Verify to show the Figma MCP loop." },
+      notes: "Pause at Ideate and Prototype. After Nehmat Gereige." },
     { title: "German customers wanted flexibility through responsible credit", time: 60,
       points: [
         "I owned the German credit checkout and application experience, working with the local research lead and checkout partner.",
