@@ -435,21 +435,16 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
 #s-ai .ai-hl{left:72px;top:118px;width:1296px}
 #s-ai .wire path{stroke:var(--moss)}
 #s-ai .wire text{fill:var(--moss);letter-spacing:.04em}
-/* six stations sit on the top run. each one is a bg-coloured patch that knocks the line out behind it
-   (the return label's trick). The icon box always sits 9px left of the column; the patch's left edge is
-   set per icon (padding-left = 20 − the drawing's left ink offset inside its 58px box) so the wire stops
-   20px before every drawing's ink — the same 20px the drawing keeps from its title */
-#s-ai .ai-stages{left:116px;top:202px;width:1208px;margin:0;padding:0;list-style:none;
-  display:grid;grid-template-columns:repeat(6,174px);column-gap:32px;grid-template-rows:60px auto auto}
-#s-ai .ai-stage{position:relative;top:18px;display:grid;grid-template-rows:subgrid;grid-row:span 3;min-width:0}
-#s-ai .ai-node{display:flex;align-items:center;gap:10px;justify-self:start;margin-left:calc(-9px - var(--pl));padding:0 10px 0 var(--pl);background:var(--bg)}
-#s-ai [data-s="0"] .ai-node{--pl:14px}    /* heart ink starts 6px in */
-#s-ai [data-s="1"] .ai-node{--pl:6px}     /* lens 14px */
-#s-ai [data-s="2"] .ai-node{--pl:26px}    /* bulb spills 6px left of the box */
-#s-ai [data-s="3"] .ai-node{--pl:1px}     /* phone 19px */
-#s-ai [data-s="4"] .ai-node{--pl:13.5px}  /* checklist 6.5px */
-#s-ai [data-s="5"] .ai-node{--pl:9.5px}   /* rocket 10.5px */
+/* Seven stations sit on the top run. Each full-size icon stacks above its title, while the title's
+   vertical centre lands directly on the loop line. The node background knocks out the line behind
+   the icon and title, preserving a clean continuous-loop treatment. */
+#s-ai .ai-stages{left:96px;top:241px;width:1248px;margin:0;padding:0;list-style:none;
+  display:grid;grid-template-columns:repeat(7,148px);column-gap:35.33px;grid-template-rows:106px auto auto}
+#s-ai .ai-stage{position:relative;top:-32px;display:grid;grid-template-rows:subgrid;grid-row:span 3;min-width:0}
+#s-ai .ai-node{display:flex;flex-direction:column;align-items:center;gap:8px;justify-self:center;padding:0 10px;background:var(--bg);text-align:center}
 #s-ai .ai-ic{flex:none;width:58px;height:58px;overflow:visible;color:var(--moss)}
+#s-ai [data-s="4"] .ai-ic{transform:translateX(4px)}
+#s-ai [data-s="6"] .ai-ic{transform:translateX(3px)}
 /* the icon draws itself once the copy has settled (.45s = the .acc transition). Every shape carries
    pathLength="1", so one dash pattern inherits through <use> and all strokes of an icon finish together —
    the pen-tip look of 21st.dev's lucide-icon-drawer (anime.js createDrawable, inOutQuad, 1s).
@@ -458,10 +453,10 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
 @keyframes ic-draw{from{stroke-dasharray:1 1.1;stroke-dashoffset:1.01}to{stroke-dasharray:1 1.1;stroke-dashoffset:0}}
 @media (prefers-reduced-motion:reduce){#s-ai .acc.is-on .ai-ic{animation:none}}
 #s-ai .ai-stage h3{margin:0;font:400 26px/1.05 var(--serif);letter-spacing:-.012em;color:var(--ink)}
-#s-ai .ai-stage p{margin:11px 0 0;font:300 15px/1.42 var(--sans);color:var(--ink-2);text-wrap:pretty}
-#s-ai .ai-stage .to{margin-top:12px;font:300 13px/1.45 var(--sans);color:var(--ink-3);text-wrap:pretty}
+#s-ai .ai-stage p{justify-self:center;width:136px;margin:11px 0 0;text-align:left;font:300 14px/1.42 var(--sans);color:var(--ink-2);text-wrap:pretty}
+#s-ai .ai-stage .to{justify-self:center;width:136px;margin-top:12px;text-align:left;font:300 12.5px/1.45 var(--sans);color:var(--ink-3);text-wrap:pretty}
 #s-ai .ai-stage .to b{font:400 10px/1 var(--sans);letter-spacing:.02em;color:var(--ink-3);opacity:.8;margin-right:8px}
-#s-ai .ai-tools{left:116px;top:568px;display:flex;align-items:baseline;margin:0;padding:0;list-style:none;white-space:nowrap}
+#s-ai .ai-tools{left:116px;top:538px;display:flex;align-items:baseline;margin:0;padding:0;list-style:none;white-space:nowrap}
 #s-ai .ai-tools li{padding:0 13px;border-left:1px solid var(--rule);font:300 12.5px/1.45 var(--sans);color:var(--ink-2)}
 #s-ai .ai-tools li:first-child{padding-left:0;border-left:0;font:400 10px/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
 #s-ai .ai-tools li:nth-child(2){border-left:0;padding-left:11px}
@@ -667,14 +662,14 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
        stroke .83 is 1.5px at 58px, matching the weight of the wire they sit on.
        viewBox x-offsets put every icon's right ink edge (measured in the title's cap band) 20px before
        the first letter's ink. Ideate spills 7px left of its box, so .ai-ic keeps overflow visible -->
-  <symbol id="ic-empathize" viewBox="1.18 0 32 32" fill="none" stroke="currentColor" stroke-width=".83" stroke-linecap="round" stroke-linejoin="round">
+  <symbol id="ic-empathize" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".83" stroke-linecap="round" stroke-linejoin="round">
     <path pathLength="1" d="M16 27C16 27 4.5 20.2 4.5 12.2A6.2 6.2 0 0 1 16 8.9A6.2 6.2 0 0 1 27.5 12.2C27.5 20.2 16 27 16 27Z"/>
   </symbol>
-  <symbol id="ic-define" viewBox="-3.25 0 32 32" fill="none" stroke="currentColor" stroke-width=".83" stroke-linecap="round" stroke-linejoin="round">
+  <symbol id="ic-define" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".83" stroke-linecap="round" stroke-linejoin="round">
     <circle pathLength="1" cx="13.8" cy="13.8" r="9.3"/>
     <path pathLength="1" d="M20.6 20.6 28 28"/>
   </symbol>
-  <symbol id="ic-ideate" viewBox="4.54 0 32 32" overflow="visible" fill="none" stroke="currentColor" stroke-width=".83" stroke-linecap="round" stroke-linejoin="round">
+  <symbol id="ic-ideate" viewBox="0 0 32 32" overflow="visible" fill="none" stroke="currentColor" stroke-width=".83" stroke-linecap="round" stroke-linejoin="round">
     <path pathLength="1" d="M4.6 10.9A12.5 12.5 0 0 1 28.2 18.6"/>
     <path pathLength="1" d="m25.5 15.9 2.7 2.7 2.7-2.7"/>
     <path pathLength="1" d="M27.4 21.1A12.5 12.5 0 0 1 3.8 13.4"/>
@@ -682,7 +677,13 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
     <path pathLength="1" d="M13.8 20.2C13.8 17.6 10.3 16.4 10.3 12.3A5.7 5.7 0 0 1 21.7 12.3C21.7 16.4 18.2 17.6 18.2 20.2Z"/>
     <path pathLength="1" d="M14.1 22.4h3.8M15.1 24.4h1.8"/>
   </symbol>
-  <symbol id="ic-prototype" viewBox="-5.43 0 32 32" fill="none" stroke="currentColor" stroke-width=".83" stroke-linecap="round" stroke-linejoin="round">
+  <symbol id="ic-refine" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".83" stroke-linecap="round" stroke-linejoin="round">
+    <path pathLength="1" d="M4 8h24M4 16h24M4 24h24"/>
+    <circle pathLength="1" cx="11" cy="8" r="2.7" fill="var(--bg)"/>
+    <circle pathLength="1" cx="21" cy="16" r="2.7" fill="var(--bg)"/>
+    <circle pathLength="1" cx="14" cy="24" r="2.7" fill="var(--bg)"/>
+  </symbol>
+  <symbol id="ic-prototype" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".83" stroke-linecap="round" stroke-linejoin="round">
     <path pathLength="1" d="M19 20V5.4A2.4 2.4 0 0 0 16.6 3H7.4A2.4 2.4 0 0 0 5 5.4v21.2A2.4 2.4 0 0 0 7.4 29h3"/>
     <circle pathLength="1" cx="12" cy="9.6" r="3"/>
     <path pathLength="1" d="m10.7 9.7.9.9 1.8-2"/>
@@ -692,7 +693,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
     <rect pathLength="1" x="10.6" y="19.2" width="2.2" height="2.2" rx=".6"/>
     <path pathLength="1" d="M14 24.4V15.3a1.5 1.5 0 0 1 3 0v5.7h3.6a2.4 2.4 0 0 1 2.4 2.4v2.1c0 2.4-.9 3.8-2.2 5.1H14.3c-1.3-1.2-2.2-2.4-3.2-3.7l-1-1.5a1.3 1.3 0 0 1 2-1.6l1.9 1.6"/>
   </symbol>
-  <symbol id="ic-test" viewBox="0.44 0 32 32" fill="none" stroke="currentColor" stroke-width=".83" stroke-linecap="round" stroke-linejoin="round">
+  <symbol id="ic-test" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".83" stroke-linecap="round" stroke-linejoin="round">
     <path pathLength="1" d="M21 13V5a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h8.5"/>
     <path pathLength="1" d="m7.6 7.1 2.2 2.2M9.8 7.1 7.6 9.3"/>
     <path pathLength="1" d="M12.6 7.4h5.4M12.6 9.6h3.6"/>
@@ -702,7 +703,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
     <path pathLength="1" d="M12.6 18.4h4.4M12.6 20.6h2.4"/>
     <path pathLength="1" d="M17.6 29.5c0-4 1.6-6.8 3.6-8.4a3.4 3.4 0 1 1 3.6 0c2 1.6 3.6 4.4 3.6 8.4"/>
   </symbol>
-  <symbol id="ic-launch" viewBox="-2.9 0 32 32" fill="none" stroke="currentColor" stroke-width=".83" stroke-linecap="round" stroke-linejoin="round">
+  <symbol id="ic-launch" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width=".83" stroke-linecap="round" stroke-linejoin="round">
     <g transform="translate(16 16) rotate(45) translate(-14 -13.8)">
       <path pathLength="1" d="M14 3c3.2 3 4.6 7.2 4.6 12.2v4.4H9.4v-4.4C9.4 10.2 10.8 6 14 3Z"/>
       <circle pathLength="1" cx="14" cy="12" r="1.8"/>
@@ -783,52 +784,57 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
 </section>
 
 <!-- ================= 2 · HOW I WORK ================= -->
-<section class="slide" id="s-ai" data-project="tv" data-steps="6" data-step="0" aria-label="Slide 2">
+<section class="slide" id="s-ai" data-project="tv" data-steps="7" data-step="0" aria-label="Slide 2">
   <header class="eyebrow b" style="--i:0">
     <span class="pill"><i class="dot"></i>Tim Valderrama · Lead Product Designer</span>
     <span class="stage-tag">How I work · <b>Empathize → Implement → Next decision</b></span>
   </header>
-  <h2 class="hl md ai-hl b" style="--i:1">AI expands, tests and connects the loop.</h2>
+  <h2 class="hl md ai-hl b" style="--i:1">Human Judgment Leads. AI Accelerates.</h2>
 
   <!-- The thread: one loop, drawn clockwise from Empathize and back to it.
        Two paths, so the return label sits inside the line rather than on top of it. -->
   <svg class="wire" viewBox="0 0 1440 810" aria-hidden="true">
-    <path class="draw" style="--i:2;animation-duration:1.6s" d="M116 250 H1344 A24 24 0 0 1 1368 274 V606 A24 24 0 0 1 1344 630 H856" pathLength="1"/>
-    <path class="draw" style="--i:17;animation-duration:.7s" d="M584 630 H96 A24 24 0 0 1 72 606 V274 A24 24 0 0 1 96 250 H116" pathLength="1"/>
-    <text class="b" style="--i:21" x="720" y="630" text-anchor="middle" dominant-baseline="central">Signals become the next product decision</text>
+    <path class="draw" style="--i:2;animation-duration:1.6s" d="M116 289 H1344 A24 24 0 0 1 1368 313 V576 A24 24 0 0 1 1344 600 H856" pathLength="1"/>
+    <path class="draw" style="--i:17;animation-duration:.7s" d="M584 600 H96 A24 24 0 0 1 72 576 V313 A24 24 0 0 1 96 289 H116" pathLength="1"/>
+    <text class="b" style="--i:21" x="720" y="600" text-anchor="middle" dominant-baseline="central">Signals become the next product decision</text>
   </svg>
 
-  <!-- Six stations on the top run. Empathize is there from the start; ← → brings in the rest one by one. -->
+  <!-- Seven stations on the top run. Empathize is there from the start; ← → brings in the rest one by one. -->
   <ol class="ai-stages">
     <li class="ai-stage acc" data-s="0">
       <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-empathize"/></svg><h3>Empathize</h3></div>
-      <p>Research with real people, not synthetic users.</p>
-      <span class="to"><b>AI</b>Drafts plans, guides and tags evidence</span>
+      <p>I identify the highest-impact problem from research and product data.</p>
+      <span class="to"><b>AI</b>Drafts research plans and interview guides</span>
     </li>
     <li class="ai-stage acc" data-s="1">
       <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-define"/></svg><h3>Define</h3></div>
-      <p>Separate symptoms from the real root cause.</p>
-      <span class="to"><b>AI</b>Clusters themes and exposes contradictions</span>
+      <p>I separate evidence from interpretation and define success.</p>
+      <span class="to"><b>AI</b>Clusters themes and challenges conclusions</span>
     </li>
     <li class="ai-stage acc" data-s="2">
       <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-ideate"/></svg><h3>Ideate</h3></div>
-      <p>Decide which experience is worth pursuing.</p>
-      <span class="to"><b>AI</b>Explores directions and critiques concepts</span>
+      <p>I explore evidence-led options and choose what merits investment.</p>
+      <span class="to"><b>AI</b>Generates low-fi options and critiques tradeoffs</span>
     </li>
     <li class="ai-stage acc" data-s="3">
-      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-prototype"/></svg><h3>Prototype</h3></div>
-      <p>Set the fidelity the learning goal needs.</p>
-      <span class="to"><b>AI</b>Adds states, content and variants</span>
+      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-refine"/></svg><h3>Refine</h3></div>
+      <p>I narrow to one direction and apply the design system.</p>
+      <span class="to"><b>AI</b>Checks content, localization and edge cases</span>
     </li>
     <li class="ai-stage acc" data-s="4">
-      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-test"/></svg><h3>Test</h3></div>
-      <p>Moderate real sessions and read behavior.</p>
-      <span class="to"><b>AI</b>Synthesizes sessions and ranks issues</span>
+      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-prototype"/></svg><h3>Prototype</h3></div>
+      <p>I choose the fidelity needed to answer the next question.</p>
+      <span class="to"><b>AI</b>Builds realistic flows from design context</span>
     </li>
     <li class="ai-stage acc" data-s="5">
+      <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-test"/></svg><h3>Test</h3></div>
+      <p>I moderate real sessions and prioritize observed problems.</p>
+      <span class="to"><b>AI</b>Drafts unbiased tasks and synthesizes evidence</span>
+    </li>
+    <li class="ai-stage acc" data-s="6">
       <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-launch"/></svg><h3>Implement</h3></div>
-      <p>Decide launch readiness and own the outcome.</p>
-      <span class="to"><b>AI</b>Propagates fixes, specs and QA cases</span>
+      <p>I turn validated findings into a launch-ready design.</p>
+      <span class="to"><b>AI</b>Flags risk, propagates changes and supports QA</span>
     </li>
   </ol>
 
@@ -837,7 +843,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
     <li><b>Figma + Code Connect</b>design intent ↔ production components</li>
     <li><b>Figma MCP + AI agents</b>context, critique, implementation and QA</li>
   </ul>
-  <div class="s3-rail b" style="--i:5"><i class="now"></i><i></i><i></i><i></i><i></i><i></i><em>← → to step through</em></div>
+  <div class="s3-rail b" style="--i:5"><i class="now"></i><i></i><i></i><i></i><i></i><i></i><i></i><em>← → to step through</em></div>
 </section>
 
 <!-- ================= PAYPAL GERMANY OPENER ================= -->
@@ -1491,16 +1497,17 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
         "These three stories follow the same arc: a customer problem, a strategic decision, a reusable system, and a measurable result."
       ],
       notes: "The three handsets show real work: PayPal Germany checkout, Pay in 4, and the Ms. Sunshine parent feed." },
-    { title: "AI expands, tests and connects the loop.", time: 55,
+    { title: "Human Judgment Leads. AI Accelerates.", time: 110,
       points: [
-        "Empathize. I pick who to study, sit with them, read emotion and hesitation, protect consent. AI preps guides, transcribes and mines the evidence.",
-        "Define. I own the diagnosis: pick credible evidence, block my bias, verify each conclusion. AI groups themes and drafts the problem.",
-        "Ideate. I set direction, keep ideas tied to research, judge function before looks, check accessibility. AI drafts low-fi options and edge cases.",
-        "Prototype. I pick the tools, fix errors before automating, verify the logic, polish before users see it. AI builds it fast and links design context to code via MCP.",
-        "Test. I pilot first, run real sessions, probe without leading, pick what to fix first. AI writes tasks, flags leading questions, splits said from did.",
-        "Implement. I match org readiness, align product, design, engineering and legal, set safeguards, own the outcome. AI carries changes across screens and writes QA cases. Never prompt, generate, ship."
+        "Empathize. I start with existing usability research, product feedback and behavioral data to identify the highest-impact user problem. AI helps turn the product brief into a research plan and interview guide, but I prevent it from inventing findings and review every output.",
+        "Define. I use AI to organize recurring themes and unmet needs while keeping observations separate from interpretations. I ask it to challenge my conclusions, then I define the user problem, the design principles and the outcomes that will measure success.",
+        "Ideate. I ground every concept in research findings and product metrics. AI helps generate low-fidelity options against those constraints, while I judge the tradeoffs and choose which directions deserve feedback from design, product and engineering.",
+        "Refine. I narrow the options to one direction and bring it into the existing design system. AI helps critique the work and surface gaps in content, localization, accessibility and edge cases. I prioritize the feedback and provide the final craft and judgment.",
+        "Prototype. I choose the fidelity based on what we need to learn. Figma Make can quickly create realistic test flows, while a design-system-connected development environment and Figma MCP can produce prototypes that sit closer to production code. I verify the logic before anyone tests it.",
+        "Test. AI helps me prepare tasks, scenarios, follow-up questions and observation criteria, including checks for leading language. I moderate real sessions, then use AI to organize recurring usability problems by severity, affected step and supporting evidence.",
+        "Implement. I refine the design from the research findings, pressure-test where it could fail and confirm launch readiness with product and engineering. AI helps propagate approved changes and build QA coverage, while I remain accountable for the decision and the outcome."
       ],
-      notes: "Pause at Ideate and Prototype. After Nehmat Gereige." },
+      notes: "The point of this slide is accountability: AI increases speed and range, but it does not replace design judgment. Evidence enters the process, I make the decisions, and real user behavior shapes the next cycle." },
     { title: "German customers wanted flexibility through responsible credit", time: 60,
       points: [
         "I owned the German credit checkout and application experience, working with the local research lead and checkout partner.",
