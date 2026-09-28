@@ -803,37 +803,37 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
   <ol class="ai-stages">
     <li class="ai-stage acc" data-s="0">
       <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-empathize"/></svg><h3>Empathize</h3></div>
-      <p>I pinpoint the problem that matters most from research, data and the brief.</p>
-      <span class="to"><b>AI</b>Drafts the research plan and interview guide</span>
+      <p>I focus the inquiry on finding the biggest issue.</p>
+      <span class="to"><b>AI</b>Synthesizes behavioral data and the brief into a research plan</span>
     </li>
     <li class="ai-stage acc" data-s="1">
       <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-define"/></svg><h3>Define</h3></div>
-      <p>I sharpen the user problem, choose a design principle and define success.</p>
-      <span class="to"><b>AI</b>Surfaces themes and challenges conclusions</span>
+      <p>I frame the issues and choose guiding design principles.</p>
+      <span class="to"><b>AI</b>Finds patterns, challenges assumptions and helps define success</span>
     </li>
     <li class="ai-stage acc" data-s="2">
       <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-ideate"/></svg><h3>Ideate</h3></div>
-      <p>I steer targeted low-fidelity concepts and weigh tradeoffs with the team.</p>
-      <span class="to"><b>AI</b>Broadens the range of concepts from findings</span>
+      <p>I weigh tradeoffs with design, product and engineering.</p>
+      <span class="to"><b>AI</b>Generates low-fidelity concepts under my direction</span>
     </li>
     <li class="ai-stage acc" data-s="3">
       <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-refine"/></svg><h3>Refine</h3></div>
-      <p>I align one direction with the design system and own the final craft.</p>
-      <span class="to"><b>AI</b>Exposes content, localization, accessibility and edge cases</span>
+      <p>I refine one solution within the design system.</p>
+      <span class="to"><b>AI</b>Exposes gaps in content, accessibility and edge cases</span>
     </li>
     <li class="ai-stage acc" data-s="4">
       <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-prototype"/></svg><h3>Prototype</h3></div>
-      <p>I match the prototype to how the team works.</p>
-      <span class="to"><b>AI</b>Figma Make mirrors the system. Figma MCP nears production.</span>
+      <p>I choose the prototype path the team needs.</p>
+      <span class="to"><b>AI</b>Figma Make matches the system. Figma MCP gets closer to production.</span>
     </li>
     <li class="ai-stage acc" data-s="5">
       <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-test"/></svg><h3>Test</h3></div>
-      <p>I moderate real sessions and prioritize recurring issues.</p>
-      <span class="to"><b>AI</b>Drafts unbiased tasks and groups evidence</span>
+      <p>I prioritize issues with my research partner.</p>
+      <span class="to"><b>AI</b>Organizes the test findings</span>
     </li>
     <li class="ai-stage acc" data-s="6">
       <div class="ai-node"><svg class="ai-ic" aria-hidden="true"><use href="#ic-launch"/></svg><h3>Implement</h3></div>
-      <p>I revise from findings, pressure-test failures and confirm readiness.</p>
+      <p>I confirm readiness with product and engineering.</p>
       <span class="to"><b>AI</b>Applies approved changes and extends QA coverage</span>
     </li>
   </ol>
@@ -1497,17 +1497,17 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
         "These three stories follow the same arc: a customer problem, a strategic decision, a reusable system, and a measurable result."
       ],
       notes: "The three handsets show real work: PayPal Germany checkout, Pay in 4, and the Ms. Sunshine parent feed." },
-    { title: "Human Judgment Leads. AI Accelerates.", time: 110,
+    { title: "Human Judgment Leads. AI Accelerates.", time: 80,
       points: [
-        "Empathize. I start with usability research, behavioral data, and the product brief to pinpoint the problem that matters most. AI turns the brief into a research plan and interview guide for my review.",
-        "Define. AI synthesizes findings and surfaces recurring themes and unmet needs. I sharpen the user problem, select the design principle most likely to solve it, and define how success will be measured. Further, I use AI as a sounding board to challenge my interpretations and conclusions.",
-        "Ideate. Guided by the findings, I steer AI-assisted ideation across a range of targeted low-fidelity concepts. I weigh the tradeoffs with design, product, and engineering.",
-        "Refine. I narrow to one direction and align it with the design system. AI exposes gaps in content, localization, accessibility, and edge cases. I prioritize what matters and own the final craft.",
-        "Prototype. I match the prototype to how the team works. Figma Make produces design-system-faithful prototypes, while a design-system-connected environment with Figma MCP gets closer to production.",
-        "Test. AI helps draft unbiased tasks, scenarios, follow-up questions, and observation criteria. I moderate real sessions, then use AI to group recurring issues by severity, affected step, and evidence.",
-        "Implement. I revise the design based on the findings, pressure-test failure points, and confirm launch readiness with product and engineering. AI helps apply approved changes and extend QA coverage."
+        "Empathize. I use AI to connect the brief and behavioral data, then plan where research should focus.",
+        "Define. I frame the issues and design principles. AI challenges my read and helps define success.",
+        "Ideate. I steer AI through rough concepts, then weigh options with design, product, and engineering.",
+        "Refine. I shape one solution within the design system. AI helps catch gaps I might miss.",
+        "Prototype. I choose Figma Make or Figma MCP based on how close to production the team needs to get.",
+        "Test. My research partner and I prioritize issues. AI organizes what we learned.",
+        "Implement. I confirm readiness with product and engineering. AI helps apply approved changes and expand QA."
       ],
-      notes: "The point of this slide is accountability: AI increases speed and range, but it does not replace design judgment. Evidence enters the process, I make the decisions, and real user behavior shapes the next cycle." },
+      notes: "AI helps me move faster. I make the decisions, and user evidence shapes what comes next." },
     { title: "German customers wanted flexibility through responsible credit", time: 60,
       points: [
         "I owned the German credit checkout and application experience, working with the local research lead and checkout partner.",
@@ -1581,6 +1581,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
   const $ = (s, r = document) => r.querySelector(s);
   const stage = $('#stage');
   const slides = [...document.querySelectorAll('.slide')];
+  const aiSlideIndex = slides.findIndex(slide => slide.id === 's-ai');
   const total = slides.length;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const totalSec = NOTES.reduce((a, n) => a + n.time, 0);
@@ -1626,7 +1627,11 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
     const el = slides[cur], n = stepsOf(el);
     if (n) {
       const t = (+el.dataset.step || 0) + dir;
-      if (t >= 0 && t < n) { setStep(el, t); return; }
+      if (t >= 0 && t < n) {
+        setStep(el, t);
+        if (cur === aiSlideIndex) renderNotes(cur);
+        return;
+      }
     }
     go(cur + dir);
   }
@@ -1664,10 +1669,15 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
   const drawer = $('#drawer'), tab = $('#tab'), closeBtn = $('#d-close');
   function renderNotes(n) {
     const d = NOTES[n];
-    $('#d-eyebrow').textContent = `Talking points · Slide ${String(n + 1).padStart(2, '0')} of ${total}`;
+    const step = n === aiSlideIndex ? +slides[n].dataset.step || 0 : null;
+    const points = step === null ? d.points : [d.points[step]];
+    $('#d-eyebrow').textContent = `Talking points · Slide ${String(n + 1).padStart(2, '0')} of ${total}`
+      + (step === null ? '' : ` · Step ${step + 1} of ${stepsOf(slides[n])}`);
     $('#d-title').textContent = d.title;
-    $('#d-points').innerHTML = d.points.map(p => `<li>${p}</li>`).join('');
-    $('#d-notes').hidden = !d.notes;
+    $('#d-points').setAttribute('aria-live', step === null ? 'off' : 'polite');
+    $('#d-points').style.counterReset = step === null ? '' : `pt ${step}`;
+    $('#d-points').innerHTML = points.map(p => `<li>${p}</li>`).join('');
+    $('#d-notes').hidden = !d.notes || (step !== null && step < stepsOf(slides[n]) - 1);
     $('#d-notes-p').innerHTML = d.notes || '';
     $('#d-retro').hidden = !d.retro;
     $('#d-retro-p').innerHTML = d.retro || '';
