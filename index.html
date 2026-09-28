@@ -784,7 +784,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
 </section>
 
 <!-- ================= 2 · HOW I WORK ================= -->
-<section class="slide" id="s-ai" data-project="tv" data-steps="7" data-step="0" aria-label="Slide 2">
+<section class="slide" id="s-ai" data-project="tv" data-steps="7" data-step="0" data-step-notes aria-label="Slide 2">
   <header class="eyebrow b" style="--i:0">
     <span class="pill"><i class="dot"></i>Tim Valderrama · Lead Product Designer</span>
     <span class="stage-tag">How I work · <b>Empathize → Implement → Next decision</b></span>
@@ -865,7 +865,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
 </section>
 
 <!-- ================= PAYPAL GERMANY STRATEGY ================= -->
-<section class="slide" id="s3" data-project="pp" data-steps="5" data-step="0" aria-label="Slide 4">
+<section class="slide" id="s3" data-project="pp" data-steps="5" data-step="0" data-step-notes aria-label="Slide 4">
       <header class="eyebrow b" style="--i:0">
         <span class="pill"><i class="dot"></i>PayPal Germany</span>
         <span class="stage-tag">01 · Options → <b>Strategic choice</b> → Repeatable system</span>
@@ -1517,11 +1517,11 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
       notes: "The research lead ran market interviews on financial practices, attitudes to credit, and shopping habits across Germany." },
     { title: "Solving the equation, one variable at a time", time: 85,
       points: [
-        "The strategy in one line: Trust = Flexibility − Friction + Transparency + Control. Every decision that follows moves exactly one variable.",
-        "Flexibility — two needs, two products. Pay in 30 Days for time; Ratenzahlung for predictable installments.",
-        "Friction — flexibility shouldn’t take three pages. With the checkout partner I surfaced installment options earlier, tucked terms behind links, and collapsed three application pages into one.",
-        "Transparency — every option and its estimated cost sit inside checkout, with the full terms before commitment.",
-        "Control — customers can reschedule a payment after seeing the new date and fee. That added control for them and a new revenue stream for PayPal."
+        "Flexibility — People wanted more time or predictable installments. So I designed Pay in 30 Days and Ratenzahlung.",
+        "Friction — I worked with my checkout partner to show options earlier, and with legal to cut the application from three pages to one.",
+        "Transparency — Customers could see each option’s estimated cost in checkout and read the full terms before committing.",
+        "Control — Customers saw the new date and fee before rescheduling. That also gave PayPal a new revenue stream.",
+        "Outcome — Together, these choices changed what customers were willing to do. I’ll show you the results next."
       ],
       notes: "Advance through the five steps. Hold the results for the next slide." },
     { title: "Clarity and control changed behavior", time: 60,
@@ -1585,7 +1585,6 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
   const $ = (s, r = document) => r.querySelector(s);
   const stage = $('#stage');
   const slides = [...document.querySelectorAll('.slide')];
-  const aiSlideIndex = slides.findIndex(slide => slide.id === 's-ai');
   const total = slides.length;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const totalSec = NOTES.reduce((a, n) => a + n.time, 0);
@@ -1633,7 +1632,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
       const t = (+el.dataset.step || 0) + dir;
       if (t >= 0 && t < n) {
         setStep(el, t);
-        if (cur === aiSlideIndex) renderNotes(cur);
+        if (el.hasAttribute('data-step-notes')) renderNotes(cur);
         return;
       }
     }
@@ -1673,7 +1672,7 @@ body.drawer-open .drawer{transform:none;visibility:visible;transition:transform 
   const drawer = $('#drawer'), tab = $('#tab'), closeBtn = $('#d-close');
   function renderNotes(n) {
     const d = NOTES[n];
-    const step = n === aiSlideIndex ? +slides[n].dataset.step || 0 : null;
+    const step = slides[n].hasAttribute('data-step-notes') ? +slides[n].dataset.step || 0 : null;
     const points = step === null ? d.points : [d.points[step]];
     $('#d-eyebrow').textContent = `Talking points · Slide ${String(n + 1).padStart(2, '0')} of ${total}`
       + (step === null ? '' : ` · Step ${step + 1} of ${stepsOf(slides[n])}`);
